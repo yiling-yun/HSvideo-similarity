@@ -57,13 +57,12 @@ class trialObject {
     init(){
         this.randomizedExptIDList = SHUFFLE_ARRAY(Object.keys(this.trialInput));
         console.log(this.randomizedExptIDList);
-        this.updateStimuli(this.randomizedExptIDList[this.trialIndex]);
+        this.updateStimuli(this.trialIndex);
     }
 
 
     record(choicePos){
         this.rt = this.decideTime - this.startTime;
-        this.exptId = this.randomizedExptIDList[this.trialIndex];
         this.option1 = this.trialInput[this.exptId][0];
         this.option2 = this.trialInput[this.exptId][1];
         this.option3 = this.trialInput[this.exptId][2];
@@ -82,13 +81,13 @@ class trialObject {
         this.option1PlayTime = 0;
         this.option2PlayTime = 0;
         this.option3PlayTime = 0;
-        this.updateStimuli(this.randomizedExptIDList[this.trialIndex]);
     }
 
     updateStimuli(trialIndex){
-        $('#option1').attr('src', this.stimSource + this.trialInput[this.randomizedExptIDList[trialIndex]][0] + this.stimType);
-        $('#option2').attr('src', this.stimSource + this.trialInput[this.randomizedExptIDList[trialIndex]][1] + this.stimType);
-        $('#option3').attr('src', this.stimSource + this.trialInput[this.randomizedExptIDList[trialIndex]][2] + this.stimType);
+        this.exptId = this.randomizedExptIDList[this.trialIndex];
+        $('#option1').attr('src', this.stimSource + this.trialInput[this.exptId][0] + this.stimType);
+        $('#option2').attr('src', this.stimSource + this.trialInput[this.exptId][1] + this.stimType);
+        $('#option3').attr('src', this.stimSource + this.trialInput[this.exptId][2] + this.stimType);
     }
 
     save() {
@@ -121,6 +120,7 @@ function SHOW_NEXT_BUT() {
 }
 
 function RESET_TRIAL_INTERFACE() {
+    test.updateStimuli(this.trialIndex);
     $("#stimuliBox img").css("background", "none");
     $("input[name = 'trialQ']:checked").prop("checked", false);
     $("#stimuliBox label").hide();
