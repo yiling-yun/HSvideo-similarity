@@ -30,8 +30,8 @@ class instrObject {
 }
 
 var instr_text = new Array;
-instr_text[0] = "<strong>Welcome!</strong><br><br>In this experiment, you will see emojis and make judgments following your intuition. <br><br>Hope you enjoy it!";
-instr_text[1] = "On each trial, you will see three emojis. Please select the emoji that looks the most different from the other two.";
+instr_text[0] = "<strong>Welcome!</strong><br><br>In this experiment, you will see some videos and make judgments following your intuition. <br><br>Hope you enjoy it!";
+instr_text[1] = "On each trial, you will see three videos. Please select the video that looks the most different from the other two.<br><br>You can watch the videos as many times as you want.";
 instr_text[2] = "You can start the experiment on the next page.";
 instr_text[3] = "";
 
