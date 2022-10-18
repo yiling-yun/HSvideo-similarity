@@ -43,11 +43,15 @@ body {
     border: none;
 }
 
-#instrNextBut{
+#instrNextBut, #nextTrialBut{
     position: absolute;
     display: inline-block;
     right: 0px;
     top: 500px;
+}
+
+#nextTrialBut {
+    display:none;
 }
 
 #taskBox {
@@ -74,11 +78,6 @@ body {
 }
 
 #stimuliBox img:hover {
-    cursor: pointer;
-    border: solid black;
-}
-
-#stimuliBox img:click {
     cursor: pointer;
     border: solid black;
 }

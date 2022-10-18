@@ -97,6 +97,9 @@ function UPDATE_TRIAL_INFO(obj, choicePos) {
     if (obj.trialIndex == obj.trialN){
         obj.save();
     }
+    obj.option1PlayTime = 0;
+    obj.option2PlayTime = 0;
+    obj.option3PlayTime = 0;
     obj.run();
 }
 
@@ -105,16 +108,25 @@ function PLAY(ele) {
     var option = $(ele).attr("id");
     test[option + "PlayTime"] += 1;
     if (test.option1PlayTime > 0 && test.option2PlayTime > 0 && test.option3PlayTime > 0){
-        console.log("ha");
         $("#stimuliBox label").show();
-
     }
-
 }
 
-function NEXT_TRIAL(ele) {
-    var choicePos = $(ele).attr("id");
+function SHOW_NEXT_BUT() {
+    $("#nextTrialBut").show();
+}
+
+function RESET_TRIAL_INTERFACE() {
+    $("#stimuliBox img").css("background", "none");
+    $("input[name = 'trialQ']:checked").prop("checked", false);
+    $("#stimuliBox label").hide();
+    $("#nextTrialBut").hide();
+}
+
+function NEXT_TRIAL() {
+    var choicePos = $("input[name = 'trialQ']:checked").val();
     UPDATE_TRIAL_INFO(test, choicePos);
+    RESET_TRIAL_INTERFACE();
     //xxx: need to buffer videos for the next trial
 };
 
