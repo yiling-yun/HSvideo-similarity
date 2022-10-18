@@ -51,6 +51,7 @@ function SHOW_INSTR(){
 function START_EXPT(){
     $('#instrBox').hide();
     $('#taskBox').show();
+    test.startTime = Date.now();
 };
 
 var instr_options = {

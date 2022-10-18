@@ -1,6 +1,6 @@
 const FORMAL = false;
 const EXPERIMENT_NAME = "HSvideo";
-const FILE_TYPE = ".png";
+const STIM_TYPE = ".png";
 const TRIAL_FILE = "trial_" + EXPERIMENT_NAME + ".txt";
 const SAVING_SCRIPT = 'save.php';
 const SAVING_DIR = FORMAL ? "data/formal":"data/testing";
@@ -33,6 +33,9 @@ class trialObject {
                 dataFile: "",
                 savingScript: "save.php",
                 savingDir: "data/testing",
+                stimSource: "",
+                stimType: "",
+                trialInput: "",
                 intertrialInterval: 500,
                 //updateFunc: false,
                 // trialFunc: false,
@@ -41,7 +44,7 @@ class trialObject {
             options
         );
         this.trialIndex = 0;
-        this.trialN = Object.keys(TRIAL_INPUT).length;
+        this.trialN = Object.keys(this.trialInput).length;
         // this.sonaID = this.subj.sonaID;
         // this.subjStartDate = this.subj.startDate;
         // this.subjStartTime = this.subj.startTime;
@@ -51,21 +54,41 @@ class trialObject {
         this.option3PlayTime = 0;
     }
 
-    run(){
-        setTimeout(UPDATE_STIMULI, this.intertrialInterval, this.trialIndex);
-        this.startTime = Date.now();
+    init(){
+        this.randomizedExptIDList = SHUFFLE_ARRAY(Object.keys(this.trialInput));
+        console.log(this.randomizedExptIDList);
+        this.updateStimuli(this.randomizedExptIDList[this.trialIndex]);
     }
 
+
     record(choicePos){
-        this.rt = Date.now() - this.startTime;
-        this.option1 = TRIAL_INPUT[this.trialIndex][0];
-        this.option2 = TRIAL_INPUT[this.trialIndex][1];
-        this.option3 = TRIAL_INPUT[this.trialIndex][2];
-        this.choice = this[this.choicePos];
+        this.rt = this.decideTime - this.startTime;
+        this.exptId = this.randomizedExptIDList[this.trialIndex];
+        this.option1 = this.trialInput[this.exptId][0];
+        this.option2 = this.trialInput[this.exptId][1];
+        this.option3 = this.trialInput[this.exptId][2];
+        this.choice = this[choicePos];
         this.choicePos = choicePos;
         var dataList = LIST_FROM_ATTRIBUTE_NAMES(this, this.titles);
         this.allData += LIST_TO_FORMATTED_STRING(dataList, ";");
         console.log(this.allData);
+    }
+
+    update(){
+        this.trialIndex++;
+        if (this.trialIndex == this.trialN){
+            this.save();
+        }
+        this.option1PlayTime = 0;
+        this.option2PlayTime = 0;
+        this.option3PlayTime = 0;
+        this.updateStimuli(this.randomizedExptIDList[this.trialIndex]);
+    }
+
+    updateStimuli(trialIndex){
+        $('#option1').attr('src', this.stimSource + this.trialInput[this.randomizedExptIDList[trialIndex]][0] + this.stimType);
+        $('#option2').attr('src', this.stimSource + this.trialInput[this.randomizedExptIDList[trialIndex]][1] + this.stimType);
+        $('#option3').attr('src', this.stimSource + this.trialInput[this.randomizedExptIDList[trialIndex]][2] + this.stimType);
     }
 
     save() {
@@ -83,26 +106,6 @@ class trialObject {
 
 }
 
-function UPDATE_STIMULI(trialIndex) {
-    $('#option1').attr('src', STIM_SOURCE + TRIAL_INPUT[trialIndex][0] + FILE_TYPE);
-    $('#option2').attr('src', STIM_SOURCE + TRIAL_INPUT[trialIndex][1] + FILE_TYPE);
-    $('#option3').attr('src', STIM_SOURCE + TRIAL_INPUT[trialIndex][2] + FILE_TYPE);
-};
-
-function UPDATE_TRIAL_INFO(obj, choicePos) {
-    obj.record(choicePos);
-
-    //prepare for the next trial
-    obj.trialIndex++;
-    if (obj.trialIndex == obj.trialN){
-        obj.save();
-    }
-    obj.option1PlayTime = 0;
-    obj.option2PlayTime = 0;
-    obj.option3PlayTime = 0;
-    obj.run();
-}
-
 function PLAY(ele) {
     $(ele).css("background","#9D8F8F");
     var option = $(ele).attr("id");
@@ -114,6 +117,7 @@ function PLAY(ele) {
 
 function SHOW_NEXT_BUT() {
     $("#nextTrialBut").show();
+    test.decideTime = Date.now();
 }
 
 function RESET_TRIAL_INTERFACE() {
@@ -121,12 +125,14 @@ function RESET_TRIAL_INTERFACE() {
     $("input[name = 'trialQ']:checked").prop("checked", false);
     $("#stimuliBox label").hide();
     $("#nextTrialBut").hide();
+    test.startTime = Date.now();
 }
 
 function NEXT_TRIAL() {
     var choicePos = $("input[name = 'trialQ']:checked").val();
-    UPDATE_TRIAL_INFO(test, choicePos);
-    RESET_TRIAL_INTERFACE();
+    test.record(choicePos);
+    test.update();
+    setTimeout(RESET_TRIAL_INTERFACE, test.intertrialInterval);
     //xxx: need to buffer videos for the next trial
 };
 
@@ -135,7 +141,7 @@ const TRIAL_TITLES = [
     //"sonaID",
     //"startDate",
     //"startTime",
-    //"exptId",
+    "exptId",
     "option1",
     "option2",
     "option3",
@@ -153,6 +159,9 @@ var trial_options = {
     dataFile: TRIAL_FILE,
     savingScript: SAVING_SCRIPT,
     savingDir: SAVING_DIR,
+    stimSource: STIM_SOURCE,
+    stimType: STIM_TYPE,
+    trialInput: TRIAL_INPUT,
     intertrialInterval: INTERTRIAL_INTERVAL,
     //updateFunc: TRIAL_UPDATE,
     //trialFunc: TRIAL,
@@ -177,4 +186,15 @@ function LIST_TO_FORMATTED_STRING(data_list, divider) {
     }
     string += data_list[data_list.length - 1] + '\n';
     return string;
+}
+
+function SHUFFLE_ARRAY(array) {
+    var j, temp;
+    for (var i = array.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
 }
