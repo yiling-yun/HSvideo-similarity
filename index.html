@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-us" translate="no">
+
+<head>
+    <meta charset="utf-8">
+    <title>UCLA Experiment</title>
+    <link rel="icon" href="img/ucla.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.3/mobile-detect.min.js"></script>
+    <script src="js/instr.js"></script>
+    <script src="js/trial.js"></script>
+    <script src="js/main.js"></script>
+</head>
+
+<body>
+    <noscript>It seems that JavaScript is disabled in your browser. Please go to settings and enable JavaScript for this experiment.</noscript>
+
+    <div class="pageBox" id="instrBox">
+        <p id="instrText"></p>
+        <button class="instrBut" id="instrNextBut" onclick=instr.next()>NEXT</button>
+    </div>
+
+    <!--======== INFORMED CONSENT FORM ========-->
+
+    <!--======== TASK ========-->
+    <div class="pageBox" id="taskBox">
+        <p id="prompt">Which one is different from the other two?</p>
+        <!-- <video> -->
+            <div id="stimuliBox">
+                <div id="opt1">
+                    <img id="option1" class="option" src="stim/blank.png" onclick=PLAY(this) alt="Image Error: Please contact the experimenter at yiling.yun@g.ucla.edu with the phrase 'VIDEO-ERROR'.">
+                    <label><input id="radio1" class="optionRadio" type="radio" name="instrQ"></label>
+                </div>
+                <div id="opt2">
+                    <img id="option2" class="option" src="stim/blank.png" onclick=PLAY(this) alt="Image Error: Please contact the experimenter at yiling.yun@g.ucla.edu with the phrase 'VIDEO-ERROR'.">
+                    <label><input id="radio2" class="optionRadio" type="radio" name="instrQ"></label>
+                </div>
+                <div id="opt3">
+                    <img id="option3" class="option" src="stim/blank.png" onclick=PLAY(this) alt="Image Error: Please contact the experimenter at yiling.yun@g.ucla.edu with the phrase 'VIDEO-ERROR'.">
+                    <label><input id="radio3" class="optionRadio" type="radio" name="instrQ"></label>
+                </div>
+            </div>
+
+        <!-- </video> -->
+        <button class="instrBut" id="nextTrialBut" onclick=NEXT_TRIAL(this)>NEXT</button>
+
+    </div>
+
+</body>
+
+</html>
