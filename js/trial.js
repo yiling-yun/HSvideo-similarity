@@ -62,7 +62,7 @@ class trialObject {
         this.updateStimuli(this.trialIndex);
     }
 
-    update(){ // this is not called? XXX
+    update(){ // this is not called? XXX RE: it's called in NEXT_TRIAL()
         this.trialIndex++;
         if (this.trialIndex == this.trialN){
             this.save();
@@ -78,25 +78,26 @@ class trialObject {
         $('#vid2 source').attr('src', this.stimSource + this.trialInput[this.exptId][1] + this.stimType);
         $('#vid3 source').attr('src', this.stimSource + this.trialInput[this.exptId][2] + this.stimType);
         $('#vid1')[0].load();
-        $('#vid2')[0].load();
-        $('#vid3')[0].load();
+        // $('#vid2')[0].load();
+        // $('#vid3')[0].load();
         $('.vid').on('ended', CHECK_PLAY_COUNT);
         $('.vid').on('mouseup', PLAY);
         $('.vid').show();
-        if (!last) { // if not last trial
-            BUFFER_VIDEO($('#bufferVid1')[0], this.stimSource + XXX); // load next trial's videos
-            BUFFER_VIDEO($('#bufferVid2')[0], this.stimSource + XXX); // load next trial's videos
-            BUFFER_VIDEO($('#bufferVid3')[0], this.stimSource + XXX); // load next trial's videos
-        }
+        // if (!last) { // if not last trial
+        //     var nextExptId = this.randomizedExptIDList[this.trialIndex + 1];
+        //     BUFFER_VIDEO($('#bufferVid1')[0], this.stimSource + this.trialInput[nextExptId][0] + this.stimType); // load next trial's videos
+        //     BUFFER_VIDEO($('#bufferVid2')[0], this.stimSource + this.trialInput[nextExptId][1] + this.stimType); // load next trial's videos
+        //     BUFFER_VIDEO($('#bufferVid3')[0], this.stimSource + this.trialInput[nextExptId][2] + this.stimType); // load next trial's videos
+        // }
     }
 
     record(event){
         $('.respButton').off('mouseup');
         $('.vid').hide();
         var target = $(event.target).closest('.respButton');
-        target.attr('id'); // would be 'left', 'middle', or 'right' here. I don't understand your code below so I am not sure where to plug this in XXX
-        this.rt = this.decideTime - this.startTime; // where is this.decideTime from XXX
-        this.option1 = this.trialInput[this.exptId][0]; // you want to record click location not just video chosen in case some analyses need that information XXX
+        target.attr('id'); // would be 'left', 'middle', or 'right' here. I don't understand your code below so I am not sure where to plug this in XXX RE: yes it's recorded in choicePos
+        this.rt = this.decideTime - this.startTime; // where is this.decideTime from XXX RE: that's the last time they click on a button (i.e, if they select option1, then switch to option2, it records when they select option2)
+        this.option1 = this.trialInput[this.exptId][0]; // you want to record click location not just video chosen in case some analyses need that information XXX RE: yes it's recorded in choicePos
         this.option2 = this.trialInput[this.exptId][1];
         this.option3 = this.trialInput[this.exptId][2];
         this.choice = this[choicePos];
