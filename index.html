@@ -27,44 +27,25 @@
     <!--======== TASK ========-->
     <div class="pageBox" id="taskBox">
         <p id="prompt">Which one is different from the other two?</p>
-        <div class="v1Box">
-            <div class="v1Placeholder">
-                <video class="vid" id="vid1" preload="auto" muted>
-                    <source src="stim/27movies/1012_push.mp4" type="video/mp4" />
-                    Video Error: Please contact yiling.yun@g.ucla.edu and include your sona ID and the code "VIDEO-ERROR" to receive your credit.
-                </video>
+        <!-- <video> -->
+            <div id="stimuliBox">
+                <div id="opt1">
+                    <img id="option1" class="option" src="stim/blank.png" onclick=PLAY(this) alt="Image Error: Please contact the experimenter at yiling.yun@g.ucla.edu with the phrase 'VIDEO-ERROR'.">
+                    <label><input class="optionRadio" type="radio" name="trialQ" value="option1" onclick=SHOW_NEXT_BUT()></label>
+                </div>
+                <div id="opt2">
+                    <img id="option2" class="option" src="stim/blank.png" onclick=PLAY(this) alt="Image Error: Please contact the experimenter at yiling.yun@g.ucla.edu with the phrase 'VIDEO-ERROR'.">
+                    <label><input class="optionRadio" type="radio" name="trialQ" value="option2" onclick=SHOW_NEXT_BUT()></label>
+                </div>
+                <div id="opt3">
+                    <img id="option3" class="option" src="stim/blank.png" onclick=PLAY(this) alt="Image Error: Please contact the experimenter at yiling.yun@g.ucla.edu with the phrase 'VIDEO-ERROR'.">
+                    <label><input class="optionRadio" type="radio" name="trialQ" value="option3" onclick=SHOW_NEXT_BUT()></label>
+                </div>
             </div>
-            <div class="respButton inactiveButton optLeft" id="left"><p class="respLabel">This one</p></div>
-        </div>
-        <div class="v2Box">
-            <div class="v2Placeholder">
-                <video class="vid" id="vid2" preload="auto" muted>
-                    <source src="stim/27movies/1012_push.mp4" type="video/mp4" />
-                    Video Error: Please contact yiling.yun@g.ucla.edu and include your sona ID and the code "VIDEO-ERROR" to receive your credit.
-                </video>
-            </div>
-            <div class="respButton inactiveButton optMiddle" id="middle"><p class="respLabel">This one</p></div>
-        </div>
-        <div class="v3Box">
-            <div class="v2Placeholder">
-                <video class="vid" id="vid2" preload="auto" muted>
-                    <source src="stim/27movies/1012_push.mp4" type="video/mp4" />
-                    Video Error: Please contact yiling.yun@g.ucla.edu and include your sona ID and the code "VIDEO-ERROR" to receive your credit.
-                </video>
-            </div>
-            <div class="respButton inactiveButton optRight" id="right"><p class="respLabel">This one</p></div>
-        </div>
-        <div id="bufferDiv" alt="">
-            <video id="bufferVid1" preload="auto">
-                <source src="stim/27movies/1012_push.mp4" type="video/mp4" />
-            </video>
-            <video id="bufferVid2" preload="auto">
-                <source src="stim/27movies/1012_push.mp4" type="video/mp4" />
-            </video>
-            <video id="bufferVid3" preload="auto">
-                <source src="stim/27movies/1012_push.mp4" type="video/mp4" />
-            </video>
-        </div>
+
+        <!-- </video> -->
+        <button class="instrBut" id="nextTrialBut" onclick=NEXT_TRIAL()>NEXT</button>
+
     </div>
 
 </body>

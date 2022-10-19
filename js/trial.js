@@ -49,11 +49,9 @@ class trialObject {
         // this.subjStartDate = this.subj.startDate;
         // this.subjStartTime = this.subj.startTime;
         this.allData = LIST_TO_FORMATTED_STRING(this.titles, ";");
-        this.vidPlayCounts = {
-            vid1: 0,
-            vid2: 0,
-            vid3: 0
-        };
+        this.option1PlayTime = 0;
+        this.option2PlayTime = 0;
+        this.option3PlayTime = 0;
     }
 
     init(){
@@ -62,41 +60,10 @@ class trialObject {
         this.updateStimuli(this.trialIndex);
     }
 
-    update(){ // this is not called? XXX
-        this.trialIndex++;
-        if (this.trialIndex == this.trialN){
-            this.save();
-        }
-        this.vidPlayCounts['vid1'] = 0;
-        this.vidPlayCounts['vid2'] = 0;
-        this.vidPlayCounts['vid3'] = 0;
-    }
 
-    updateStimuli(trialIndex){
-        this.exptId = this.randomizedExptIDList[this.trialIndex];
-        $('#vid1 source').attr('src', this.stimSource + this.trialInput[this.exptId][0] + this.stimType);
-        $('#vid2 source').attr('src', this.stimSource + this.trialInput[this.exptId][1] + this.stimType);
-        $('#vid3 source').attr('src', this.stimSource + this.trialInput[this.exptId][2] + this.stimType);
-        $('#vid1')[0].load();
-        $('#vid2')[0].load();
-        $('#vid3')[0].load();
-        $('.vid').on('ended', CHECK_PLAY_COUNT);
-        $('.vid').on('mouseup', PLAY);
-        $('.vid').show();
-        if (!last) { // if not last trial
-            BUFFER_VIDEO($('#bufferVid1')[0], this.stimSource + XXX); // load next trial's videos
-            BUFFER_VIDEO($('#bufferVid2')[0], this.stimSource + XXX); // load next trial's videos
-            BUFFER_VIDEO($('#bufferVid3')[0], this.stimSource + XXX); // load next trial's videos
-        }
-    }
-
-    record(event){
-        $('.respButton').off('mouseup');
-        $('.vid').hide();
-        var target = $(event.target).closest('.respButton');
-        target.attr('id'); // would be 'left', 'middle', or 'right' here. I don't understand your code below so I am not sure where to plug this in XXX
-        this.rt = this.decideTime - this.startTime; // where is this.decideTime from XXX
-        this.option1 = this.trialInput[this.exptId][0]; // you want to record click location not just video chosen in case some analyses need that information XXX
+    record(choicePos){
+        this.rt = this.decideTime - this.startTime;
+        this.option1 = this.trialInput[this.exptId][0];
         this.option2 = this.trialInput[this.exptId][1];
         this.option3 = this.trialInput[this.exptId][2];
         this.choice = this[choicePos];
@@ -104,6 +71,23 @@ class trialObject {
         var dataList = LIST_FROM_ATTRIBUTE_NAMES(this, this.titles);
         this.allData += LIST_TO_FORMATTED_STRING(dataList, ";");
         console.log(this.allData);
+    }
+
+    update(){
+        this.trialIndex++;
+        if (this.trialIndex == this.trialN){
+            this.save();
+        }
+        this.option1PlayTime = 0;
+        this.option2PlayTime = 0;
+        this.option3PlayTime = 0;
+    }
+
+    updateStimuli(trialIndex){
+        this.exptId = this.randomizedExptIDList[this.trialIndex];
+        $('#option1').attr('src', this.stimSource + this.trialInput[this.exptId][0] + this.stimType);
+        $('#option2').attr('src', this.stimSource + this.trialInput[this.exptId][1] + this.stimType);
+        $('#option3').attr('src', this.stimSource + this.trialInput[this.exptId][2] + this.stimType);
     }
 
     save() {
@@ -120,50 +104,6 @@ class trialObject {
     }
 
 }
-
-function PLAY(event) {
-    $('.vid').off('mouseup');
-    $('.respButton').addClass('inactiveButton');
-    $('.respButton').off('mouseup');
-    let target = $(event.target).closest('.vid');
-    target[0].play();
-    trial.inView = CHECK_FULLY_IN_VIEW($('.vid'));
-}
-
-function CHECK_PLAY_COUNT(event) {
-    $('.vid').on('mouseup', PLAY);
-    let targetID = $(event.target).attr('id');
-    trial.vidPlayCounts[targetID] += 1;
-    let allPlayed = true;
-    for (let i in trial.vidPlayCounts) {
-        if (trial.vidPlayCounts[i] == 0) {
-            allPlayed = false;
-        }
-    }
-    if (allPlayed) {
-        $('.respButton').removeClass('inactiveButton');
-        $('.respButton').on('mouseup', trial.record);
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function PLAY(ele) {
     $(ele).css("background","#9D8F8F");
