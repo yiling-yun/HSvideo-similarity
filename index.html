@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <title>UCLA Experiment</title>
     <link rel="icon" href="stim/ucla.png">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" />
     <link rel="stylesheet" href="css/style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.3/mobile-detect.min.js"></script>
@@ -16,36 +15,52 @@
 
 <body>
     <noscript>It seems that JavaScript is disabled in your browser. Please go to settings and enable JavaScript for this experiment.</noscript>
-
-    <div class="pageBox" id="instrBox">
+    <div class="pageBox fixedBox" id="instrBox">
         <p id="instrText"></p>
+        <img id="instrImg" src="media/blank.png" draggable="false" alt='Image Error: Please email yiling.yun@g.ucla.edu with the message "IMG-ERROR" to receive credit.'></img>
         <button class="instrBut" id="instrNextBut" onclick=instr.next()>NEXT</button>
+        <!--======== INFORMED CONSENT FORM ========-->
+        <div class='pageBox' id='consentBox'>
+            <div class='consentInstr'>To conduct this experiment, we need to include this information sheet:</div>
+            <div class='formArea'>
+                <strong>CONSENT FORM</strong><br /><br />
+                Your consent form here.<br />
+            </div>
+        </div>
     </div>
 
-    <!--======== INFORMED CONSENT FORM ========-->
+    <!--======== INSTRUCTIONS QUIZ ========-->
+    <div class="pageBox" id="quizBox">
+        <div class="bold">What is your job in this experiment?</div>
+        <label><div class="option"><input class="radio" type="radio" name="quiz" value="forgot" /><p class='option-text'>Select this option if you do not remember the instructions.</p></div></label>
+        <label><div class="option"><input class="radio" type="radio" name="quiz" value="pleasant" /><p class="option-text">Choose the animation that is the most pleasant among the three</p></div></label>
+        <label><div class="option"><input class="radio" type="radio" name="quiz" value="unpleasant" /><p class="option-text">Choose the animation that is the most unpleasant among the three</p></div></label>
+        <label><div class="option"><input class="radio" type="radio" name="quiz" value="complex" /><p class="option-text">Choose the animation that is the most complex among the three</p></div></label>
+        <label><div class="option"><input class="radio" type="radio" name="quiz" value="normal" /><p class="option-text">Choose the animation that is the most normal among the three</p></div></label>
+        <label><div class="option"><input class="radio" type="radio" name="quiz" value="different" /><p class="option-text">Choose the animation that is the most different among the three</p></div></label>
+        <button onclick='SUBMIT_INSTR_QUIZ()'>SUBMIT</button>
+        <p class="warning" id="quizWarning"></p>
+    </div>
 
     <!--======== TASK ========-->
     <div class="pageBox" id="taskBox">
-        <p id="prompt">Which one is different from the other two?</p>
+        <p id="prompt">Which one looks the most different?</p>
         <!-- <video> -->
             <div id="stimuliBox">
-                <div id="opt1">
+                <div class="optionBox" id="opt1">
                     <img id="option1" class="option" src="stim/blank.png" onclick=PLAY(this) alt="Image Error: Please contact the experimenter at yiling.yun@g.ucla.edu with the phrase 'VIDEO-ERROR'.">
-                    <label><input class="optionRadio" type="radio" name="trialQ" value="option1" onclick=SHOW_NEXT_BUT()></label>
+                    <button class="responseBut" onclick="SUBMIT_RESPONSE_LEFT()">^</button>
                 </div>
-                <div id="opt2">
+                <div class="optionBox" id="opt2">
                     <img id="option2" class="option" src="stim/blank.png" onclick=PLAY(this) alt="Image Error: Please contact the experimenter at yiling.yun@g.ucla.edu with the phrase 'VIDEO-ERROR'.">
-                    <label><input class="optionRadio" type="radio" name="trialQ" value="option2" onclick=SHOW_NEXT_BUT()></label>
+                    <button class="responseBut" onclick="SUBMIT_RESPONSE_MIDDLE()">^</button>
                 </div>
-                <div id="opt3">
+                <div class="optionBox" id="opt3">
                     <img id="option3" class="option" src="stim/blank.png" onclick=PLAY(this) alt="Image Error: Please contact the experimenter at yiling.yun@g.ucla.edu with the phrase 'VIDEO-ERROR'.">
-                    <label><input class="optionRadio" type="radio" name="trialQ" value="option3" onclick=SHOW_NEXT_BUT()></label>
+                    <button class="responseBut" onclick="SUBMIT_RESPONSE_RIGHT()">^</button>
                 </div>
             </div>
-
         <!-- </video> -->
-        <button class="instrBut" id="nextTrialBut" onclick=NEXT_TRIAL()>NEXT</button>
-
     </div>
 
 </body>

@@ -63,7 +63,7 @@ class trialObject {
 
     record(choicePos){
         this.rt = this.decideTime - this.startTime;
-        this.option1 = this.trialInput[this.exptId][0];
+        this.option1 = this.trialInput[this.exptId][0]; // need to adjust this to left/middle/right
         this.option2 = this.trialInput[this.exptId][1];
         this.option3 = this.trialInput[this.exptId][2];
         this.choice = this[choicePos];
@@ -110,31 +110,38 @@ function PLAY(ele) {
     var option = $(ele).attr("id");
     test[option + "PlayTime"] += 1;
     if (test.option1PlayTime > 0 && test.option2PlayTime > 0 && test.option3PlayTime > 0){
-        $("#stimuliBox label").show();
+        $(".responseBut").show();
     }
 }
 
-function SHOW_NEXT_BUT() {
-    $("#nextTrialBut").show();
+function SUBMIT_RESPONSE_LEFT() {
+    SUBMIT_RESPONSE('left');
+}
+
+function SUBMIT_RESPONSE_MIDDLE() {
+    SUBMIT_RESPONSE('middle');
+}
+
+function SUBMIT_RESPONSE_RIGHT() {
+    SUBMIT_RESPONSE('right');
+}
+
+function SUBMIT_RESPONSE(resp) {
     test.decideTime = Date.now();
+    $(".responseBut").hide();
+    $("#stimuliBox img").css("background", "none");
+    $("#stimuliBox img").hide();
+    test.record(resp);
+    test.update();
+    setTimeout(RESET_TRIAL_INTERFACE, test.intertrialInterval);
+    //xxx: need to buffer videos for the next trial
 }
 
 function RESET_TRIAL_INTERFACE() {
     test.updateStimuli(this.trialIndex);
-    $("#stimuliBox img").css("background", "none");
-    $("input[name = 'trialQ']:checked").prop("checked", false);
-    $("#stimuliBox label").hide();
-    $("#nextTrialBut").hide();
+    $("#stimuliBox img").show();
     test.startTime = Date.now();
 }
-
-function NEXT_TRIAL() {
-    var choicePos = $("input[name = 'trialQ']:checked").val();
-    test.record(choicePos);
-    test.update();
-    setTimeout(RESET_TRIAL_INTERFACE, test.intertrialInterval);
-    //xxx: need to buffer videos for the next trial
-};
 
 const TRIAL_TITLES = [
     "trialIndex",
