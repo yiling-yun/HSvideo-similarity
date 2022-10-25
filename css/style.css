@@ -1,74 +1,148 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+	border: 0;
+	outline: 0;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+    width: 0px;
+}
+html {
+    width: 100%;
+    height: 100%;
+}
 body {
+    position: relative;
+    width: 100%;
+    height: 100%;
     background-color: #f9f9f9;
-    font-family: "Open Sans", sans-serif;
-    font-family: "Work Sans", sans-serif;
+    color: black;
+    font-family: "Work Sans", "Open Sans", sans-serif;
     font-size: 20px;
     line-height: 40px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
-
 .pageBox{
     display: none;
+    position: relative;
+    margin: 50px auto;
+    width: 800px;
 }
-
-#instrBox {
-    display: block;
-    position: absolute;
-    width: 50%;
+.fixedBox {
+    position: fixed;
+    margin: 0;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%, 100px);
+    max-height: 100%;
+    transform: translate(-50%, -50%);
 }
-
-#instrText{
+button {
     display: block;
     position: relative;
-}
-
-.instrBut{
+    margin: 25px auto;
+    width: 250px;
+    height: 40px;
+    font-size: 16px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 4px;
     background-color: #9D8F8F;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
-    border-radius: 4px;
     outline: none;
+    color: black;
     cursor: pointer;
-    font-size: 16px;
-    padding: 10px 20px;
 }
-
-.instrBut:hover {
+button:hover {
     background: #625757;
     color: #f9f9f9;
 }
-
-.instrBut:active {
+button:active {
     box-shadow: 0px 0px rgba(0, 0, 0, 0.25);
     border: none;
 }
-
-#instrNextBut, #nextTrialBut{
-    position: absolute;
-    display: inline-block;
-    right: 0px;
-    top: 500px;
+.warning {
+    display: none;
+    padding: 30px 0;
+    color: #380000;
+}
+.small-dim {
+    color: #222222;
+    font-size: 18px;
+    line-height: 36px;
 }
 
-#nextTrialBut {
-    display:none;
+/* #### ##    ##  ######  ######## ########  ##     ##  ######  ######## ####  #######  ##    ##  ######   */
+/*  ##  ###   ## ##    ##    ##    ##     ## ##     ## ##    ##    ##     ##  ##     ## ###   ## ##    ##  */
+/*  ##  ####  ## ##          ##    ##     ## ##     ## ##          ##     ##  ##     ## ####  ## ##        */
+/*  ##  ## ## ##  ######     ##    ########  ##     ## ##          ##     ##  ##     ## ## ## ##  ######   */
+/*  ##  ##  ####       ##    ##    ##   ##   ##     ## ##          ##     ##  ##     ## ##  ####       ##  */
+/*  ##  ##   ### ##    ##    ##    ##    ##  ##     ## ##    ##    ##     ##  ##     ## ##   ### ##    ##  */
+/* #### ##    ##  ######     ##    ##     ##  #######   ######     ##    ####  #######  ##    ##  ######   */
+
+#instrBox {
+    display: block;
 }
+#instrImg {
+    display: none;
+    position: relative;
+    margin: 0 auto;
+    padding: 50px;
+}
+
+/*  ######   #######  ##    ##  ######  ######## ##    ## ########  */
+/* ##    ## ##     ## ###   ## ##    ## ##       ###   ##    ##     */
+/* ##       ##     ## ####  ## ##       ##       ####  ##    ##     */
+/* ##       ##     ## ## ## ##  ######  ######   ## ## ##    ##     */
+/* ##       ##     ## ##  ####       ## ##       ##  ####    ##     */
+/* ##    ## ##     ## ##   ### ##    ## ##       ##   ###    ##     */
+/*  ######   #######  ##    ##  ######  ######## ##    ##    ##     */
+
+.consentInstr {
+    font-size: 20px;
+    line-height: 60px;
+}
+.formArea {
+    margin: 0 auto;
+    padding: 20px;
+    width: 95%;
+    height: 200px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: auto;
+    font-size: 16px;
+    line-height: 25px;
+    background: #a4b9b9;
+}
+.formArea::-webkit-scrollbar {
+    width: 5px;
+}
+.formArea::-webkit-scrollbar-thumb {
+    background: rgb(134, 134, 134);
+}
+
+/* ########    ###     ######  ##    ##  */
+/*    ##      ## ##   ##    ## ##   ##   */
+/*    ##     ##   ##  ##       ##  ##    */
+/*    ##    ##     ##  ######  #####     */
+/*    ##    #########       ## ##  ##    */
+/*    ##    ##     ## ##    ## ##   ##   */
+/*    ##    ##     ##  ######  ##    ##  */
 
 #taskBox {
-    display: none;
-    position: absolute;
-    width: 80%;
-    left: 50%;
-    top: 35%;
-    transform: translate(-50%, -50%);
+	margin: 20px auto;
+    overflow-x: none;
 }
-
 #stimuliBox {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
 #stimuliBox img {
     width: 100px;
     height: 100px;
@@ -76,18 +150,83 @@ body {
     margin: 100px;
     padding: 5px;
 }
-
 #stimuliBox img:hover {
     cursor: pointer;
     border: solid black;
 }
-
-#stimuliBox label {
-    display: none;
-    position: relative;
-    left: -50%;
-}
-
 #prompt {
     text-align: center;
 }
+/* .optionBox {
+
+} */
+.responseBut {
+    display: none;
+    width: 100px;
+}
+
+/*  #######  ##     ## ########  ######  ######## ####  #######  ##    ##  ######   */
+/* ##     ## ##     ## ##       ##    ##    ##     ##  ##     ## ###   ## ##    ##  */
+/* ##     ## ##     ## ##       ##          ##     ##  ##     ## ####  ## ##        */
+/* ##     ## ##     ## ######    ######     ##     ##  ##     ## ## ## ##  ######   */
+/* ##  ## ## ##     ## ##             ##    ##     ##  ##     ## ##  ####       ##  */
+/* ##    ##  ##     ## ##       ##    ##    ##     ##  ##     ## ##   ### ##    ##  */
+/*  ##### ##  #######  ########  ######     ##    ####  #######  ##    ##  ######   */
+
+.question {
+    margin: 50px 0;
+}
+.option {
+    position: relative;
+    margin: 10px 0;
+    padding: 7px;
+    width: 100%;
+    border-radius: 8px;
+    background: rgb(194, 194, 194);
+    cursor: pointer;
+}
+.option:hover {
+    background: rgb(218, 218, 218);
+}
+.radio {
+    position: absolute;
+    margin: 0;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.option-text {
+    position: relative;
+    left: 28px;
+    width: calc(100% - 28px);
+}
+/* input[type='number'],
+textarea {
+    background-color: #f5f5f5;
+    padding: 5px;
+    margin: 10px 0;
+} */
+/* #problems {
+    width: 100%;
+    height: 100px;
+}
+#age {
+    width: 50px;
+    height: 28px;
+} */
+
+/* ########  ######## ########  ########  #### ######## ######## #### ##    ##  ######    */
+/* ##     ## ##       ##     ## ##     ##  ##  ##       ##        ##  ###   ## ##    ##   */
+/* ##     ## ##       ##     ## ##     ##  ##  ##       ##        ##  ####  ## ##         */
+/* ##     ## ######   ########  ########   ##  ######   ######    ##  ## ## ## ##   ####  */
+/* ##     ## ##       ##     ## ##   ##    ##  ##       ##        ##  ##  #### ##    ##   */
+/* ##     ## ##       ##     ## ##    ##   ##  ##       ##        ##  ##   ### ##    ##   */
+/* ########  ######## ########  ##     ## #### ######## ##       #### ##    ##  ######    */
+
+/* #debriefingBox{
+	margin: 80px auto;
+}
+.debriefingArea {
+	margin: 30px 0 0 0;
+} */

@@ -1,29 +1,3 @@
-const FORMAL = false;
-const EXPERIMENT_NAME = "HSvideo";
-const STIM_TYPE = ".png";
-const TRIAL_FILE = "trial_" + EXPERIMENT_NAME + ".txt";
-const SAVING_SCRIPT = 'save.php';
-const SAVING_DIR = FORMAL ? "data/formal":"data/testing";
-const INTERTRIAL_INTERVAL = 500; //ms
-const STIM_SOURCE = 'stim/Facebook/';
-const TRIAL_INPUT = {
-    0: [1,2,3],
-    1: [2,3,4],
-    2: [3,4,1],
-    3: [10,11,13],
-    4: [21,31,14],
-    5: [20,31,14]
-};
-// const TRIAL_INPUT = {
-//     0: ["1012_push", "4397_hug", "4408_lead"],
-//     1: ["5408_kiss", "5814_talk to", "5816_ignore"],
-//     2: ["5814_talk to", "5816_ignore", "4408_lead"],
-//     3: ["5814_talk to", "4408_lead", "5816_ignore"],
-//     4: ["5814_talk to", "5816_ignore", "4408_lead"],
-//     5: ["5814_talk to", "4408_lead", "5816_ignore"]
-// };
-
-
 class trialObject {
     constructor(options = {}) {
         Object.assign(
@@ -48,7 +22,7 @@ class trialObject {
         // this.sonaID = this.subj.sonaID;
         // this.subjStartDate = this.subj.startDate;
         // this.subjStartTime = this.subj.startTime;
-        this.allData = LIST_TO_FORMATTED_STRING(this.titles, ";");
+        this.allData = list_to_formatted_string(this.titles, ";");
         this.option1PlayTime = 0;
         this.option2PlayTime = 0;
         this.option3PlayTime = 0;
@@ -63,13 +37,13 @@ class trialObject {
 
     record(choicePos){
         this.rt = this.decideTime - this.startTime;
-        this.option1 = this.trialInput[this.exptId][0];
+        this.option1 = this.trialInput[this.exptId][0]; // need to adjust this to left/middle/right
         this.option2 = this.trialInput[this.exptId][1];
         this.option3 = this.trialInput[this.exptId][2];
         this.choice = this[choicePos];
         this.choicePos = choicePos;
         var dataList = LIST_FROM_ATTRIBUTE_NAMES(this, this.titles);
-        this.allData += LIST_TO_FORMATTED_STRING(dataList, ";");
+        this.allData += list_to_formatted_string(dataList, ";");
         console.log(this.allData);
     }
 
@@ -110,31 +84,38 @@ function PLAY(ele) {
     var option = $(ele).attr("id");
     test[option + "PlayTime"] += 1;
     if (test.option1PlayTime > 0 && test.option2PlayTime > 0 && test.option3PlayTime > 0){
-        $("#stimuliBox label").show();
+        $(".responseBut").show();
     }
 }
 
-function SHOW_NEXT_BUT() {
-    $("#nextTrialBut").show();
+function SUBMIT_RESPONSE_LEFT() {
+    SUBMIT_RESPONSE('left');
+}
+
+function SUBMIT_RESPONSE_MIDDLE() {
+    SUBMIT_RESPONSE('middle');
+}
+
+function SUBMIT_RESPONSE_RIGHT() {
+    SUBMIT_RESPONSE('right');
+}
+
+function SUBMIT_RESPONSE(resp) {
     test.decideTime = Date.now();
+    $(".responseBut").hide();
+    $("#stimuliBox img").css("background", "none");
+    $("#stimuliBox img").hide();
+    test.record(resp);
+    test.update();
+    setTimeout(RESET_TRIAL_INTERFACE, test.intertrialInterval);
+    //xxx: need to buffer videos for the next trial
 }
 
 function RESET_TRIAL_INTERFACE() {
     test.updateStimuli(this.trialIndex);
-    $("#stimuliBox img").css("background", "none");
-    $("input[name = 'trialQ']:checked").prop("checked", false);
-    $("#stimuliBox label").hide();
-    $("#nextTrialBut").hide();
+    $("#stimuliBox img").show();
     test.startTime = Date.now();
 }
-
-function NEXT_TRIAL() {
-    var choicePos = $("input[name = 'trialQ']:checked").val();
-    test.record(choicePos);
-    test.update();
-    setTimeout(RESET_TRIAL_INTERFACE, test.intertrialInterval);
-    //xxx: need to buffer videos for the next trial
-};
 
 const TRIAL_TITLES = [
     "trialIndex",
@@ -153,21 +134,6 @@ const TRIAL_TITLES = [
     "rt"
 ];
 
-var trial_options = {
-    subj: 'pre-define',
-    titles: TRIAL_TITLES,
-    dataFile: TRIAL_FILE,
-    savingScript: SAVING_SCRIPT,
-    savingDir: SAVING_DIR,
-    stimSource: STIM_SOURCE,
-    stimType: STIM_TYPE,
-    trialInput: TRIAL_INPUT,
-    intertrialInterval: INTERTRIAL_INTERVAL,
-    //updateFunc: TRIAL_UPDATE,
-    //trialFunc: TRIAL,
-    //endExptFunc: END_EXPT
-}
-
 //HELPER FUNCTIONS
 
 function LIST_FROM_ATTRIBUTE_NAMES(obj, string_list) {
@@ -178,7 +144,7 @@ function LIST_FROM_ATTRIBUTE_NAMES(obj, string_list) {
     return list;
 }
 
-function LIST_TO_FORMATTED_STRING(data_list, divider) {
+function list_to_formatted_string(data_list, divider) {
     divider = (divider === undefined) ? '\t' : divider;
     var string = '';
     for (var i = 0; i < data_list.length - 1; i++) {
