@@ -6,18 +6,16 @@
     <title>UCLA Experiment</title>
     <link rel="icon" href="stim/ucla.png">
     <link rel="stylesheet" href="css/style.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.3/mobile-detect.min.js"></script>
-    <script src="js/instr.js"></script>
-    <script src="js/trial.js"></script>
-    <script src="js/main.js"></script>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Raleway&display=swap' />
 </head>
 
 <body>
     <noscript>It seems that JavaScript is disabled in your browser. Please go to settings and enable JavaScript for this experiment.</noscript>
+
+    <!--======== INSTRUCTIONS ========-->
     <div class="pageBox fixedBox" id="instrBox">
         <p id="instrText"></p>
-        <img id="instrImg" src="media/blank.png" draggable="false" alt='Image Error: Please email yiling.yun@g.ucla.edu with the message "IMG-ERROR" to receive credit.'></img>
+        <img id="instrImg" src="stim/blank.png" draggable="false" alt='Image Error: Please email yiling.yun@g.ucla.edu with the message "IMG-ERROR" to receive credit.'></img>
         <button class="instrBut" id="instrNextBut" onclick=instr.next()>NEXT</button>
         <!--======== INFORMED CONSENT FORM ========-->
         <div class='pageBox' id='consentBox'>
@@ -62,7 +60,54 @@
             </div>
         <!-- </video> -->
     </div>
-
+    <!--======== DEBRIEFING QUESTIONS ========-->
+    <div class='pageBox' id='questions-box'>
+        <div class='question'>
+            You are almost done! Please answer these last 4 questions:
+        </div>
+        <div class='question'>
+            <p class='bold'>Did you complete this experiment seriously throughout (without responding randomly)?</p>
+            <p class='small-dim'>You will receive credit regardless of what your answer is here. Please be honest for science! Thanks!</p>
+            <label><div class='option'><input class='radio' type='radio' name='serious' value='0' /><p class='option-text'>No, I didn't.</p></div></label>
+            <label><div class='option'><input class='radio' type='radio' name='serious' value='1' /><p class='option-text'>Yes, I did.</p></div></label>
+            <p class='warning' id='serious-warning'>Please answer this question to complete the experiment. Thank you!</p>
+        </div>
+        <div class='question'>
+            <p class='bold'>Was the browser in the full-screen mode throughout the experiment?</p>
+            <p class='small-dim'>You will receive credit regardless of what your answer is here. Please be honest for science! Thanks!</p>
+            <label><div class='option'><input class='radio' type='radio' name='maximized' value='0' /><p class='option-text'>No, it wasn't.</p></div></label>
+            <label><div class='option'><input class='radio' type='radio' name='maximized' value='1' /><p class='option-text'>Yes, it was.</p></div></label>
+            <p class='warning' id='maximized-warning'>Please answer this question to complete the experiment. Thank you!</p>
+        </div>
+        <div class='question'>
+            <p class='bold'>Was any part of the procedure unclear? Did you have any problems completing any of the tasks?</p>
+            <p class='small-dim'>You will receive credit regardless of what your answer is here. Please be honest for science! Thanks!</p>
+            <textarea id='problems'></textarea>
+            <p class='warning' id='problems-warning'>Please answer this question to complete the experiment. Thank you!</p>
+        </div>
+        <div class='question'>
+            <p class='bold'>What is your gender?</p>
+            <label><div class='option'><input class='radio' type='radio' name='gender' value='F' /><p class='option-text'>Female</p></div></label>
+            <label><div class='option'><input class='radio' type='radio' name='gender' value='M' /><p class='option-text'>Male</p></div></label>
+            <label><div class='option'><input class='radio' type='radio' name='gender' value='O' /><p class='option-text'>Other</p></div></label>
+            <label><div class='option'><input class='radio' type='radio' name='gender' value='N' /><p class='option-text'>I would rather not say</p></div></label>
+            <p class='warning' id='gender-warning'>Please answer this question to complete the experiment. Thank you!</p>
+        </div>
+        <div class='question'>
+            <p class='bold'>What is your age?</p>
+            <input type='number' id='age' min='0' max='150'/>
+            <p class='warning' id='age-warning'>Please give a valid answer for this question. Thank you!</p>
+        </div>
+        <button class='button' onclick='submit_debriefing_questions()'>SUBMIT</button>
+    </div>
+    </p>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.3/mobile-detect.min.js"></script>
+    <script src="js/func.js"></script>
+    <script src="js/subj.js"></script>
+    <script src="js/trial.js"></script>
+    <script src="js/instr.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>

@@ -1,29 +1,3 @@
-const FORMAL = false;
-const EXPERIMENT_NAME = "HSvideo";
-const STIM_TYPE = ".png";
-const TRIAL_FILE = "trial_" + EXPERIMENT_NAME + ".txt";
-const SAVING_SCRIPT = 'save.php';
-const SAVING_DIR = FORMAL ? "data/formal":"data/testing";
-const INTERTRIAL_INTERVAL = 500; //ms
-const STIM_SOURCE = 'stim/Facebook/';
-const TRIAL_INPUT = {
-    0: [1,2,3],
-    1: [2,3,4],
-    2: [3,4,1],
-    3: [10,11,13],
-    4: [21,31,14],
-    5: [20,31,14]
-};
-// const TRIAL_INPUT = {
-//     0: ["1012_push", "4397_hug", "4408_lead"],
-//     1: ["5408_kiss", "5814_talk to", "5816_ignore"],
-//     2: ["5814_talk to", "5816_ignore", "4408_lead"],
-//     3: ["5814_talk to", "4408_lead", "5816_ignore"],
-//     4: ["5814_talk to", "5816_ignore", "4408_lead"],
-//     5: ["5814_talk to", "4408_lead", "5816_ignore"]
-// };
-
-
 class trialObject {
     constructor(options = {}) {
         Object.assign(
@@ -48,7 +22,7 @@ class trialObject {
         // this.sonaID = this.subj.sonaID;
         // this.subjStartDate = this.subj.startDate;
         // this.subjStartTime = this.subj.startTime;
-        this.allData = LIST_TO_FORMATTED_STRING(this.titles, ";");
+        this.allData = list_to_formatted_string(this.titles, ";");
         this.option1PlayTime = 0;
         this.option2PlayTime = 0;
         this.option3PlayTime = 0;
@@ -69,7 +43,7 @@ class trialObject {
         this.choice = this[choicePos];
         this.choicePos = choicePos;
         var dataList = LIST_FROM_ATTRIBUTE_NAMES(this, this.titles);
-        this.allData += LIST_TO_FORMATTED_STRING(dataList, ";");
+        this.allData += list_to_formatted_string(dataList, ";");
         console.log(this.allData);
     }
 
@@ -160,21 +134,6 @@ const TRIAL_TITLES = [
     "rt"
 ];
 
-var trial_options = {
-    subj: 'pre-define',
-    titles: TRIAL_TITLES,
-    dataFile: TRIAL_FILE,
-    savingScript: SAVING_SCRIPT,
-    savingDir: SAVING_DIR,
-    stimSource: STIM_SOURCE,
-    stimType: STIM_TYPE,
-    trialInput: TRIAL_INPUT,
-    intertrialInterval: INTERTRIAL_INTERVAL,
-    //updateFunc: TRIAL_UPDATE,
-    //trialFunc: TRIAL,
-    //endExptFunc: END_EXPT
-}
-
 //HELPER FUNCTIONS
 
 function LIST_FROM_ATTRIBUTE_NAMES(obj, string_list) {
@@ -185,7 +144,7 @@ function LIST_FROM_ATTRIBUTE_NAMES(obj, string_list) {
     return list;
 }
 
-function LIST_TO_FORMATTED_STRING(data_list, divider) {
+function list_to_formatted_string(data_list, divider) {
     divider = (divider === undefined) ? '\t' : divider;
     var string = '';
     for (var i = 0; i < data_list.length - 1; i++) {

@@ -25,7 +25,6 @@ class instrObject {
                 this.funcDict[this.index]();
             }
         }
-
     }
 }
 
