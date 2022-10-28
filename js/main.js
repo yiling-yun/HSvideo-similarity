@@ -250,7 +250,7 @@ function SHOW_INSTR_IMG(file_name) {
 }
 
 function SHOW_MAXIMIZE_WINDOW() {
-    SHOW_INSTR_IMG('maximize_window.png');
+    SHOW_INSTR_IMG('maximize_window.png');//xxx: need to maximize screen
 }
 
 function SHOW_NO_MUSIC() {
