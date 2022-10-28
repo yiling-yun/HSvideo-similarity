@@ -128,3 +128,76 @@ function check_if_responded(open_ended_list, choice_list) {
     }
     return all_responded;
 }
+
+function load_img(index, stim_path, img_list, after_func) {
+    after_func = (after_func === undefined) ? function() { return; } : after_func;
+    if (index >= img_list.length) {
+        return;
+    }
+    const IMAGE = new Image();
+    if (index < img_list.length - 1) {
+        IMAGE.onload = function() {
+            load_img(index + 1, stim_path, img_list, after_func);
+        };
+    } else {
+        IMAGE.onload = after_func;
+    }
+    IMAGE.src = stim_path + img_list[index];
+}
+
+function buffer_video(buffer_element, filename, error_func, after_func) {
+    error_func = (error_func === undefined) ? function() { return; } : error_func;
+    after_func = (after_func === undefined) ? function() { return; } : after_func;
+    const REQUEST = new XMLHttpRequest();
+    REQUEST.open('GET', filename, true);
+    REQUEST.responseType = 'blob';
+    REQUEST.onload = function() {
+        if (this.status === 200) {
+            const VIDEO_BLOB = this.response;
+            const VIDEO = URL.createObjectURL(VIDEO_BLOB);
+            buffer_element.src = VIDEO;
+            after_func();
+        }
+    };
+    REQUEST.onerror = error_func;
+    REQUEST.send();
+}
+
+function check_fully_in_view(el) {
+    el = el.get(0);
+    const RECT = el.getBoundingClientRect();
+    const TOP = RECT.top;
+    const BOTTOM = RECT.bottom;
+    const LEFT = RECT.left;
+    const RIGHT = RECT.right;
+
+    const W = $(window).width();
+    const H = $(window).height();
+    return (TOP >= 0) && (BOTTOM <= H) && (LEFT >= 0) && (RIGHT <= W);
+}
+
+function enter_fullscreen() {
+    let el = document.documentElement;
+    if (el.requestFullscreen) {
+        el.requestFullscreen();
+    } else if (el.mozRequestFullScreen) {
+        el.mozRequestFullScreen();
+    } else if (el.webkitRequestFullscreen) {
+        el.webkitRequestFullscreen();
+    } else {
+        el.msRequestFullscreen();
+    }
+}
+
+function exit_fullscreen() {
+    let el = document;
+    if (el.exitFullscreen) {
+        el.exitFullscreen();
+    } else if (el.mozCancelFullScreen) {
+        el.mozCancelFullScreen();
+    } else if (el.webkitExitFullscreen) {
+        el.webkitExitFullscreen();
+    } else {
+        el.msExitFullscreen();
+    }
+}

@@ -16,7 +16,11 @@
     <div class="pageBox fixedBox" id="instrBox">
         <p id="instrText"></p>
         <img id="instrImg" src="stim/blank.png" draggable="false" alt='Image Error: Please email yiling.yun@g.ucla.edu with the message "IMG-ERROR" to receive credit.'></img>
-        <button class="instrBut" id="instrNextBut" onclick=instr.next()>NEXT</button>
+        <video id="instrVid" preload="auto" muted loop>
+            <source src="stim/27movies/1012_push.mp4" type="video/mp4" />
+            Video Error: Please contact yiling.yun@g.ucla.edu and include your sona ID and the code "VIDEO-ERROR" to receive your credit.
+        </video>
+        <button class="instrBut" id="instrNextBut" onclick="instr.next()">NEXT</button>
         <!--======== INFORMED CONSENT FORM ========-->
         <div class='pageBox' id='consentBox'>
             <div class='consentInstr'>To conduct this experiment, we need to include this information sheet:</div>
@@ -85,25 +89,25 @@
         <!-- <video> -->
             <div id="stimuliBox">
                 <div class="optionBox" id="opt1">
-                    <video class="vid" id="vid1" preload="auto" onclick=PLAY(this) muted>
+                    <video class="vid" id="vid1" preload="auto" muted>
                         <source src="stim/27movies/1012_push.mp4" type="video/mp4" />
                         Video Error: Please contact yiling.yun@g.ucla.edu and include your sona ID and the code "VIDEO-ERROR" to receive your credit.
                     </video>
-                    <button class="responseBut" onclick="SUBMIT_RESPONSE_LEFT()">^</button>
+                    <button class="responseBut" id="leftRespBut">^</button>
                 </div>
                 <div class="optionBox" id="opt2">
-                    <video class="vid" id="vid2" preload="auto" onclick=PLAY(this) muted>
+                    <video class="vid" id="vid2" preload="auto" muted>
                         <source src="stim/27movies/1012_push.mp4" type="video/mp4" />
                         Video Error: Please contact yiling.yun@g.ucla.edu and include your sona ID and the code "VIDEO-ERROR" to receive your credit.
                     </video>
-                    <button class="responseBut" onclick="SUBMIT_RESPONSE_MIDDLE()">^</button>
+                    <button class="responseBut" id="middleRespBut">^</button>
                 </div>
                 <div class="optionBox" id="opt3">
-                    <video class="vid" id="vid3" preload="auto" onclick=PLAY(this) muted>
+                    <video class="vid" id="vid3" preload="auto" muted>
                         <source src="stim/27movies/1012_push.mp4" type="video/mp4" />
                         Video Error: Please contact yiling.yun@g.ucla.edu and include your sona ID and the code "VIDEO-ERROR" to receive your credit.
                     </video>
-                    <button class="responseBut" onclick="SUBMIT_RESPONSE_RIGHT()">^</button>
+                    <button class="responseBut" id="rightRespBut">^</button>
                 </div>
             </div>
         <!-- </video> -->

@@ -32,6 +32,9 @@ class trialObject {
     init(){
         this.randomizedExptIDList = shuffle_array(Object.keys(this.trialInput));
         console.log(this.randomizedExptIDList);
+        $('#leftRespBut').on('mouseup', SUBMIT_RESPONSE_LEFT);
+        $('#middleRespBut').on('mouseup', SUBMIT_RESPONSE_MIDDLE);
+        $('#rightRespBut').on('mouseup', SUBMIT_RESPONSE_RIGHT);
         UPDATE_STIMULI();
         this.startTime = Date.now();
     }
@@ -55,7 +58,8 @@ class trialObject {
                 'vid2': 0,
                 'vid3': 0,
             }
-            setTimeout(RESET_TRIAL_INTERFACE, this.intertrialInterval);
+            UPDATE_STIMULI();
+            setTimeout(SHOW_VIDEOS, this.intertrialInterval);
         }
     }
 
@@ -73,6 +77,28 @@ class trialObject {
     }
 }
 
+function UPDATE_STIMULI() {
+    test.exptId = test.randomizedExptIDList[test.trialIndex];
+    $('#vid1').attr('src', test.stimSource + test.trialInput[test.exptId][1] + test.stimType);
+    $('#vid2').attr('src', test.stimSource + test.trialInput[test.exptId][1] + test.stimType);
+    $('#vid3').attr('src', test.stimSource + test.trialInput[test.exptId][2] + test.stimType);
+    $('#vid1')[0].load();
+    $('#vid2')[0].load();
+    $('#vid3')[0].load();
+    $('#stimuliBox .vid').on('ended', CHECK_PLAY_COUNT);
+    $('#stimuliBox .vid').on('mouseup', PLAY);
+    // if (!last) { // XXX need to add this after Yiling figures out the trial list input method
+    //     let nextExptId = test.randomizedExptIDList[test.trialIndex + 1];
+    //     buffer_video($('#bufferVid1')[0], this.stimSource + this.trialInput[nextExptId][0] + this.stimType); // load next trial's videos
+    //     buffer_video($('#bufferVid2')[0], this.stimSource + this.trialInput[nextExptId][1] + this.stimType); // load next trial's videos
+    //     buffer_video($('#bufferVid3')[0], this.stimSource + this.trialInput[nextExptId][2] + this.stimType); // load next trial's videos
+    // }
+}
+
+function SHOW_VIDEOS() {
+    $('#stimuliBox .vid').show();
+}
+
 function DISABLE_HOVER_EFFECT() {
     $(".vid").css({
         "pointer-events": "none"
@@ -86,26 +112,22 @@ function ENABLE_HOVER_EFFECT() {
 }
 
 function PLAY(ele) {
-   // $('.vid').off('mouseup');
+    $('.vid').off('mouseup');
     DISABLE_HOVER_EFFECT();
-    $('.responseBut').addClass('inactiveButton');
-    $('.responseBut').off('mouseup');
-    let target = $(ele).closest('.vid');
+    $(".responseBut").hide();
+    let target = $(ele.target).closest('.vid');
     target[0].play();
-    CHECK_PLAY_COUNT(ele);
-    //trial.inView = CHECK_FULLY_IN_VIEW($('.vid'));
-    let targetID = $(ele).attr('id');
-    $("#" + targetID).css("border-color","#9D8F8F");  //xxx: don't know how to check if videos are watched til the end, want to add this after watched
+    test.inView = check_fully_in_view($('.vid'));
 }
 
 function CHECK_PLAY_COUNT(ele) {
+    $(ele.target)[0].currentTime = 0
+    $(ele.target).css("border-color","#9D8F8F");
     ENABLE_HOVER_EFFECT();
-   // $('.vid').on('mouseup', event, PLAY); //xxx: don't know how to enable play + ENABLE_HOVER_EFFECT after watched
-    let targetID = $(ele).attr('id');
-    test.vidPlayCounts[targetID] += 1;
+    $('.vid').on('mouseup', PLAY);
+    test.vidPlayCounts[$(ele.target).attr('id')] += 1;
     if (test.vidPlayCounts['vid1'] > 0 && test.vidPlayCounts['vid2'] > 0 && test.vidPlayCounts['vid3'] > 0){
         $(".responseBut").show();
-        $('.responseBut').removeClass('inactiveButton');
     }
 }
 
@@ -130,17 +152,8 @@ function SUBMIT_RESPONSE(resp) {
     test.update();
 }
 
-function UPDATE_STIMULI() {
-    test.exptId = test.randomizedExptIDList[test.trialIndex];
-    $('#vid1').attr('src', test.stimSource + test.trialInput[test.exptId][1] + test.stimType);
-    $('#vid2').attr('src', test.stimSource + test.trialInput[test.exptId][1] + test.stimType);
-    $('#vid3').attr('src', test.stimSource + test.trialInput[test.exptId][2] + test.stimType);
-}
-
 function RESET_TRIAL_INTERFACE() {
     UPDATE_STIMULI();
-    $("#stimuliBox .vid").show();
-    ENABLE_HOVER_EFFECT();
     test.startTime = Date.now();
 }
 

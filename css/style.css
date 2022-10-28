@@ -88,11 +88,14 @@ button:active {
 #instrBox {
     display: block;
 }
-#instrImg {
+#instrImg, #instrVid {
     display: none;
     position: relative;
     margin: 0 auto;
     padding: 50px;
+}
+#instrVid {
+    width: 250px;
 }
 
 /*  ######   #######  ##    ##  ######  ######## ##    ## ########  */

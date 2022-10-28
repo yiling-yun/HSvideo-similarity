@@ -8,7 +8,7 @@
 
 // data saving
 const FORMAL = false;
-const EXPERIMENT_NAME = "HSvideo";
+const EXPERIMENT_NAME = 'HSvideo';
 const SUBJ_NUM_SCRIPT = 'php/subjNum.php';
 const SAVING_SCRIPT = 'php/save.php';
 const VISIT_FILE = 'visit_' + EXPERIMENT_NAME + '.txt';
@@ -16,16 +16,16 @@ const SUBJ_NUM_FILE = 'subjNum_' + EXPERIMENT_NAME + '.txt';
 const TRIAL_FILE = "trial_" + EXPERIMENT_NAME + ".txt";
 const ATTRITION_FILE = 'attrition_' + EXPERIMENT_NAME + '.txt';
 const SUBJ_FILE = 'subj_' + EXPERIMENT_NAME + '.txt';
-// const SAVING_DIR_HOME = "/var/www-data-experiments/cvlstudy_data/YY/";
-// const SAVING_DIR = FORMAL ? SAVING_DIR_HOME + EXPERIMENT_NAME + '/data/formal' : SAVING_DIR_HOME + EXPERIMENT_NAME + '/data/testing';
-const SAVING_DIR = FORMAL ? 'data/formal' : 'data/testing';
+const SAVING_DIR_HOME = '/var/www-data-experiments/cvlstudy_data/YY/'+EXPERIMENT_NAME+'/';
+const SAVING_DIR = FORMAL ? SAVING_DIR_HOME+'/formal' : SAVING_DIR_HOME+'/testing';
 const ID_GET_VARIABLE_NAME = 'id';
-const COMPLETION_URL = 'https://ycc.vision/'; //xxx: need to change to SONA
+const COMPLETION_URL = 'https://ycc.vision/'; //XXX: need to change to SONA (like this: https://ucla.sona-systems.com/webstudy_credit.aspx?experiment_id=2231&credit_token=4dbaa04987f7408abc9b916b7d99bb56&survey_code= )
 
 
 // stimuli
-const STIM_PATH = "stim/"
-const STIM_TYPE = ".mp4";
+const STIM_PATH = 'stim/';
+const ALL_IMG_LIST = ['blank.png','maximize_window.png','no_music.png','ucla.png'];
+const STIM_TYPE = '.mp4';
 const INTERTRIAL_INTERVAL = 500; //ms
 const STIM_SOURCE = 'stim/27movies/';
 // const TRIAL_INPUT = {
@@ -34,15 +34,15 @@ const STIM_SOURCE = 'stim/27movies/';
 //     2: [3,4,1],
 // };
 const TRIAL_INPUT = {
-    0: ["1012_push", "4397_hug", "4408_lead"],
-    1: ["5408_kiss", "5814_talk to", "5816_ignore"],
-    2: ["5814_talk to", "5816_ignore", "4408_lead"],
-    3: ["5814_talk to", "4408_lead", "5816_ignore"],
-    4: ["5814_talk to", "5816_ignore", "4408_lead"],
-    5: ["5814_talk to", "4408_lead", "5816_ignore"]
+    0: ['1012_push', '4397_hug', '4408_lead'],
+    1: ['5408_kiss', '5814_talk to', '5816_ignore'],
+    2: ['5814_talk to', '5816_ignore', '4408_lead'],
+    3: ['5814_talk to', '4408_lead', '5816_ignore'],
+    4: ['5814_talk to', '5816_ignore', '4408_lead'],
+    5: ['5814_talk to', '4408_lead', '5816_ignore']
 };
 
-
+const INSTR_PRAC_LIST = ['1012_push', '4397_hug', '4408_lead'];
 
 // object variables
 let subj, instr, test;
@@ -62,15 +62,15 @@ const INSTR_READING_TIME_MIN = 0.3;
 
 $(document).ready(function() {
     subj = new Subject(subj_options);
-    // subj.id = subj.getID(ID_GET_VARIABLE_NAME);
+    subj.id = subj.getID(ID_GET_VARIABLE_NAME);
     subj.saveVisit();
-    // if (subj.phone) {
-    //     halt_experiment('It seems that you are using a touchscreen device or a phone. Please use a laptop or desktop instead.<br /><br />If you believe you have received this message in error, please contact the experimenter at yichiachen@ucla.edu<br /><br />Otherwise, please switch to a laptop or a desktop computer for this experiment.');
-    // } else if (subj.validID){
-        //load_img(0, STIM_PATH, ALL_IMG_LIST); //xxx: need to load videos
+    if (subj.phone) {
+        halt_experiment('It seems that you are using a touchscreen device or a phone. Please use a laptop or desktop instead.<br /><br />If you believe you have received this message in error, please contact the experimenter at yiling.yun@g.ucla.edu<br /><br />Otherwise, please switch to a laptop or a desktop computer for this experiment.');
+    } else if (subj.validID){
+        load_img(0, STIM_PATH, ALL_IMG_LIST); //XXX: need to load videos too  YC: actually no need. We will buffer video for next trial each trial
         instr = new instrObject(instr_options);
         instr.start();
-    // }
+    }
 });
 
 function halt_experiment(explanation) {
@@ -131,8 +131,8 @@ function submit_debriefing_questions() {
         subj.quickReadingPageN = Object.values(instr.readingTimes).filter(d => d < INSTR_READING_TIME_MIN).length;
         subj.submitAnswers();
         $('#questionsBox').hide();
-        // exit_maximize_window();
-        // allow_selection();
+        exit_fullscreen();
+        allow_selection();
         $('#debriefingBox').show();
         $('body').scrollTop(0);
     }
@@ -173,9 +173,8 @@ function allow_selection() {
 }
 
 function go_to_completion_page() {
-    window.location.href = COMPLETION_URL+'?id='+subj.id;
+    window.location.href = COMPLETION_URL+subj.id;
 }
-
 
 let subj_options = {
     titles: SUBJ_TITLES,
@@ -202,7 +201,7 @@ let subj_options = {
 var instr_text = new Array;
 instr_text[0] = "<strong>Welcome!</strong><br /><br />I am a scientist researching human actions, and I am studying how people view other people's interactions.";
 instr_text[1] = "Your contributions may help in designing robots and making animations in movies or video games!<br /><br />And, most importantly, I hope this is fun for you, too!";
-instr_text[2] = "This experiment will take about XXX minutes to complete.<br /><br />Please help me by reading the instructions in the next few pages carefully, and avoid using the refresh or back buttons.";
+instr_text[2] = "This experiment will take about 50 minutes to complete.<br /><br />Please help me by reading the instructions in the next few pages carefully, and avoid using the refresh or back buttons.";
 instr_text[3] = "For this study to work, the webpage will automatically switch to the fullscreen view on the next page. Please stay in the fullscreen mode until the study automatically switches out from it.";
 instr_text[4] = "Please also turn off any music you are playing. Music is known to affect my kind of studies and it will make your data unusable.";
 instr_text[5] = "In this experiment, I will show you some simple animations of two triangles interacting with each other, just like the one in the example below.";
@@ -225,7 +224,7 @@ const INSTR_FUNC_DICT = {
     3: SHOW_MAXIMIZE_WINDOW,
     4: SHOW_NO_MUSIC,
     5: SHOW_EXAMPLE_ANIMATION,
-    6: SHOW_INSTR,
+    6: HIDE_EXAMPLE_ANIMATION,
     7: SHOW_INSTR,
     8: SHOW_INSTR,
     9: SHOW_INSTR,
@@ -249,22 +248,76 @@ function SHOW_INSTR_IMG(file_name) {
     $('#instrImg').css('display', 'block');
 }
 
+function HIDE_INSTR_IMG() {
+    $('#instrImg').css('display', 'none');
+}
+
 function SHOW_MAXIMIZE_WINDOW() {
-    SHOW_INSTR_IMG('maximize_window.png');//xxx: need to maximize screen
+    SHOW_INSTR_IMG('maximize_window.png');
 }
 
 function SHOW_NO_MUSIC() {
+    enter_fullscreen();
     SHOW_INSTR_IMG('no_music.png');
 }
 
 function SHOW_EXAMPLE_ANIMATION() {
-    $('#instrImg').css('display', 'none');
-    // XXX I'll write this after merging from the video branch
+    HIDE_INSTR_IMG();
+    $('#instrVid').css('display', 'block');
+    $('#instrVid')[0].play();
+}
+
+function HIDE_EXAMPLE_ANIMATION() {
+    $('#instrVid').hide();
 }
 
 function SHOW_PRACTICE() {
-    $('#instrImg').css('display', 'none');
-    // XXX I'll write this after merging from the video branch
+    $('#instrBox').hide();
+    $('#vid1').attr('src', STIM_SOURCE + INSTR_PRAC_LIST[0] + STIM_TYPE);
+    $('#vid2').attr('src', STIM_SOURCE + INSTR_PRAC_LIST[1] + STIM_TYPE);
+    $('#vid3').attr('src', STIM_SOURCE + INSTR_PRAC_LIST[2] + STIM_TYPE);
+    $('#vid1')[0].load();
+    $('#vid2')[0].load();
+    $('#vid3')[0].load();
+    $('#stimuliBox .vid').on('ended', instr_practice_check_play_count);
+    $('#stimuliBox .vid').on('mouseup', instr_practice_play);
+    $('#taskBox').show();
+    instr.vidPlayCounts = {
+        'vid1': 0,
+        'vid2': 0,
+        'vid3': 0,
+    }
+    $('.responseBut').on('mouseup', BACK_TO_INSTRUCTIONS);
+}
+
+function instr_practice_play(ele) {
+    $('.vid').off('mouseup');
+    DISABLE_HOVER_EFFECT();
+    $(".responseBut").hide();
+    let target = $(ele.target).closest('.vid');
+    target[0].play();
+}
+
+function instr_practice_check_play_count(ele) {
+    $(ele.target)[0].currentTime = 0
+    $(ele.target).css("border-color","#9D8F8F");
+    ENABLE_HOVER_EFFECT();
+    $('.vid').on('mouseup', instr_practice_play);
+    instr.vidPlayCounts[$(ele.target).attr('id')] += 1;
+    if (instr.vidPlayCounts['vid1'] > 0 && instr.vidPlayCounts['vid2'] > 0 && instr.vidPlayCounts['vid3'] > 0){
+        $(".responseBut").show();
+    }
+}
+
+function BACK_TO_INSTRUCTIONS() {
+    $('#taskBox').hide();
+    $('#stimuliBox .vid').off('ended');
+    $('#stimuliBox .vid').off('mouseup');
+    $('.responseBut').off('mouseup');
+    $(".responseBut").hide();
+    $("#stimuliBox .vid").css("border-color", "black");
+    $('#instrBox').show();
+    instr.next();
 }
 
 function SHOW_INSTR_QUIZ() {
@@ -301,9 +354,6 @@ function SHOW_CONSENT() {
             $('#instrBox').hide();
             subj.saveAttrition();
             show_trial();
-            $('#taskBox').show();
-
-            test.startTime = Date.now();
         }
     });
 }
@@ -340,6 +390,7 @@ function show_trial() {
     test = new trialObject(trial_options);
     $('#taskBox').show();
     subj.detectVisibilityStart();
+    test.startTime = Date.now();
     test.init();
 }
 
@@ -349,4 +400,3 @@ function end_task() {
     $('#questionsBox').show();
     test.save();
 }
-
