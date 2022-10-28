@@ -71,7 +71,7 @@ function get_parameters(var_name, default_value) {
 
 function post_data(page, data, success_func, error_callback) {
     data = (data === undefined) ? null : data;
-    success_func = (success_func === undefined) ? function() { return; } : success_func;
+    success_func = (success_func === undefined) ? function() {return; } : success_func;
     error_callback = (error_callback === undefined) ? function() { return; } : error_callback;
     $.ajax({
         type: "POST",
@@ -80,4 +80,51 @@ function post_data(page, data, success_func, error_callback) {
         success: success_func,
         error: error_callback
     });
+}
+
+//    ###    ########  ########     ###    ##    ##
+//   ## ##   ##     ## ##     ##   ## ##    ##  ##
+//  ##   ##  ##     ## ##     ##  ##   ##    ####
+// ##     ## ########  ########  ##     ##    ##
+// ######### ##   ##   ##   ##   #########    ##
+// ##     ## ##    ##  ##    ##  ##     ##    ##
+// ##     ## ##     ## ##     ## ##     ##    ##
+
+function shuffle_array(input_array) {
+    let j, temp;
+    let arr = Array.from(input_array);
+    for (let i = arr.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    return arr;
+}
+
+//   #####  ####### #     # ####### ####### #     # #######
+//  #     # #     # ##    #    #    #       ##    #    #
+//  #       #     # # #   #    #    #       # #   #    #
+//  #       #     # #  #  #    #    #####   #  #  #    #
+//  #       #     # #   # #    #    #       #   # #    #
+//  #     # #     # #    ##    #    #       #    ##    #
+//   #####  ####### #     #    #    ####### #     #    #
+
+function list_from_attribute_names(obj, string_list) {
+    let list = []
+    for (let s of string_list) {
+        list.push(obj[s]);
+    }
+    return list;
+}
+
+function check_if_responded(open_ended_list, choice_list) {
+    let all_responded = true;
+    for (let i of open_ended_list) {
+        all_responded = all_responded && (i.replace(/(?:\r\n|\r|\n|\s)/g, '') != '');
+    }
+    for (let j of choice_list) {
+        all_responded = all_responded && (typeof j !== 'undefined');
+    }
+    return all_responded;
 }
