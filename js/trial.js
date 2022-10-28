@@ -19,23 +19,27 @@ class trialObject {
         );
         this.trialIndex = 0;
         this.trialN = Object.keys(this.trialInput).length;
-        this.subjStartDate = this.subj.startDate;
+        this.subjStartDate = this.subj.date;
         this.subjStartTime = this.subj.startTime;
         this.allData = list_to_formatted_string(this.titles, ";");
-        this.option1PlayTime = 0;
-        this.option2PlayTime = 0;
-        this.option3PlayTime = 0;
+        this.vidPlayCounts = {
+            'vid1': 0,
+            'vid2': 0,
+            'vid3': 0,
+        }
     }
 
     init(){
         this.randomizedExptIDList = shuffle_array(Object.keys(this.trialInput));
         console.log(this.randomizedExptIDList);
-        this.updateStimuli(this.trialIndex);
+        UPDATE_STIMULI();
+        this.startTime = Date.now();
     }
 
     record(choicePos){
         this.rt = this.decideTime - this.startTime;
         this.choicePos = choicePos;
+        this.vidPlayCounts = JSON.stringify(this.vidPlayCounts);
         var dataList = list_from_attribute_names(this, this.titles);
         this.allData += list_to_formatted_string(dataList, ";");
         console.log(this.allData);
@@ -46,18 +50,13 @@ class trialObject {
         if (this.trialIndex == this.trialN){
             this.endExptFunc();
         } else {
-            this.option1PlayTime = 0;
-            this.option2PlayTime = 0;
-            this.option3PlayTime = 0;
+            this.vidPlayCounts = {
+                'vid1': 0,
+                'vid2': 0,
+                'vid3': 0,
+            }
             setTimeout(RESET_TRIAL_INTERFACE, this.intertrialInterval);
         }
-    }
-
-    updateStimuli(trialIndex){
-        this.exptId = this.randomizedExptIDList[this.trialIndex];
-        $('#option1').attr('src', this.stimSource + this.trialInput[this.exptId][0] + this.stimType);
-        $('#option2').attr('src', this.stimSource + this.trialInput[this.exptId][1] + this.stimType);
-        $('#option3').attr('src', this.stimSource + this.trialInput[this.exptId][2] + this.stimType);
     }
 
     save() {
@@ -74,12 +73,39 @@ class trialObject {
     }
 }
 
+function DISABLE_HOVER_EFFECT() {
+    $(".vid").css({
+        "pointer-events": "none"
+    });
+}
+
+function ENABLE_HOVER_EFFECT() {
+    $(".vid").css({
+        "pointer-events": "revert",
+    });
+}
+
 function PLAY(ele) {
-    $(ele).css("background","#9D8F8F");
-    var option = $(ele).attr("id");
-    test[option + "PlayTime"] += 1;
-    if (test.option1PlayTime > 0 && test.option2PlayTime > 0 && test.option3PlayTime > 0){
+   // $('.vid').off('mouseup');
+    DISABLE_HOVER_EFFECT();
+    $('.responseBut').addClass('inactiveButton');
+    $('.responseBut').off('mouseup');
+    let target = $(ele).closest('.vid');
+    target[0].play();
+    CHECK_PLAY_COUNT(ele);
+    //trial.inView = CHECK_FULLY_IN_VIEW($('.vid'));
+    let targetID = $(ele).attr('id');
+    $("#" + targetID).css("border-color","#9D8F8F");  //xxx: don't know how to check if videos are watched til the end, want to add this after watched
+}
+
+function CHECK_PLAY_COUNT(ele) {
+    ENABLE_HOVER_EFFECT();
+   // $('.vid').on('mouseup', event, PLAY); //xxx: don't know how to enable play + ENABLE_HOVER_EFFECT after watched
+    let targetID = $(ele).attr('id');
+    test.vidPlayCounts[targetID] += 1;
+    if (test.vidPlayCounts['vid1'] > 0 && test.vidPlayCounts['vid2'] > 0 && test.vidPlayCounts['vid3'] > 0){
         $(".responseBut").show();
+        $('.responseBut').removeClass('inactiveButton');
     }
 }
 
@@ -98,27 +124,33 @@ function SUBMIT_RESPONSE_RIGHT() {
 function SUBMIT_RESPONSE(resp) {
     test.decideTime = Date.now();
     $(".responseBut").hide();
-    $("#stimuliBox img").css("background", "none");
-    $("#stimuliBox img").hide();
+    $("#stimuliBox .vid").css("border-color", "black");
+    $("#stimuliBox .vid").hide();
     test.record(resp);
     test.update();
 }
 
+function UPDATE_STIMULI() {
+    test.exptId = test.randomizedExptIDList[test.trialIndex];
+    $('#vid1').attr('src', test.stimSource + test.trialInput[test.exptId][1] + test.stimType);
+    $('#vid2').attr('src', test.stimSource + test.trialInput[test.exptId][1] + test.stimType);
+    $('#vid3').attr('src', test.stimSource + test.trialInput[test.exptId][2] + test.stimType);
+}
+
 function RESET_TRIAL_INTERFACE() {
-    test.updateStimuli(test.trialIndex);
-    $("#stimuliBox img").show();
+    UPDATE_STIMULI();
+    $("#stimuliBox .vid").show();
+    ENABLE_HOVER_EFFECT();
     test.startTime = Date.now();
 }
 
 const TRIAL_TITLES = [
     "subjNum",
-    "trialIndex",
     "subjStartDate",
     "subjStartTime",
+    "trialIndex",
     "exptId",
     "choicePos",
-    "option1PlayTime",
-    "option2PlayTime",
-    "option3PlayTime",
+    "vidPlayCounts",
     "rt"
 ];

@@ -44,17 +44,17 @@ class Subject {
         post_data(this.subjNumScript, { 'directory_path': this.savingDir, 'file_name': this.subjNumFile }, subj_num_update_succeeded, subj_num_update_failed);
     }
 
-    assignCondition() {
-        let that = this;
-        const check_subj_num = function(){
-            if(that.num != 'pre-post'){
-                clearInterval(interval_id);
-                that.condition = that.conditionList[(that.num-1) % that.conditionList.length];
-                that.conditionAssigned = true;
-            }
-        };
-        let interval_id = setInterval(check_subj_num, 10);
-    }
+    // assignCondition() {
+    //     let that = this;
+    //     const check_subj_num = function(){
+    //         if(that.num != 'pre-post'){
+    //             clearInterval(interval_id);
+    //             that.condition = that.conditionList[(that.num-1) % that.conditionList.length];
+    //             that.conditionAssigned = true;
+    //         }
+    //     };
+    //     let interval_id = setInterval(check_subj_num, 10);
+    // }
 
     saveVisit() {
         let data = 'subjNum\tstartDate\tstartTime\tid\tuserAgent\tinView\tviewportW\tviewportH\n';
@@ -64,6 +64,7 @@ class Subject {
         this.viewportH = this.viewport['h'];
         let dataList = [this.num, this.date, this.startTime, this.id, this.userAgent, this.inView, this.viewportW, this.viewportH];
         data += list_to_formatted_string(dataList);
+        console.log(data);
         post_data(this.savingScript, { 'directory_path': this.savingDir, 'file_name': this.visitFile, 'data': data });
     }
 
@@ -106,6 +107,7 @@ class Subject {
         this.viewportH = this.viewport['h'];
         let dataList = [this.num, this.date, this.startTime, this.id, this.userAgent, this.inView, this.viewportW, this.viewportH];
         data += list_to_formatted_string(dataList);
+        console.log(data);
         post_data(this.savingScript, { 'directory_path': this.savingDir, 'file_name': this.attritionFile, 'data': data });
     }
 

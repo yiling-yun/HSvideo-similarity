@@ -135,6 +135,7 @@ button:active {
 /*    ##    ##     ##  ######  ##    ##  */
 
 #taskBox {
+    top: 100px;
 	margin: 20px auto;
     overflow-x: none;
 }
@@ -142,21 +143,20 @@ button:active {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 100px;
 }
-#stimuliBox img {
-    width: 100px;
-    height: 100px;
-    border: solid #f9f9f9;
-    margin: 100px;
-    padding: 5px;
+#stimuliBox .vid {
+    width: 250px;
+    margin: 10px;
 }
-#stimuliBox img:hover {
+#stimuliBox .vid:hover {
     cursor: pointer;
     border: solid black;
 }
 #prompt {
     text-align: center;
 }
+
 /* .optionBox {
 
 } */
