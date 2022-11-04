@@ -35,11 +35,8 @@ const STIM_SOURCE = 'stim/27movies/';
 // };
 const TRIAL_INPUT = {
     0: ['1012_push', '4397_hug', '4408_lead'],
-    1: ['5408_kiss', '5814_talk to', '5816_ignore'],
+    1: ['5407_kiss', '5814_talk to', '5816_ignore'],
     2: ['5814_talk to', '5816_ignore', '4408_lead'],
-    3: ['5814_talk to', '4408_lead', '5816_ignore'],
-    4: ['5814_talk to', '5816_ignore', '4408_lead'],
-    5: ['5814_talk to', '4408_lead', '5816_ignore']
 };
 
 const INSTR_PRAC_LIST = ['1012_push', '4397_hug', '4408_lead'];
@@ -67,7 +64,7 @@ $(document).ready(function() {
     if (subj.phone) {
         halt_experiment('It seems that you are using a touchscreen device or a phone. Please use a laptop or desktop instead.<br /><br />If you believe you have received this message in error, please contact the experimenter at yiling.yun@g.ucla.edu<br /><br />Otherwise, please switch to a laptop or a desktop computer for this experiment.');
     } else if (subj.validID){
-        load_img(0, STIM_PATH, ALL_IMG_LIST); //XXX: need to load videos too  YC: actually no need. We will buffer video for next trial each trial
+        load_img(0, STIM_PATH, ALL_IMG_LIST);
         instr = new instrObject(instr_options);
         instr.start();
     }
@@ -101,6 +98,7 @@ const SUBJ_TITLES = [
     'quickReadingPageN',
     'hiddenCount',
     'hiddenDurations',
+    'comments',
     'serious',
     'maximized',
     'problems',
@@ -118,7 +116,7 @@ function update_task_object_subj_num() {
 }
 
 function submit_debriefing_questions() {
-    const OPEN_ENDED_ATTRIBUTE_NAMES = ['problems', 'age'];
+    const OPEN_ENDED_ATTRIBUTE_NAMES = ['comments', 'problems', 'age'];
     const CHOICE_ATTRIBUTE_NAMES = ['serious', 'maximized', 'gender'];
     const ALL_RESPONDED = show_hide_warnings(OPEN_ENDED_ATTRIBUTE_NAMES, CHOICE_ATTRIBUTE_NAMES);
     if (ALL_RESPONDED) {
@@ -126,8 +124,7 @@ function submit_debriefing_questions() {
             subj[a] = subj[a].replace(/(?:\r\n|\r|\n)/g, '<br />');
         }
         subj.quizAttemptN = instr.quizAttemptN;
-        subj.instrReadingTimes =
-        (instr.readingTimes);
+        subj.instrReadingTimes = JSON.stringify(instr.readingTimes);
         subj.quickReadingPageN = Object.values(instr.readingTimes).filter(d => d < INSTR_READING_TIME_MIN).length;
         subj.submitAnswers();
         $('#questionsBox').hide();
@@ -199,19 +196,19 @@ let subj_options = {
 //  ### #     #  #####     #    #     #  #####   #####     #    ### ####### #     #  #####
 
 var instr_text = new Array;
-instr_text[0] = "<strong>Welcome!</strong><br /><br />I am a scientist researching human actions, and I am studying how people view other people's interactions.";
-instr_text[1] = "Your contributions may help in designing robots and making animations in movies or video games!<br /><br />And, most importantly, I hope this is fun for you, too!";
-instr_text[2] = "This experiment will take about 50 minutes to complete.<br /><br />Please help me by reading the instructions in the next few pages carefully, and avoid using the refresh or back buttons.";
+instr_text[0] = "<strong>Welcome!</strong><br /><br />We are a group of cognitive scientists researching human actions, and we are studying how people view other people's interactions.";
+instr_text[1] = "Your contributions may help in designing robots and making animations in movies or video games!<br /><br />And, most importantly, we hope this is fun for you, too!";
+instr_text[2] = "This experiment will take about 50 minutes to complete.<br /><br />Please help us by reading the instructions in the next few pages carefully, and avoid using the refresh or back buttons.";
 instr_text[3] = "For this study to work, the webpage will automatically switch to the fullscreen view on the next page. Please stay in the fullscreen mode until the study automatically switches out from it.";
 instr_text[4] = "Please also turn off any music you are playing. Music is known to affect my kind of studies and it will make your data unusable.";
-instr_text[5] = "In this experiment, I will show you some simple animations of two triangles interacting with each other, just like the one in the example below.";
+instr_text[5] = "In this experiment, we will show you some simple animations of two triangles interacting with each other, just like the one in the example below.";
 instr_text[6] = "Each time, three boxes containing three animations will show up. You may click to play each of them as many time as you like in whatever order you choose.";
 instr_text[7] = "Your job is to pick the odd one out. That is to say, you should select the animation that looks the most different among the three.";
 instr_text[8] = "You will make the selection by clicking on the button below the one you are choosing.";
 instr_text[9] = "Note that you can only make your selection after you watch all three animations.";
 instr_text[10] = "Let's try it once on the next page!";
 instr_text[11] = "";
-instr_text[12] = "I hope that was clear!<br /><br />By the way, you don't need to spend too much time thinking about what to choose. Just follow your intuitive impressions.";
+instr_text[12] = "I hope that was clear!<br /><br />By the way, you don't need to spend too much time thinking about what to choose. Just follow your intuition.";
 instr_text[13] = "One last thing: Please make sure you make you choice based on the content of the animations and not the length or duration of them."
 instr_text[14] = "The next page is a quick instruction quiz. (It's very simple!)";
 instr_text[15] = "";
@@ -330,7 +327,7 @@ function SUBMIT_INSTR_QUIZ() {
     if (typeof CHOICE === 'undefined') {
         $('#quizWarning').text('Please answer the question. Thank you!');
     } else if (CHOICE != 'different') {
-        instr.qAttemptN += 1;
+        instr.quizAttemptN += 1;
         instr.saveReadingTime();
         $('#quizBox').hide();
         $('#instrText').text('You have given an incorrect answer. Please read the instructions again carefully.');

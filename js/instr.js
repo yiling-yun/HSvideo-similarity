@@ -7,7 +7,7 @@ class instrObject {
         }, options);
         this.index = 0;
         this.instrKeys = Object.keys(this.funcDict).map(Number);
-        this.qAttemptN = 1;
+        this.quizAttemptN = 1;
         this.readingTimes = {};
     }
 

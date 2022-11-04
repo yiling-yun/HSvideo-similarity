@@ -19,6 +19,7 @@ class trialObject {
         );
         this.trialIndex = 0;
         this.trialN = Object.keys(this.trialInput).length;
+        this.subjNum = this.subj.num;
         this.subjStartDate = this.subj.date;
         this.subjStartTime = this.subj.startTime;
         this.allData = list_to_formatted_string(this.titles, ";");
@@ -31,7 +32,6 @@ class trialObject {
 
     init(){
         this.randomizedExptIDList = shuffle_array(Object.keys(this.trialInput));
-        console.log(this.randomizedExptIDList);
         $('#leftRespBut').on('mouseup', SUBMIT_RESPONSE_LEFT);
         $('#middleRespBut').on('mouseup', SUBMIT_RESPONSE_MIDDLE);
         $('#rightRespBut').on('mouseup', SUBMIT_RESPONSE_RIGHT);
@@ -40,7 +40,7 @@ class trialObject {
     }
 
     record(choicePos){
-        this.rt = this.decideTime - this.startTime;
+        this.rt = (this.decideTime - this.startTime)/1000;
         this.choicePos = choicePos;
         this.vidPlayCounts = JSON.stringify(this.vidPlayCounts);
         var dataList = list_from_attribute_names(this, this.titles);
@@ -79,7 +79,7 @@ class trialObject {
 
 function UPDATE_STIMULI() {
     test.exptId = test.randomizedExptIDList[test.trialIndex];
-    $('#vid1').attr('src', test.stimSource + test.trialInput[test.exptId][1] + test.stimType);
+    $('#vid1').attr('src', test.stimSource + test.trialInput[test.exptId][0] + test.stimType);
     $('#vid2').attr('src', test.stimSource + test.trialInput[test.exptId][1] + test.stimType);
     $('#vid3').attr('src', test.stimSource + test.trialInput[test.exptId][2] + test.stimType);
     $('#vid1')[0].load();
@@ -87,12 +87,13 @@ function UPDATE_STIMULI() {
     $('#vid3')[0].load();
     $('#stimuliBox .vid').on('ended', CHECK_PLAY_COUNT);
     $('#stimuliBox .vid').on('mouseup', PLAY);
-    // if (!last) { // XXX need to add this after Yiling figures out the trial list input method
-    //     let nextExptId = test.randomizedExptIDList[test.trialIndex + 1];
-    //     buffer_video($('#bufferVid1')[0], this.stimSource + this.trialInput[nextExptId][0] + this.stimType); // load next trial's videos
-    //     buffer_video($('#bufferVid2')[0], this.stimSource + this.trialInput[nextExptId][1] + this.stimType); // load next trial's videos
-    //     buffer_video($('#bufferVid3')[0], this.stimSource + this.trialInput[nextExptId][2] + this.stimType); // load next trial's videos
-    // }
+    let nextTrialIndex = test.trialIndex + 1;
+    if (nextTrialIndex != test.trialN) { // XXX need to add this after Yiling figures out the trial list input method
+        let nextExptId = test.randomizedExptIDList[test.trialIndex + 1];
+        buffer_video($('#bufferVid1')[0], test.stimSource + test.trialInput[nextExptId][0] + test.stimType); // load next trial's videos
+        buffer_video($('#bufferVid2')[0], test.stimSource + test.trialInput[nextExptId][1] + test.stimType); // load next trial's videos
+        buffer_video($('#bufferVid3')[0], test.stimSource + test.trialInput[nextExptId][2] + test.stimType); // load next trial's videos
+    }
 }
 
 function SHOW_VIDEOS() {
