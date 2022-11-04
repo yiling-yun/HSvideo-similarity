@@ -19,7 +19,7 @@ const SUBJ_FILE = 'subj_' + EXPERIMENT_NAME + '.txt';
 const SAVING_DIR_HOME = '/var/www-data-experiments/cvlstudy_data/YY/'+EXPERIMENT_NAME+'/';
 const SAVING_DIR = FORMAL ? SAVING_DIR_HOME+'/formal' : SAVING_DIR_HOME+'/testing';
 const ID_GET_VARIABLE_NAME = 'id';
-const COMPLETION_URL = 'https://ycc.vision/'; //XXX: need to change to SONA (like this: https://ucla.sona-systems.com/webstudy_credit.aspx?experiment_id=2231&credit_token=4dbaa04987f7408abc9b916b7d99bb56&survey_code= )
+const COMPLETION_URL = 'https://ucla.sona-systems.com/webstudy_credit.aspx?experiment_id=2320&credit_token=8610357a2fb040cb9a68edfb2162a54f&survey_code='; //XXX: need to change to SONA (like this: https://ucla.sona-systems.com/webstudy_credit.aspx?experiment_id=2231&credit_token=4dbaa04987f7408abc9b916b7d99bb56&survey_code= )
 
 
 // stimuli
@@ -28,16 +28,12 @@ const ALL_IMG_LIST = ['blank.png','maximize_window.png','no_music.png','ucla.png
 const STIM_TYPE = '.mp4';
 const INTERTRIAL_INTERVAL = 500; //ms
 const STIM_SOURCE = 'stim/27movies/';
+const TRIAL_N = 45;
 // const TRIAL_INPUT = {
-//     0: [1,2,3],
-//     1: [2,3,4],
-//     2: [3,4,1],
+//     0: ['1012_push', '4397_hug', '4408_lead'],
+//     1: ['5407_kiss', '5814_talk to', '5816_ignore'],
+//     2: ['5814_talk to', '5816_ignore', '4408_lead'],
 // };
-const TRIAL_INPUT = {
-    0: ['1012_push', '4397_hug', '4408_lead'],
-    1: ['5407_kiss', '5814_talk to', '5816_ignore'],
-    2: ['5814_talk to', '5816_ignore', '4408_lead'],
-};
 
 const INSTR_PRAC_LIST = ['1012_push', '4397_hug', '4408_lead'];
 
@@ -67,6 +63,7 @@ $(document).ready(function() {
         load_img(0, STIM_PATH, ALL_IMG_LIST);
         instr = new instrObject(instr_options);
         instr.start();
+        test = new trialObject(trial_options);
     }
 });
 
@@ -110,8 +107,8 @@ const SUBJ_TITLES = [
 ];
 
 function update_task_object_subj_num() {
-    if (typeof task !== 'undefined'){
-        task.num = subj.num;
+    if (typeof test !== 'undefined'){
+        test.num = subj.num;
     }
 }
 
@@ -250,6 +247,7 @@ function HIDE_INSTR_IMG() {
 }
 
 function SHOW_MAXIMIZE_WINDOW() {
+    import_json(subj.num);
     SHOW_INSTR_IMG('maximize_window.png');
 }
 
@@ -353,6 +351,10 @@ function SHOW_CONSENT() {
             show_trial();
         }
     });
+    buffer_video($('#bufferVid1')[0], test.stimSource + test.trialInput[test.trialIndex][0] + test.stimType); // load first trial's videos
+    buffer_video($('#bufferVid2')[0], test.stimSource + test.trialInput[test.trialIndex][1] + test.stimType);
+    buffer_video($('#bufferVid3')[0], test.stimSource + test.trialInput[test.trialIndex][2] + test.stimType);
+
 }
 
 var instr_options = {
@@ -375,7 +377,7 @@ var trial_options = {
     savingDir: SAVING_DIR,
     stimSource: STIM_SOURCE,
     stimType: STIM_TYPE,
-    trialInput: TRIAL_INPUT,
+    //trialInput: TRIAL_INPUT,
     intertrialInterval: INTERTRIAL_INTERVAL,
     //updateFunc: TRIAL_UPDATE,
     //trialFunc: TRIAL,
@@ -384,10 +386,8 @@ var trial_options = {
 
 function show_trial() {
     trial_options['subj'] = subj;
-    test = new trialObject(trial_options);
     $('#taskBox').show();
     subj.detectVisibilityStart();
-    test.startTime = Date.now();
     test.init();
 }
 

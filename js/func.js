@@ -109,6 +109,17 @@ function shuffle_array(input_array) {
 //  #       #     # #   # #    #    #       #   # #    #
 //  #     # #     # #    ##    #    #       #    ##    #
 //   #####  ####### #     #    #    ####### #     #    #
+function import_json(num){
+    let exptVer = num % TRIAL_N;
+    fetch("./input/expt" + String(exptVer) + ".json")
+        .then(response => {
+            return response.json();
+            })
+            .then(data => {
+                test.trialInput = data;
+            });
+}
+
 
 function list_from_attribute_names(obj, string_list) {
     let list = []

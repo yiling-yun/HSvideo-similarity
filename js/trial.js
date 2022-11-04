@@ -45,7 +45,6 @@ class trialObject {
         this.vidPlayCounts = JSON.stringify(this.vidPlayCounts);
         var dataList = list_from_attribute_names(this, this.titles);
         this.allData += list_to_formatted_string(dataList, ";");
-        console.log(this.allData);
     }
 
     update(){

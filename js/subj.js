@@ -64,7 +64,6 @@ class Subject {
         this.viewportH = this.viewport['h'];
         let dataList = [this.num, this.date, this.startTime, this.id, this.userAgent, this.inView, this.viewportW, this.viewportH];
         data += list_to_formatted_string(dataList);
-        console.log(data);
         post_data(this.savingScript, { 'directory_path': this.savingDir, 'file_name': this.visitFile, 'data': data });
     }
 
@@ -107,7 +106,6 @@ class Subject {
         this.viewportH = this.viewport['h'];
         let dataList = [this.num, this.date, this.startTime, this.id, this.userAgent, this.inView, this.viewportW, this.viewportH];
         data += list_to_formatted_string(dataList);
-        console.log(data);
         post_data(this.savingScript, { 'directory_path': this.savingDir, 'file_name': this.attritionFile, 'data': data });
     }
 
