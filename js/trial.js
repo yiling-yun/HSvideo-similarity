@@ -9,7 +9,7 @@ class trialObject {
                 savingDir: "data/testing",
                 stimSource: "",
                 stimType: "",
-                trialInput: "",
+                //trialInput: "",
                 intertrialInterval: 500,
                 //updateFunc: false,
                 // trialFunc: false,
@@ -18,7 +18,6 @@ class trialObject {
             options
         );
         this.trialIndex = 0;
-        this.trialN = Object.keys(this.trialInput).length;
         this.subjNum = this.subj.num;
         this.subjStartDate = this.subj.date;
         this.subjStartTime = this.subj.startTime;
@@ -45,6 +44,9 @@ class trialObject {
         this.vidPlayCounts = JSON.stringify(this.vidPlayCounts);
         var dataList = list_from_attribute_names(this, this.titles);
         this.allData += list_to_formatted_string(dataList, ";");
+        console.log(this.allData);
+        this.save();
+        this.allData = "";
     }
 
     update(){

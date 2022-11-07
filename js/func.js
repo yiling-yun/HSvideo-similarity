@@ -117,6 +117,7 @@ function import_json(num){
             })
             .then(data => {
                 test.trialInput = data;
+                test.trialN = Object.keys(test.trialInput).length;
             });
 }
 

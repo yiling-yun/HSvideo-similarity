@@ -63,7 +63,6 @@ $(document).ready(function() {
         load_img(0, STIM_PATH, ALL_IMG_LIST);
         instr = new instrObject(instr_options);
         instr.start();
-        test = new trialObject(trial_options);
     }
 });
 
@@ -246,8 +245,14 @@ function HIDE_INSTR_IMG() {
     $('#instrImg').css('display', 'none');
 }
 
-function SHOW_MAXIMIZE_WINDOW() {
+function PREPARE_TRIAL() {
     import_json(subj.num);
+    trial_options['subj'] = subj;
+    test = new trialObject(trial_options);
+}
+
+function SHOW_MAXIMIZE_WINDOW() {
+    PREPARE_TRIAL();
     SHOW_INSTR_IMG('maximize_window.png');
 }
 
@@ -385,7 +390,6 @@ var trial_options = {
 }
 
 function show_trial() {
-    trial_options['subj'] = subj;
     $('#taskBox').show();
     subj.detectVisibilityStart();
     test.init();
@@ -395,5 +399,4 @@ function end_task() {
     subj.detectVisibilityEnd();
     $('#taskBox').hide();
     $('#questionsBox').show();
-    test.save();
 }
