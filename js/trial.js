@@ -79,6 +79,7 @@ class trialObject {
 }
 
 function UPDATE_STIMULI() {
+    $("#progress").html( test.trialIndex + ' / ' + test.trialN + " completed");
     test.exptId = test.randomizedExptIDList[test.trialIndex];
     $('#vid1').attr('src', test.stimSource + test.trialInput[test.exptId][0] + test.stimType);
     $('#vid2').attr('src', test.stimSource + test.trialInput[test.exptId][1] + test.stimType);
