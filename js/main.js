@@ -7,7 +7,7 @@
 // ######## ##     ## ##           ##
 
 // data saving
-const FORMAL = false;
+const FORMAL = true;
 const EXPERIMENT_NAME = 'HSvideo';
 const SUBJ_NUM_SCRIPT = 'php/subjNum.php';
 const SAVING_SCRIPT = 'php/save.php';
@@ -19,7 +19,7 @@ const SUBJ_FILE = 'subj_' + EXPERIMENT_NAME + '.txt';
 const SAVING_DIR_HOME = '/var/www-data-experiments/cvlstudy_data/YY/'+EXPERIMENT_NAME+'/';
 const SAVING_DIR = FORMAL ? SAVING_DIR_HOME+'/formal' : SAVING_DIR_HOME+'/testing';
 const ID_GET_VARIABLE_NAME = 'id';
-const COMPLETION_URL = 'https://ucla.sona-systems.com/webstudy_credit.aspx?experiment_id=2320&credit_token=8610357a2fb040cb9a68edfb2162a54f&survey_code='; //XXX: need to change to SONA (like this: https://ucla.sona-systems.com/webstudy_credit.aspx?experiment_id=2231&credit_token=4dbaa04987f7408abc9b916b7d99bb56&survey_code= )
+const COMPLETION_URL = 'https://ucla.sona-systems.com/webstudy_credit.aspx?experiment_id=2320&credit_token=8610357a2fb040cb9a68edfb2162a54f&survey_code=';
 
 
 // stimuli
