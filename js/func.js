@@ -110,7 +110,9 @@ function shuffle_array(input_array) {
 //  #     # #     # #    ##    #    #       #    ##    #
 //   #####  ####### #     #    #    ####### #     #    #
 function import_json(num){
-    let exptVer = num % TRIAL_N;
+    let exptVer = num % EXPT_N;
+    if (exptVer == 0)
+        exptVer = EXPT_N;
     fetch("./input/expt" + String(exptVer) + ".json")
         .then(response => {
             return response.json();

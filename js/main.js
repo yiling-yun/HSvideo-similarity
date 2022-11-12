@@ -28,7 +28,7 @@ const ALL_IMG_LIST = ['blank.png','maximize_window.png','no_music.png','ucla.png
 const STIM_TYPE = '.mp4';
 const INTERTRIAL_INTERVAL = 500; //ms
 const STIM_SOURCE = 'stim/27movies/';
-const TRIAL_N = 45;
+const EXPT_N = 65;
 // const TRIAL_INPUT = {
 //     0: ['1012_push', '4397_hug', '4408_lead'],
 //     1: ['5407_kiss', '5814_talk to', '5816_ignore'],

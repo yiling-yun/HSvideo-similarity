@@ -1,0 +1,12 @@
+subjNum;subjStartDate;subjStartTime;trialIndex;exptId;choicePos;vidPlayCounts;rt
+undefined;2022-11-03;23:57:00;0;2;middle;{"vid1":1,"vid2":1,"vid3":1};28705
+undefined;2022-11-03;23:57:00;1;0;right;{"vid1":2,"vid2":4,"vid3":2};106213
+undefined;2022-11-03;23:57:00;2;1;middle;{"vid1":3,"vid2":3,"vid3":3};446111
+subjNum;subjStartDate;subjStartTime;trialIndex;exptId;choicePos;vidPlayCounts;rt
+15;2022-11-04;04:23:38;0;1;left;{"vid1":1,"vid2":1,"vid3":1};27.717
+15;2022-11-04;04:23:38;1;0;middle;{"vid1":2,"vid2":2,"vid3":2};60.548
+15;2022-11-04;04:23:38;2;2;left;{"vid1":3,"vid2":3,"vid3":3};92.778
+subjNum;subjStartDate;subjStartTime;trialIndex;exptId;choicePos;vidPlayCounts;rt
+16;2022-11-04;04:59:36;0;0;middle;{"vid1":1,"vid2":1,"vid3":1};31.785
+16;2022-11-04;04:59:36;1;1;middle;{"vid1":2,"vid2":2,"vid3":2};59.408
+16;2022-11-04;04:59:36;2;2;middle;{"vid1":3,"vid2":3,"vid3":3};110.484
