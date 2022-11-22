@@ -16,9 +16,6 @@ class Subject {
             viewportMinW: 0,
             viewportMinH: 0
         }, options);
-        if (this.num == 'pre-post') {
-            this.obtainSubjNum();
-        }
         this.data = list_to_formatted_string(this.titles);
         this.dateObj = new Date();
         this.date = format_date(this.dateObj, 'UTC', '-', true);

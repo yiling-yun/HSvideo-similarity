@@ -7,7 +7,7 @@
 // ######## ##     ## ##           ##
 
 // data saving
-const FORMAL = true;
+const FORMAL = false;
 const EXPERIMENT_NAME = 'HSvideo';
 const SUBJ_NUM_SCRIPT = 'php/subjNum.php';
 const SAVING_SCRIPT = 'php/save.php';
@@ -29,13 +29,8 @@ const STIM_TYPE = '.mp4';
 const INTERTRIAL_INTERVAL = 500; //ms
 const STIM_SOURCE = 'stim/27movies/';
 const EXPT_N = 65;
-// const TRIAL_INPUT = {
-//     0: ['1012_push', '4397_hug', '4408_lead'],
-//     1: ['5407_kiss', '5814_talk to', '5816_ignore'],
-//     2: ['5814_talk to', '5816_ignore', '4408_lead'],
-// };
 
-const INSTR_PRAC_LIST = ['1012_push', '4397_hug', '4408_lead'];
+const INSTR_PRAC_LIST = ['5994_push', '5801_hug', '6005_throw'];
 
 // object variables
 let subj, instr, test;
@@ -94,6 +89,7 @@ const SUBJ_TITLES = [
     'quickReadingPageN',
     'hiddenCount',
     'hiddenDurations',
+    'exptVer',
     'comments',
     'serious',
     'maximized',
@@ -197,15 +193,15 @@ instr_text[1] = "Your contributions may help in designing robots and making anim
 instr_text[2] = "This experiment will take about 50 minutes to complete.<br /><br />Please help us by reading the instructions in the next few pages carefully, and avoid using the refresh or back buttons.";
 instr_text[3] = "For this study to work, the webpage will automatically switch to the fullscreen view on the next page. Please stay in the fullscreen mode until the study automatically switches out from it.";
 instr_text[4] = "Please also turn off any music you are playing. Music is known to affect my kind of studies and it will make your data unusable.";
-instr_text[5] = "In this experiment, we will show you some simple animations of two triangles interacting with each other, just like the one in the example below.";
-instr_text[6] = "Each time, three boxes containing three animations will show up. You may click to play each of them as many time as you like in whatever order you choose.";
-instr_text[7] = "Your job is to pick the odd one out. That is to say, you should select the animation that looks the most different among the three.";
+instr_text[5] = "In this experiment, we will show you some simple animations of two triangles interacting with each other, depicting some human interactions, just like the one in the example below.<br><br>A big triangle representing a bigger person is pushing the small triangle representing a smaller person.";
+instr_text[6] = "Each time, three boxes containing three animations will show up. You may click to play each of them as many times as you like in whatever order you choose.";
+instr_text[7] = "Your job is to pick the odd one out. That is to say, you should select the animation that shows the most different social interaction among the three.";
 instr_text[8] = "You will make the selection by clicking on the button below the one you are choosing.";
 instr_text[9] = "Note that you can only make your selection after you watch all three animations.";
 instr_text[10] = "Let's try it once on the next page!";
 instr_text[11] = "";
 instr_text[12] = "I hope that was clear!<br /><br />By the way, you don't need to spend too much time thinking about what to choose. Just follow your intuition.";
-instr_text[13] = "One last thing: Please make sure you make you choice based on the content of the animations and not the length or duration of them."
+instr_text[13] = "One last thing: Please make sure you make your choice based on the content of the animations and not the length or duration of them."
 instr_text[14] = "The next page is a quick instruction quiz. (It's very simple!)";
 instr_text[15] = "";
 instr_text[16] = "Great! You can press SPACE to start. Please focus after you start. (Don't switch to other windows or tabs!)";
@@ -246,17 +242,19 @@ function HIDE_INSTR_IMG() {
 }
 
 function PREPARE_TRIAL() {
-    import_json(subj.num);
-    trial_options['subj'] = subj;
+    trial_options["subj"] = subj;
     test = new trialObject(trial_options);
+    import_json(subj.num);
 }
 
 function SHOW_MAXIMIZE_WINDOW() {
-    PREPARE_TRIAL();
     SHOW_INSTR_IMG('maximize_window.png');
 }
 
 function SHOW_NO_MUSIC() {
+    if (subj.num == 'pre-post') {
+        subj.obtainSubjNum();
+    }
     enter_fullscreen();
     SHOW_INSTR_IMG('no_music.png');
 }
@@ -265,6 +263,9 @@ function SHOW_EXAMPLE_ANIMATION() {
     HIDE_INSTR_IMG();
     $('#instrVid').css('display', 'block');
     $('#instrVid')[0].play();
+    buffer_video($('#bufferVid1')[0], "stim/" + INSTR_PRAC_LIST[0] + STIM_TYPE); // load first trial's videos
+    buffer_video($('#bufferVid2')[0], "stim/" + INSTR_PRAC_LIST[1] + STIM_TYPE);
+    buffer_video($('#bufferVid3')[0], "stim/" + INSTR_PRAC_LIST[2] + STIM_TYPE);
 }
 
 function HIDE_EXAMPLE_ANIMATION() {
@@ -272,10 +273,11 @@ function HIDE_EXAMPLE_ANIMATION() {
 }
 
 function SHOW_PRACTICE() {
+    PREPARE_TRIAL();
     $('#instrBox').hide();
-    $('#vid1').attr('src', STIM_SOURCE + INSTR_PRAC_LIST[0] + STIM_TYPE);
-    $('#vid2').attr('src', STIM_SOURCE + INSTR_PRAC_LIST[1] + STIM_TYPE);
-    $('#vid3').attr('src', STIM_SOURCE + INSTR_PRAC_LIST[2] + STIM_TYPE);
+    $('#vid1').attr('src', "stim/" + INSTR_PRAC_LIST[0] + STIM_TYPE);
+    $('#vid2').attr('src', "stim/" + INSTR_PRAC_LIST[1] + STIM_TYPE);
+    $('#vid3').attr('src', "stim/" + INSTR_PRAC_LIST[2] + STIM_TYPE);
     $('#vid1')[0].load();
     $('#vid2')[0].load();
     $('#vid3')[0].load();

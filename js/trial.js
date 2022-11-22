@@ -163,6 +163,7 @@ const TRIAL_TITLES = [
     "subjNum",
     "subjStartDate",
     "subjStartTime",
+    "exptVer",
     "trialIndex",
     "exptId",
     "choicePos",
