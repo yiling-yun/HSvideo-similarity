@@ -62,7 +62,7 @@ class trialObject {
             setTimeout(SHOW_VIDEOS, this.intertrialInterval);
         }
     }
-
+    
     save() {
         var postData = {
             'directory_path': this.savingDir,
