@@ -31,6 +31,9 @@ const STIM_SOURCE = 'stim/27movies/';
 const EXPT_N = 65;
 
 const INSTR_PRAC_LIST = ['5994_push', '5801_hug', '6005_throw'];
+const TRIAL_INPUT = {"0": ["5814_talk to", "5987_creep up on", "5870_poke"],
+                    "1": ["6017_encircle", "4397_hug", "1145_leave"],
+                    "2": ["5787_accompany", "5991_examine", "5870_poke"]};
 
 // object variables
 let subj, instr, test;
@@ -244,7 +247,7 @@ function HIDE_INSTR_IMG() {
 function PREPARE_TRIAL() {
     trial_options["subj"] = subj;
     test = new trialObject(trial_options);
-    import_json(subj.num);
+    test.trialN = Object.keys(test.trialInput).length;
 }
 
 function SHOW_MAXIMIZE_WINDOW() {
@@ -384,7 +387,7 @@ var trial_options = {
     savingDir: SAVING_DIR,
     stimSource: STIM_SOURCE,
     stimType: STIM_TYPE,
-    //trialInput: TRIAL_INPUT,
+    trialInput: TRIAL_INPUT,
     intertrialInterval: INTERTRIAL_INTERVAL,
     //updateFunc: TRIAL_UPDATE,
     //trialFunc: TRIAL,
