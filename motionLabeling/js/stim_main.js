@@ -8,7 +8,7 @@
 
 // data saving
 const FORMAL = false;
-const EXPERIMENT_NAME = 'HSvideo';
+const EXPERIMENT_NAME = 'STIM';
 const SUBJ_NUM_SCRIPT = 'php/subjNum.php';
 const SAVING_SCRIPT = 'php/save.php';
 const VISIT_FILE = 'visit_' + EXPERIMENT_NAME + '.txt';
@@ -23,17 +23,38 @@ const COMPLETION_URL = 'https://ucla.sona-systems.com/webstudy_credit.aspx?exper
 
 
 // stimuli
-const STIM_PATH = 'stim/';
+const STIM_PATH = '';
 const ALL_IMG_LIST = ['blank.png','maximize_window.png','no_music.png','ucla.png'];
 const STIM_TYPE = '.mp4';
 const INTERTRIAL_INTERVAL = 500; //ms
-const STIM_SOURCE = 'stim/27movies/';
+const STIM_SOURCE = '27movies/';
 const EXPT_N = 65;
 
-const INSTR_PRAC_LIST = ['5994_push', '5801_hug', '6005_throw'];
-const TRIAL_INPUT = {"0": ["5814_talk to", "5987_creep up on", "5870_poke"],
-                    "1": ["6017_encircle", "4397_hug", "1145_leave"],
-                    "2": ["5787_accompany", "5991_examine", "5870_poke"]};
+const INSTR_PRAC_LIST  = [ "5801_hug", "5994_push", "6005_throw"];
+const VID_LIST  = [
+    "1012_push", "1145_leave", '4397_hug', '4408_lead', 
+    '5787_accompany', '5809_pull', '5814_talk to', '5816_ignore', '5843_huddle with', 
+    '5849_approach', '5870_poke', '5875_escape', '5878_follow', '5902_hit', 
+    '5914_tickle', '5948_flirt with', '5986_fight', '5987_creep up on', '5991_examine', 
+    '6004_herd', '6005_throw', '6012_kiss', 
+    '6016_scratch', '6017_encircle', '6034_avoid', '6035_capture', '6079_bother'
+];
+const LABEL_LIST = [
+    "Push", "Leave", "Hug", "Lead", "Kiss", "Accompany", "Pull", "Talk to", "Ignore",
+    "Huddle with", "Approach", "Follow", "Poke", "Capture", "Escape", "Hit", "Encircle", "Creep up on",
+    "Bother", "Scratch", "Fight", "Flirt with", "Examine", "Tickle", "Throw", "Herd", "Avoid"
+];
+const BUTTON_LIST = [
+    "#b1", "#b2", "#b3", "#b4", "#b5", "#b6", "#b7", "#b8", "#b9",
+    "#b10", "#b11", "#b12", "#b13", "#b14", "#b15", "#b16", "#b17", "#b18",
+    "#b19", "#b20", "#b21", "#b22", "#b23", "#b24", "#b25", "#b26", "#b27"
+]
+const TRIAL_INPUT    = VID_LIST.sort((a, b)   => 0.5 - Math.random());
+const SHUFFLED_LABEL = LABEL_LIST.sort((a, b) => 0.5 - Math.random());
+var practice = true;
+var playTime = 0;
+var playTimeL = 0;
+var indexVid = 0;
 
 // object variables
 let subj, instr, test;
@@ -51,7 +72,12 @@ const INSTR_READING_TIME_MIN = 0.3;
 //  #    #  #       #     # #     #    #
 //  #     # ####### #     # ######     #
 
+
 $(document).ready(function() {
+    for (let i = 0; i < 27; i++) {
+        $(BUTTON_LIST[i]).text(SHUFFLED_LABEL[i]);
+    }
+
     subj = new Subject(subj_options);
     subj.id = subj.getID(ID_GET_VARIABLE_NAME);
     subj.saveVisit();
@@ -193,14 +219,14 @@ let subj_options = {
 var instr_text = new Array;
 instr_text[0] = "<strong>Welcome!</strong><br /><br />We are a group of cognitive scientists researching human actions, and we are studying how people view other people's interactions.";
 instr_text[1] = "Your contributions may help in designing robots and making animations in movies or video games!<br /><br />And, most importantly, we hope this is fun for you, too!";
-instr_text[2] = "This experiment will take about 50 minutes to complete.<br /><br />Please help us by reading the instructions in the next few pages carefully, and avoid using the refresh or back buttons.";
+instr_text[2] = "This experiment will take about 60 minutes to complete.<br /><br />Please help us by reading the instructions in the next few pages carefully, and avoid using the refresh or back buttons.";
 instr_text[3] = "For this study to work, the webpage will automatically switch to the fullscreen view on the next page. Please stay in the fullscreen mode until the study automatically switches out from it.";
 instr_text[4] = "Please also turn off any music you are playing. Music is known to affect my kind of studies and it will make your data unusable.";
 instr_text[5] = "In this experiment, we will show you some simple animations of two triangles interacting with each other, depicting some human interactions, just like the one in the example below.<br><br>A big triangle representing a bigger person is pushing the small triangle representing a smaller person.";
-instr_text[6] = "Each time, three boxes containing three animations will show up. You may click to play each of them as many times as you like in whatever order you choose.";
-instr_text[7] = "Your job is to pick the odd one out. That is to say, you should select the animation that shows the most different social interaction among the three.";
-instr_text[8] = "You will make the selection by clicking on the button below the one you are choosing.";
-instr_text[9] = "Note that you can only make your selection after you watch all three animations.";
+instr_text[6] = "Each time, an animation video will show up. You may click to play the video as many times as you like.";
+instr_text[7] = "27 labels will show up when you have played the video for once. And your job is to select the label that best describes the animation. ";
+instr_text[8] = "After clicking on the label, a comment box will show up, and you will describe the reason of your selection.";
+instr_text[9] = "Note that you can only make your selection after watching the animations."; 
 instr_text[10] = "Let's try it once on the next page!";
 instr_text[11] = "";
 instr_text[12] = "I hope that was clear!<br /><br />By the way, you don't need to spend too much time thinking about what to choose. Just follow your intuition.";
@@ -247,7 +273,7 @@ function HIDE_INSTR_IMG() {
 function PREPARE_TRIAL() {
     trial_options["subj"] = subj;
     test = new trialObject(trial_options);
-    test.trialN = Object.keys(test.trialInput).length;
+    test.trialN = TRIAL_INPUT.length;
 }
 
 function SHOW_MAXIMIZE_WINDOW() {
@@ -266,9 +292,7 @@ function SHOW_EXAMPLE_ANIMATION() {
     HIDE_INSTR_IMG();
     $('#instrVid').css('display', 'block');
     $('#instrVid')[0].play();
-    buffer_video($('#bufferVid1')[0], "stim/" + INSTR_PRAC_LIST[0] + STIM_TYPE); // load first trial's videos
-    buffer_video($('#bufferVid2')[0], "stim/" + INSTR_PRAC_LIST[1] + STIM_TYPE);
-    buffer_video($('#bufferVid3')[0], "stim/" + INSTR_PRAC_LIST[2] + STIM_TYPE);
+    buffer_video($('#bufferVid1')[0], "" + INSTR_PRAC_LIST[0] + STIM_TYPE); // load first trial's videos
 }
 
 function HIDE_EXAMPLE_ANIMATION() {
@@ -276,29 +300,23 @@ function HIDE_EXAMPLE_ANIMATION() {
 }
 
 function SHOW_PRACTICE() {
+    // one trial
+    pratice = true;
     PREPARE_TRIAL();
     $('#instrBox').hide();
-    $('#vid1').attr('src', "stim/" + INSTR_PRAC_LIST[0] + STIM_TYPE);
-    $('#vid2').attr('src', "stim/" + INSTR_PRAC_LIST[1] + STIM_TYPE);
-    $('#vid3').attr('src', "stim/" + INSTR_PRAC_LIST[2] + STIM_TYPE);
-    $('#vid1')[0].load();
-    $('#vid2')[0].load();
-    $('#vid3')[0].load();
+    $('#vid').attr('src', "" + INSTR_PRAC_LIST[0] + STIM_TYPE); // first video
+    // $('#vid1')[0].load();
     $('#stimuliBox .vid').on('ended', instr_practice_check_play_count);
     $('#stimuliBox .vid').on('mouseup', instr_practice_play);
     $('#taskBox').show();
     instr.vidPlayCounts = {
-        'vid1': 0,
-        'vid2': 0,
-        'vid3': 0,
+        'vid': 0,
     }
-    $('.responseBut').on('mouseup', BACK_TO_INSTRUCTIONS);
 }
 
 function instr_practice_play(ele) {
     $('.vid').off('mouseup');
     DISABLE_HOVER_EFFECT();
-    $(".responseBut").hide();
     let target = $(ele.target).closest('.vid');
     target[0].play();
 }
@@ -309,18 +327,13 @@ function instr_practice_check_play_count(ele) {
     ENABLE_HOVER_EFFECT();
     $('.vid').on('mouseup', instr_practice_play);
     instr.vidPlayCounts[$(ele.target).attr('id')] += 1;
-    if (instr.vidPlayCounts['vid1'] > 0 && instr.vidPlayCounts['vid2'] > 0 && instr.vidPlayCounts['vid3'] > 0){
-        $(".responseBut").show();
-    }
 }
 
 function BACK_TO_INSTRUCTIONS() {
     $('#taskBox').hide();
     $('#stimuliBox .vid').off('ended');
     $('#stimuliBox .vid').off('mouseup');
-    $('.responseBut').off('mouseup');
-    $(".responseBut").hide();
-    $("#stimuliBox .vid").css("border-color", "black");
+    // $("#stimuliBox .vid").css("border-color", "black");
     $('#instrBox').show();
     instr.next();
 }
@@ -362,9 +375,6 @@ function SHOW_CONSENT() {
         }
     });
     buffer_video($('#bufferVid1')[0], test.stimSource + test.trialInput[test.trialIndex][0] + test.stimType); // load first trial's videos
-    buffer_video($('#bufferVid2')[0], test.stimSource + test.trialInput[test.trialIndex][1] + test.stimType);
-    buffer_video($('#bufferVid3')[0], test.stimSource + test.trialInput[test.trialIndex][2] + test.stimType);
-
 }
 
 var instr_options = {
@@ -379,6 +389,178 @@ var instr_options = {
 //     #    #   #    #  ####### #
 //     #    #    #   #  #     # #
 //     #    #     # ### #     # #######
+
+function show_trial() {
+    $('#taskBox').show();
+    subj.detectVisibilityStart();
+    test.init();
+}
+
+function end_task() {
+    subj.detectVisibilityEnd();
+    $('#taskBox').hide();
+    $('#questionsBox').show();
+}
+
+function UPDATE_STIMULI() { // array 
+    test.startTime = Date.now();
+    $("#progress").html( test.trialIndex + ' / ' + test.trialN + " completed");
+    test.exptId = test.randomizedExptIDList[test.trialIndex]; // vid list index
+    // $('#vid').attr('src', test.stimSource + test.exptId);
+    $('#vid').attr('src', test.stimSource + test.exptId + test.stimType);
+    $('#stimuliBox .vid').on('ended', CHECK_PLAY_COUNT);
+    $('#stimuliBox .vid').on('mouseup', PLAY);
+    let nextTrialIndex = test.trialIndex + 1;
+    if (nextTrialIndex != test.trialN) { // XXX need to add this after Yiling figures out the trial list input method
+        let nextExptId = test.randomizedExptIDList[test.trialIndex + 1];
+        buffer_video($('#bufferVid1')[0], test.stimSource + nextExptId + test.stimType); // load next trial's videos
+    }
+}
+
+function SHOW_VIDEOS() {
+    $('#stimuliBox .vid').show();
+}
+
+function DISABLE_HOVER_EFFECT() {
+    $(".vid").css({
+        "pointer-events": "none"
+    });
+}
+
+function ENABLE_HOVER_EFFECT() {
+    $(".vid").css({
+        "pointer-events": "revert",
+    });
+}
+
+function PLAY(ele) {
+    $('.vid').off('mouseup');
+    DISABLE_HOVER_EFFECT();
+    let target = $(ele.target).closest('.vid');
+    target[0].play();
+    test.inView = check_fully_in_view($('.vid'));
+}
+
+function CHECK_PLAY_COUNT(ele) {
+    $(ele.target)[0].currentTime = 0
+    $(ele.target).css("border-color","#9D8F8F");
+    ENABLE_HOVER_EFFECT();
+    $('.vid').on('mouseup', PLAY);
+    test.vidPlayCounts[$(ele.target).attr('id')] += 1;
+}
+
+function SUBMIT_RESPONSE(label, index) {
+    test.decideTime = Date.now();
+    test.vidPlayCountsLabel = playTime;
+    playTimeL = playTime;
+    $("#stimuliBox .vid").css("border-color", "black");
+    $("#stimuliBox .vid").hide();
+    test.record(label, index);
+    $('#commentbox').show();
+    $(".selectionContainer").hide();
+}
+
+function SUBMIT_COMMENT(comment) {
+    test.decideTime = Date.now();
+    test.vidPlayCountsComment = playTime - playTimeL;
+    test.recordC(comment);
+}
+
+function RESET_TRIAL_INTERFACE() {
+    UPDATE_STIMULI(); 
+    test.startTime = Date.now();
+}
+
+const TRIAL_TITLES = [
+    "subjNum",
+    "subjStartDate",
+    "subjStartTime",
+    "exptVer",
+    "trialIndex",
+    "exptId",
+
+    "label",
+    "labelIndex",
+    "comment",
+    "rtLabel",
+    "rtComment",
+    "vidPlayCountsLabel",
+    "vidPlayCountsComment"
+];
+
+// helper functions
+function clickNext(selection) {
+    if (document.querySelector('#vid').currentTime != 0) {
+        return;
+    }
+
+    SUBMIT_RESPONSE(SHUFFLED_LABEL[selection], selection);
+    $("#prompt").html("Explain why this label best describes the animation");
+    $('#commentbox').show();
+    $(".selectionContainer").hide();
+}
+
+function clickSubmit() {
+    if (test.trialIndex >= VID_LIST.length - 1) {
+        $('#commentbox').hide();
+        $("#prompt").html("  ");
+        test.save();
+        end_task();
+        return;
+    }
+
+    // if empty
+    if (document.getElementById('comment').value == '') {
+        return;
+    }
+
+    // end of practice trial
+    if (practice) {
+        playTime = 0;
+        $("#taskBox").hide();
+        $('#instrBox').show();
+        $("#commentbox").hide();
+        $("#prompt").html("  ");
+        document.getElementById('comment').value = '';
+        practice = false;
+        instr.next();
+        BACK_TO_INSTRUCTIONS; 
+        return;
+    }
+
+    // submits the response
+    SUBMIT_COMMENT(document.getElementById('comment').value); // trial object
+    document.getElementById('comment').value = '';
+    $('#commentbox').hide();
+    $("#prompt").html("  ");
+    playTime = 0;
+    playTimeL = 0;
+    test.update();
+}
+
+function clickReplay() {
+    if (document.querySelector('#vid').currentTime == 0) {
+        playTime ++;
+        document.querySelector('#vid').play();
+    }
+    else {
+        return;
+    }
+} 
+
+var vid = document.getElementById("vid");
+    vid.onended = function() {
+        vid.currentTime = 0;
+        if (playTime == 1) {
+            $("#prompt").show();
+            $("#prompt").html("Select the label that best describes the animation");
+            if (practice) {
+                $("#prompt").html("You can click on the video to replay, and select the label that best describes the animation");
+            }
+            $(".selectionContainer").show();
+        }
+};
+
 var trial_options = {
     subj: 'pre-define',
     titles: TRIAL_TITLES,
@@ -394,14 +576,3 @@ var trial_options = {
     endExptFunc: end_task
 }
 
-function show_trial() {
-    $('#taskBox').show();
-    subj.detectVisibilityStart();
-    test.init();
-}
-
-function end_task() {
-    subj.detectVisibilityEnd();
-    $('#taskBox').hide();
-    $('#questionsBox').show();
-}

@@ -1,5 +1,4 @@
 class instrObject {
-
     constructor(options = {}) {
         Object.assign(this, {
             text: [],
@@ -52,4 +51,3 @@ class instrObject {
         }
     }
 }
-

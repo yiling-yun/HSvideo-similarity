@@ -1,3 +1,105 @@
+p {
+    top: 20px;
+    color:black;
+    text-align: center;
+    font-size: 30;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 150;
+}
+
+#h {
+    height: 3%;
+    margin-top: 30px;
+}
+
+.background {
+    background-color: rgb(178, 178, 178);
+}
+
+div {
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    color: black;
+    font-weight: bolder;
+    text-align: center;
+    background-color:white;
+    width: 110px;
+    height: 32px;
+    border-radius: 3px;
+    font-size: 16;
+
+    margin-top: 25px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.selection {
+    color: black;
+    font-weight: bolder;
+    text-align: center;
+    background-color:white;
+    width: 110px;
+    height: 32px;
+    border-radius: 3px;
+    font-size: 16;
+
+    margin-top: 35px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.button:hover {
+    cursor: pointer;
+    color: white;
+    background-color: black;
+}
+
+.selection:hover {
+    cursor: pointer;
+    color: white;
+    background-color: black;
+}
+
+#v {
+    height: 48%;
+    margin-top: 15px;
+}
+
+#vid {
+    margin-top: 25px;
+    position: relative;
+    align-items: center;
+}
+
+#vid:hover {
+    cursor: pointer;
+    border: solid 2px black;
+}
+
+#comment {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    font-size: 15;
+    vertical-align: top;
+    width: 385px;
+    height: 150px;
+    margin-top: 26px;
+    margin-left: 140px;
+}
+
+#submitButton {
+    margin-top: 143px;
+    margin-left: 20px;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -42,26 +144,7 @@ body {
     max-height: 100%;
     transform: translate(-50%, -50%);
 }
-button {
-    display: block;
-    position: relative;
-    margin: 25px auto;
-    width: 250px;
-    height: 40px;
-    font-size: 16px;
-    line-height: 40px;
-    text-align: center;
-    border-radius: 4px;
-    background-color: #9D8F8F;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
-    outline: none;
-    color: black;
-    cursor: pointer;
-}
-button:hover {
-    background: #625757;
-    color: #ececec;
-}
+
 button:active {
     box-shadow: 0px 0px rgba(0, 0, 0, 0.25);
     border: none;
@@ -97,6 +180,9 @@ button:active {
 #instrVid {
     width: 300px;
 }
+#instrText {
+    text-align: left;
+}
 
 /*  ######   #######  ##    ##  ######  ######## ##    ## ########  */
 /* ##    ## ##     ## ###   ## ##    ## ##       ###   ##    ##     */
@@ -107,8 +193,12 @@ button:active {
 /*  ######   #######  ##    ##  ######  ######## ##    ##    ##     */
 
 .consentInstr {
+    text-align: left;
     font-size: 20px;
     line-height: 60px;
+}
+#consentBox{
+    text-align: left;
 }
 .formArea {
     margin: 10px auto 0px;
@@ -121,6 +211,7 @@ button:active {
     font-size: 16px;
     line-height: 25px;
     background: #a4b9b9;
+    text-align: left;
 }
 .formArea::-webkit-scrollbar {
     width: 5px;
@@ -138,7 +229,7 @@ button:active {
 /*    ##    ##     ##  ######  ##    ##  */
 
 #taskBox {
-    top: 100px;
+    top: 50px;
 	margin: 20px auto;
     overflow-x: none;
 }
@@ -146,22 +237,23 @@ button:active {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 100px;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 #stimuliBox .vid {
     width: 300px;
     margin: 10px;
 }
+/*
 #stimuliBox .vid:hover {
     cursor: pointer;
-    border: solid black;
-}
+    /*border: solid black; 
+}*/
 #progress, #prompt {
     text-align: center;
 }
 
 /* .optionBox {
-
 } */
 .responseBut {
     display: none;
@@ -180,6 +272,9 @@ button:active {
 /* ##    ##  ##     ## ##       ##    ##    ##     ##  ##     ## ##   ### ##    ##  */
 /*  ##### ##  #######  ########  ######     ##    ####  #######  ##    ##  ######   */
 
+.bold {
+    text-align: left;
+}
 .question {
     margin: 50px 0;
 }
@@ -191,6 +286,7 @@ button:active {
     border-radius: 8px;
     background: rgb(194, 194, 194);
     cursor: pointer;
+    text-align: left;
 }
 .option:hover {
     background: rgb(218, 218, 218);
@@ -202,10 +298,14 @@ button:active {
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
+    text-align: left;
+    align-items: left;
 }
 .option-text {
+    text-align: left;
     position: relative;
-    left: 28px;
+    top: 0px;
+    left: 30px;
     width: calc(100% - 28px);
 }
 input[type='number'],
@@ -235,6 +335,10 @@ textarea {
 #debriefingBox{
 	margin: 80px auto;
 }
-.debriefingArea {
+.debriefing-area {
 	margin: 30px 0 0 0;
+    text-align: left;
+}
+.instructions {
+    text-align: left;
 }
