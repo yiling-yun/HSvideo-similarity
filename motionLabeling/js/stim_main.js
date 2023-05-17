@@ -224,9 +224,9 @@ instr_text[3] = "For this study to work, the webpage will automatically switch t
 instr_text[4] = "Please also turn off any music you are playing. Music is known to affect my kind of studies and it will make your data unusable.";
 instr_text[5] = "In this experiment, we will show you some simple animations of two triangles interacting with each other, depicting some human interactions, just like the one in the example below.<br><br>A big triangle representing a bigger person is pushing the small triangle representing a smaller person.";
 instr_text[6] = "You will complete two tasks in this experiment. And each task contains 27 trials. In both tasks, an animation video will show up first. You may click to play the video as many times as you like.";
-instr_text[7] = "In the first task, you will be shown one video. Once you finish playing the video, you will be asked to rate...";
+instr_text[7] = "In the first task, you will be shown one video. Once you finish playing the video, you will be asked to rate on a scale of 1-5 whether the video is a social video.";
 instr_text[8] = "You will proceed to the second task once you finish the first task.";
-instr_text[9] = "In the second task, 27 labels will show up after you've played the video. And your job is to select the label that best describes the animation. After clicking on the label, a comment box will show up, and you will describe the reason of your selection."; 
+instr_text[9] = "In the second task, 27 labels will show up after you have played the video. And your job is to select the label that best describes the animation. <br><br>After clicking on the label, a comment box will show up, and you will describe the reason of your selection."; 
 instr_text[10] = "Let's try it once on the next page!";
 instr_text[11] = "";
 instr_text[12] = "I hope that was clear!<br /><br />By the way, you don't need to spend too much time thinking about what to choose. Just follow your intuition.";
@@ -488,7 +488,36 @@ const TRIAL_TITLES = [
     "vidPlayCountsComment"
 ];
 
-// helper functions
+
+////////////////////////////
+// button click functions //
+////////////////////////////
+
+function trial_done() {
+    if (practice) {
+        $('#survey-box').hide();
+        $("#prompt").show();
+        $("#prompt").html("For the second task, select the label that best describes the animation");
+        $(".selectionContainer").show();
+        return;
+    }
+    if ($('input[name="rating"]:checked').length > 0){
+        $('#trial-container').hide(); 
+        $('#survey-box').hide(); 
+        $('#vid-next-button').hide();
+        $('#next-instr-box').show();
+        $('#video-instr').html('Please press play to watch the video.');
+        $('#required-warning').html('');
+        $('#play-button').show(); 
+        $('#replay-button').hide();
+        $('#submit-rating').hide();
+        $('#q1').trigger("reset");    //clear the forms when the trial is done 
+    }
+    else {
+        $('#required-warning').html('Please select a response before moving on.'); 
+    }
+}
+
 function clickNext(selection) {
     if (document.querySelector('#vid').currentTime != 0) {
         return;
@@ -552,11 +581,14 @@ var vid = document.getElementById("vid");
     vid.onended = function() {
         vid.currentTime = 0;
         if (playTime == 1) {
+            if (practice) {
+                $("#prompt").show();
+                $("#prompt").html("For the first task, rate the social interation of this video (click video to replay)");
+                $("#survey-box").show();
+                return;
+            }
             $("#prompt").show();
             $("#prompt").html("Select the label that best describes the animation");
-            if (practice) {
-                $("#prompt").html("You can click on the video to replay, and select the label that best describes the animation");
-            }
             $(".selectionContainer").show();
         }
 };

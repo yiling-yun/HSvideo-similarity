@@ -85,7 +85,7 @@
         <p class="warning" id="quizWarning"></p>
     </div>
 
-    <!--======== TASK 2 ========-->
+    <!--======== TASK ========-->
     <div class="pageBox" id="taskBox" style = "display: none">
         <p id="progress"></p>
         <p id="prompt">Click on the video to play</p>
@@ -104,6 +104,32 @@
                     <source src="stim/27movies/1012_push.mp4" type="video/mp4" />
                 </video>
             </div>
+        </div>
+
+        <div id="survey-box" style = "display:none"> 
+            <form id="q1">
+                <p> Please rate the video on a scale of 1-5.</p>
+                <p> To what extent was the video a social video?</p>
+                <input type="radio" class="survey" id="rating1" name="rating" value="1" required>
+                <label for="rating1">1 (not very social) </label> 
+                <input type="radio" class="survey" id="rating2" name="rating" value="2" required>
+                <label for="rating2">2</label> 
+                <input type="radio" class="survey" id="rating3" name="rating" value="3" required>
+                <label for="rating3">3</label> 
+                <input type="radio" class="survey" id="rating4" name="rating" value="4" required>
+                <label for="rating4">4</label> 
+                <input type="radio" class="survey" id="rating5" name="rating" value="5" required>
+                <label for="rating5">5 (completely social) </label> <br>  
+
+                <button type="button" class="button" id="submit-rating"onclick="trial_done()"> Submit </button>
+                <p id="required-warning"></p>
+            </form> 
+            <!-- <form id="q2">   
+                <p>Please describe what happened in the video in your own words. </p>
+                <textarea class="survey" id="freeResponse" rows="10" cols="50" required></textarea> <br>
+
+                <button type="button" class="button" id="submit-desc" onclick="trial_done()"> Submit </button> 
+            </form> -->
         </div>
 
         <!--selections-->
