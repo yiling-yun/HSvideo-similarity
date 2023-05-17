@@ -226,7 +226,7 @@ instr_text[5] = "In this experiment, we will show you some simple animations of 
 instr_text[6] = "You will complete two tasks in this experiment. And each task contains 27 trials. In both tasks, an animation video will show up first. You may click to play the video as many times as you like.";
 instr_text[7] = "In the first task, you will be shown one video. Once you finish playing the video, you will be asked to rate on a scale of 1-5 whether the video is a social video.";
 instr_text[8] = "You will proceed to the second task once you finish the first task.";
-instr_text[9] = "In the second task, 27 labels will show up after you have played the video. And your job is to select the label that best describes the animation. <br><br>After clicking on the label, a comment box will show up, and you will describe the reason of your selection."; 
+instr_text[9] = "In the second task, 27 labels will show up after you have played the video. And your job is to select the label that best describes the animation. After clicking on the label, a comment box will show up, and you will describe the reason of your selection."; 
 instr_text[10] = "Let's try it once on the next page!";
 instr_text[11] = "";
 instr_text[12] = "I hope that was clear!<br /><br />By the way, you don't need to spend too much time thinking about what to choose. Just follow your intuition.";
@@ -292,7 +292,8 @@ function SHOW_EXAMPLE_ANIMATION() {
     HIDE_INSTR_IMG();
     $('#instrVid').css('display', 'block');
     $('#instrVid')[0].play();
-    buffer_video($('#bufferVid1')[0], "stim/27movies/" + INSTR_PRAC_LIST[0] + STIM_TYPE); // load first trial's videos
+    // $('#bufferVid1').attr('src', "stim/" + INSTR_PRAC_LIST[0] + STIM_TYPE);
+    // buffer_video($('#bufferVid1')[0], "stim/" + INSTR_PRAC_LIST[0] + STIM_TYPE); // load first trial's videos
 }
 
 function HIDE_EXAMPLE_ANIMATION() {
