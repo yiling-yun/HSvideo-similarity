@@ -23,7 +23,7 @@ const COMPLETION_URL = 'https://ucla.sona-systems.com/webstudy_credit.aspx?exper
 
 
 // stimuli
-const STIM_PATH = '';
+const STIM_PATH = 'stim/';
 const ALL_IMG_LIST = ['blank.png','maximize_window.png','no_music.png','ucla.png'];
 const STIM_TYPE = '.mp4';
 const INTERTRIAL_INTERVAL = 500; //ms
@@ -84,7 +84,7 @@ $(document).ready(function() {
     if (subj.phone) {
         halt_experiment('It seems that you are using a touchscreen device or a phone. Please use a laptop or desktop instead.<br /><br />If you believe you have received this message in error, please contact the experimenter at yiling.yun@g.ucla.edu<br /><br />Otherwise, please switch to a laptop or a desktop computer for this experiment.');
     } else if (subj.validID){
-        load_img(0, STIM_PATH, ALL_IMG_LIST);
+        load_img(0, STIM_PATH + STIM_SOURCE, ALL_IMG_LIST);
         instr = new instrObject(instr_options);
         instr.start();
     }
@@ -292,7 +292,7 @@ function SHOW_EXAMPLE_ANIMATION() {
     HIDE_INSTR_IMG();
     $('#instrVid').css('display', 'block');
     $('#instrVid')[0].play();
-    buffer_video($('#bufferVid1')[0], "" + INSTR_PRAC_LIST[0] + STIM_TYPE); // load first trial's videos
+    buffer_video($('#bufferVid1')[0], "stim/27movies/" + INSTR_PRAC_LIST[0] + STIM_TYPE); // load first trial's videos
 }
 
 function HIDE_EXAMPLE_ANIMATION() {
@@ -304,7 +304,7 @@ function SHOW_PRACTICE() {
     pratice = true;
     PREPARE_TRIAL();
     $('#instrBox').hide();
-    $('#vid').attr('src', "" + INSTR_PRAC_LIST[0] + STIM_TYPE); // first video
+    $('#vid').attr('src', "stim/" + INSTR_PRAC_LIST[0] + STIM_TYPE); // first video
     // $('#vid1')[0].load();
     $('#stimuliBox .vid').on('ended', instr_practice_check_play_count);
     $('#stimuliBox .vid').on('mouseup', instr_practice_play);
@@ -567,7 +567,7 @@ var trial_options = {
     dataFile: TRIAL_FILE,
     savingScript: SAVING_SCRIPT,
     savingDir: SAVING_DIR,
-    stimSource: STIM_SOURCE,
+    stimSource: STIM_PATH + STIM_SOURCE,
     stimType: STIM_TYPE,
     trialInput: TRIAL_INPUT,
     intertrialInterval: INTERTRIAL_INTERVAL,
