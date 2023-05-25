@@ -222,18 +222,19 @@ instr_text[1] = "Your contributions may help in designing robots and making anim
 instr_text[2] = "This experiment will take about 60 minutes to complete.<br /><br />Please help us by reading the instructions in the next few pages carefully, and avoid using the refresh or back buttons.";
 instr_text[3] = "For this study to work, the webpage will automatically switch to the fullscreen view on the next page. Please stay in the fullscreen mode until the study automatically switches out from it.";
 instr_text[4] = "Please also turn off any music you are playing. Music is known to affect my kind of studies and it will make your data unusable.";
-instr_text[5] = "In this experiment, we will show you some simple animations of two triangles interacting with each other, depicting some human interactions, just like the one in the example below.<br><br>A big triangle representing a bigger person is pushing the small triangle representing a smaller person.";
-instr_text[6] = "You will complete two tasks in this experiment. And each task contains 27 trials. In both tasks, an animation video will show up first. You may click to play the video as many times as you like.";
-instr_text[7] = "In the first task, you will be shown one video. Once you finish playing the video, you will be asked to rate on a scale of 1-5 whether the video is a social video.";
+instr_text[5] = "In this experiment, we will show you some simple animations of two triangles interacting with each other, just like the one in the example below.";
+instr_text[6] = "You will complete two tasks in this experiment. And each task contains 27 trials. In both tasks, a video will show up first and you will click the video to play.";
+instr_text[7] = "In the first task, once you finish watching the video, you will be asked to rate on a scale of 1-5 whether the video is a social video.";
 instr_text[8] = "You will proceed to the second task once you finish the first task.";
-instr_text[9] = "In the second task, 27 labels will show up after you have played the video. And your job is to select the label that best describes the animation. After clicking on the label, a comment box will show up, and you will describe the reason of your selection."; 
-instr_text[10] = "Let's try it once on the next page!";
-instr_text[11] = "";
-instr_text[12] = "I hope that was clear!<br /><br />By the way, you don't need to spend too much time thinking about what to choose. Just follow your intuition.";
-instr_text[13] = "One last thing: Please make sure you make you choose based on the content of the animations and not the length or duration of them."
-instr_text[14] = "The next page is a quick instruction quiz. (It's very simple!)";
-instr_text[15] = "";
-instr_text[16] = "Great! You can press SPACE to start. Please focus after you start. (Don't switch to other windows or tabs!)";
+instr_text[9] = "In the second task, some labels will show up after you have played the video. Your job is to select the label that best describes the video.<br /><br />After clicking on the label, a comment box will show up, and you will describe the reason of your selection."; 
+instr_text[10] = "You may click on the video to rewatch the video as many time as you like.";
+instr_text[11] = "Let's try it once on the next page!";
+instr_text[12] = "";
+instr_text[13] = "I hope that was clear!<br /><br />By the way, you don't need to spend too much time thinking about what to choose. Just follow your intuition.";
+instr_text[14] = "One last thing: Please make sure you make you choose based on the content of the animations and not the length or duration of them."
+instr_text[15] = "The next page is a quick instruction quiz. (It's very simple!)";
+instr_text[16] = "";
+instr_text[17] = "Great! You can press SPACE to start. Please focus after you start. (Don't switch to other windows or tabs!)";
 
 const INSTR_FUNC_DICT = {
     0: SHOW_INSTR,
@@ -247,12 +248,13 @@ const INSTR_FUNC_DICT = {
     8: SHOW_INSTR,
     9: SHOW_INSTR,
     10: SHOW_INSTR,
-    11: SHOW_PRACTICE,
-    12: SHOW_INSTR,
+    11: SHOW_INSTR,
+    12: SHOW_PRACTICE,
     13: SHOW_INSTR,
     14: SHOW_INSTR,
-    15: SHOW_INSTR_QUIZ,
-    16: SHOW_CONSENT
+    15: SHOW_INSTR,
+    16: SHOW_INSTR_QUIZ,
+    17: SHOW_CONSENT
 };
 
 function SHOW_INSTR(){
