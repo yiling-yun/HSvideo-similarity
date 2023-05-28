@@ -498,6 +498,10 @@ const TRIAL_TITLES = [
 
 function trial_done() {
     if (practice) {
+        if ($('input[name="rating"]:checked').length == 0) {
+            $('#required-warning').html('Please select a response before moving on.'); 
+            return;
+        }
         $('#survey-box').hide();
         $("#prompt").show();
         $("#prompt").html("For the second task, select the label that best describes the animation");
@@ -543,6 +547,7 @@ function clickSubmit() {
 
     // if empty
     if (document.getElementById('comment').value == '') {
+        $('#comment-warning').html('Please write down the explantion for your selection.'); 
         return;
     }
 
@@ -553,6 +558,7 @@ function clickSubmit() {
         $('#instrBox').show();
         $("#commentbox").hide();
         $("#prompt").html("  ");
+        $('#comment-warning').html(' ');
         document.getElementById('comment').value = '';
         practice = false;
         instr.next();
@@ -565,6 +571,7 @@ function clickSubmit() {
     document.getElementById('comment').value = '';
     $('#commentbox').hide();
     $("#prompt").html("  ");
+    $('#comment-warning').html(' ');
     playTime = 0;
     playTimeL = 0;
     test.update();
