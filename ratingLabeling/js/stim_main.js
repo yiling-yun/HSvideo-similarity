@@ -502,12 +502,16 @@ function trial_done() {
             $('#required-warning').html('Please select a response before moving on.'); 
             return;
         }
+        playTime = 0;
         $('#survey-box').hide();
-        $("#prompt").show();
-        $("#prompt").html("For the second task, select the label that best describes the animation");
-        $(".selectionContainer").show();
+        $("#taskBox").hide();
+        $('#instrBox').show();
+        $("#prompt").html("  ");
+        practice = false;
+        instr.next();
+        BACK_TO_INSTRUCTIONS; 
         return;
-    }
+    } 
     if ($('input[name="rating"]:checked').length > 0){
         $('#trial-container').hide(); 
         $('#survey-box').hide(); 
@@ -552,6 +556,7 @@ function clickSubmit() {
     }
 
     // end of practice trial
+    /*
     if (practice) {
         playTime = 0;
         $("#taskBox").hide();
@@ -564,7 +569,7 @@ function clickSubmit() {
         instr.next();
         BACK_TO_INSTRUCTIONS; 
         return;
-    }
+    } */
 
     // submits the response
     SUBMIT_COMMENT(document.getElementById('comment').value); // trial object
