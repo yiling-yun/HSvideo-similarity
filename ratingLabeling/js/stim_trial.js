@@ -32,7 +32,17 @@ class trialObject {
         this.startTime = Date.now();
     }
 
-    record(label, index){
+    recordR(rating) {
+        this.rtRating = (this.decideTime - this.startTime)/1000;
+        this.rating = rating;
+        this.vidPlayCountsRating = JSON.stringify(this.vidPlayCountsRating);
+        var dataList = list_from_attribute_names(this, this.titles);
+        console.log(dataList);
+        this.allData += list_to_formatted_string(dataList, ";");
+        // this.save();
+    }
+
+    recordL(label, index){
         this.rtLabel = (this.decideTime - this.startTime)/1000;
         this.label = label;
         this.labelIndex = index;

@@ -55,6 +55,7 @@ var practice = true;
 var playTime = 0;
 var playTimeL = 0;
 var indexVid = 0;
+var trial1 = true;
 
 // object variables
 let subj, instr, test;
@@ -235,6 +236,8 @@ instr_text[14] = "One last thing: Please make sure you make you choose based on 
 instr_text[15] = "The next page is a quick instruction quiz. (It's very simple!)";
 instr_text[16] = "";
 instr_text[17] = "Great! You can press SPACE to start. Please focus after you start. (Don't switch to other windows or tabs!)";
+instr_text[18] = "You have finished the first task. Click on NEXT to proceed to the second task when you are ready. ";
+instr_text[19] = "";
 
 const INSTR_FUNC_DICT = {
     0: SHOW_INSTR,
@@ -254,7 +257,9 @@ const INSTR_FUNC_DICT = {
     14: SHOW_INSTR,
     15: SHOW_INSTR,
     16: SHOW_INSTR_QUIZ,
-    17: SHOW_CONSENT
+    17: SHOW_CONSENT,
+    18: SHOW_INSTR,
+    19: SECOND_TASK
 };
 
 function SHOW_INSTR(){
@@ -452,13 +457,19 @@ function CHECK_PLAY_COUNT(ele) {
     test.vidPlayCounts[$(ele.target).attr('id')] += 1;
 }
 
+function SUBMIT_RATING(rating) {
+    test.decideTime = Date.now();
+    test.vidPlayCountsRating = playTime;
+    test.recordR(rating);
+}
+
 function SUBMIT_RESPONSE(label, index) {
     test.decideTime = Date.now();
     test.vidPlayCountsLabel = playTime;
     playTimeL = playTime;
     $("#stimuliBox .vid").css("border-color", "black");
     $("#stimuliBox .vid").hide();
-    test.record(label, index);
+    test.recordL(label, index);
     $('#commentbox').show();
     $(".selectionContainer").hide();
 }
@@ -482,6 +493,10 @@ const TRIAL_TITLES = [
     "trialIndex",
     "exptId",
 
+    "rating",
+    "rtRating",
+    "vidPlayCountsRating",
+
     "label",
     "labelIndex",
     "comment",
@@ -491,12 +506,42 @@ const TRIAL_TITLES = [
     "vidPlayCountsComment"
 ];
 
+function SECOND_TASK() {
+    $('#instrNextBut').hide();
+    trial1 = false;
+    test.trialIndex = -1;
+    playTime = 0;
+    test.update();
+    $('#taskBox').show();
+}
+
 
 ////////////////////////////
 // button click functions //
 ////////////////////////////
 
 function trial_done() {
+    if (test.trialIndex >= VID_LIST.length - 1) {
+        if(document.getElementById('rating1').checked) {
+            SUBMIT_RATING(1);
+        } else if(document.getElementById('rating2').checked) {
+            SUBMIT_RATING(2);
+        } else if(document.getElementById('rating3').checked) {
+            SUBMIT_RATING(3);
+        } else if(document.getElementById('rating4').checked) {
+            SUBMIT_RATING(4);
+        } else {
+            SUBMIT_RATING(5);
+        }
+        $("#taskBox").hide();
+        $('#instrBox').show();
+        $("#prompt").html("  ");
+        instr.next();
+        $('#consentBox').hide();
+        $('#survey-box').hide();
+        BACK_TO_INSTRUCTIONS;
+        return;
+    }
     if (practice) {
         if ($('input[name="rating"]:checked').length == 0) {
             $('#required-warning').html('Please select a response before moving on.'); 
@@ -507,22 +552,37 @@ function trial_done() {
         $("#taskBox").hide();
         $('#instrBox').show();
         $("#prompt").html("  ");
+        $('#q1').trigger("reset"); 
         practice = false;
         instr.next();
         BACK_TO_INSTRUCTIONS; 
         return;
     } 
     if ($('input[name="rating"]:checked').length > 0){
+        if(document.getElementById('rating1').checked) {
+            SUBMIT_RATING(1);
+        } else if(document.getElementById('rating2').checked) {
+            SUBMIT_RATING(2);
+        } else if(document.getElementById('rating3').checked) {
+            SUBMIT_RATING(3);
+        } else if(document.getElementById('rating4').checked) {
+            SUBMIT_RATING(4);
+        } else {
+            SUBMIT_RATING(5);
+        }
         $('#trial-container').hide(); 
         $('#survey-box').hide(); 
         $('#vid-next-button').hide();
         $('#next-instr-box').show();
-        $('#video-instr').html('Please press play to watch the video.');
+        // $('#video-instr').html('Please press play to watch the video.');
         $('#required-warning').html('');
         $('#play-button').show(); 
         $('#replay-button').hide();
-        $('#submit-rating').hide();
+        // $('#submit-rating').hide();
         $('#q1').trigger("reset");    //clear the forms when the trial is done 
+        $("#prompt").hide();
+        playTime = 0;
+        test.update();
     }
     else {
         $('#required-warning').html('Please select a response before moving on.'); 
@@ -541,7 +601,7 @@ function clickNext(selection) {
 }
 
 function clickSubmit() {
-    if (test.trialIndex >= VID_LIST.length - 1) {
+    if (test.trialIndex >= 26) {
         $('#commentbox').hide();
         $("#prompt").html("  ");
         test.save();
@@ -554,22 +614,6 @@ function clickSubmit() {
         $('#comment-warning').html('Please write down the explantion for your selection.'); 
         return;
     }
-
-    // end of practice trial
-    /*
-    if (practice) {
-        playTime = 0;
-        $("#taskBox").hide();
-        $('#instrBox').show();
-        $("#commentbox").hide();
-        $("#prompt").html("  ");
-        $('#comment-warning').html(' ');
-        document.getElementById('comment').value = '';
-        practice = false;
-        instr.next();
-        BACK_TO_INSTRUCTIONS; 
-        return;
-    } */
 
     // submits the response
     SUBMIT_COMMENT(document.getElementById('comment').value); // trial object
@@ -598,7 +642,13 @@ var vid = document.getElementById("vid");
         if (playTime == 1) {
             if (practice) {
                 $("#prompt").show();
-                $("#prompt").html("For the first task, rate the social interation of this video (click video to replay)");
+                $("#prompt").html("Rate the social interation of this video (click video to replay)");
+                $("#survey-box").show();
+                return;
+            }
+            if (trial1) {
+                $("#prompt").show();
+                $("#prompt").html("Rate the social interation of this video (click video to replay)");
                 $("#survey-box").show();
                 return;
             }
