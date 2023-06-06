@@ -533,6 +533,9 @@ function trial_done() {
         } else {
             SUBMIT_RATING(5);
         }
+        test.rating = undefined;
+        test.rtRating = undefined;
+        test.vidPlayCountsRating = undefined;
         $("#taskBox").hide();
         $('#instrBox').show();
         $("#prompt").html("  ");
