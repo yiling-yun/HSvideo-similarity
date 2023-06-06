@@ -120,7 +120,6 @@ const SUBJ_TITLES = [
     'quickReadingPageN',
     'hiddenCount',
     'hiddenDurations',
-    'exptVer',
     'comments',
     'serious',
     'maximized',
