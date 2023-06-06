@@ -603,6 +603,8 @@ function clickNext(selection) {
 
 function clickSubmit() {
     if (test.trialIndex >= (test.trialN - 1)) {
+        SUBMIT_COMMENT(document.getElementById('comment').value); // trial object
+        document.getElementById('comment').value = '';
         $('#commentbox').hide();
         $("#prompt").html("  ");
         console.log('before test.save()');
