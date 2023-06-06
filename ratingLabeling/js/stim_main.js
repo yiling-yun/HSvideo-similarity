@@ -358,6 +358,10 @@ function SUBMIT_INSTR_QUIZ() {
     } else if (CHOICE != 'different') {
         instr.quizAttemptN += 1;
         instr.saveReadingTime();
+        practice = true;
+        playTime = 0;
+        $("#prompt").html("Click on the video to play");
+        $('#q1').trigger("reset");
         $('#quizBox').hide();
         $('#instrText').text('You have given an incorrect answer. Please read the instructions again carefully.');
         $('#instrBox').show();
