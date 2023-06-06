@@ -21,8 +21,8 @@
             Video Error: Please contact yiling.yun@g.ucla.edu and include your sona ID and the code "VIDEO-ERROR" to receive your credit.
         </video>
 
-        <button class = "button" id = "instrNextBut" onclick = "instr.next()">Next</button> 
-        
+        <button class = "button" id = "instrNextBut" onclick = "instr.next()">Next</button>
+
         <!--======== INFORMED CONSENT FORM ========-->
         <div class='pageBox' id='consentBox'>
             <div class='consentInstr'>To conduct this experiment, we need to include this information sheet:</div>
@@ -74,7 +74,7 @@
 
     <!--======== INSTRUCTIONS QUIZ ========-->
     <div class="pageBox" id="quizBox" style = "display: none">
-        <div class="bold">What is not your job in this experiment?</div>
+        <div class="bold">What is <strong>NOT</strong> your job in this experiment?</div>
         <label><div class="option"><input class="radio" type="radio" name="quiz" value="forgot" /><p class='option-text'>Select this option if you do not remember the instructions.</p></div></label>
         <label><div class="option"><input class="radio" type="radio" name="quiz" value="pleasant" /><p class="option-text">Rate each video on a scale of 1-5</p></div></label>
         <label><div class="option"><input class="radio" type="radio" name="quiz" value="unpleasant" /><p class="option-text">Select one label that best describes each video</p></div></label>
@@ -106,75 +106,74 @@
             </div>
         </div>
 
-        <div id="survey-box" style = "display:none"> 
+        <div id="survey-box" style = "display:none">
             <form id="q1">
-                <p> Please rate the video on a scale of 1-5.</p>
-                <p> To what extent was the video a social video?</p>
+                <p> To what extent are the two triangles socially interacting?</p>
                 <input type="radio" class="survey" id="rating1" name="rating" value="1" required>
-                <label for="rating1">1 (not very social) </label> 
+                <label for="rating1">1 (not very social) </label>
                 <input type="radio" class="survey" id="rating2" name="rating" value="2" required>
-                <label for="rating2">2</label> 
+                <label for="rating2">2</label>
                 <input type="radio" class="survey" id="rating3" name="rating" value="3" required>
-                <label for="rating3">3</label> 
+                <label for="rating3">3</label>
                 <input type="radio" class="survey" id="rating4" name="rating" value="4" required>
-                <label for="rating4">4</label> 
+                <label for="rating4">4</label>
                 <input type="radio" class="survey" id="rating5" name="rating" value="5" required>
-                <label for="rating5">5 (completely social) </label> <br>  
+                <label for="rating5">5 (completely social) </label> <br>
 
                 <button type="button" class="button" id="submit-rating"onclick="trial_done()"> Submit </button>
                 <p id="required-warning"></p>
-            </form> 
-            <!-- <form id="q2">   
+            </form>
+            <!-- <form id="q2">
                 <p>Please describe what happened in the video in your own words. </p>
                 <textarea class="survey" id="freeResponse" rows="10" cols="50" required></textarea> <br>
 
-                <button type="button" class="button" id="submit-desc" onclick="trial_done()"> Submit </button> 
+                <button type="button" class="button" id="submit-desc" onclick="trial_done()"> Submit </button>
             </form> -->
         </div>
 
         <!--selections-->
         <div class = "selectionContainer" style = "display: none">
             <div class = "container">
-                <button class = "selection" id = "b1" onclick = "clickNext(1)"></button> 
-                <button class = "selection" id = "b2" onclick = "clickNext(2)" value = "Avoid">Avoid</button> 
-                <button class = "selection" id = "b3" onclick = "clickNext(3)" value = "Approach">Approach</button> 
-                <button class = "selection" id = "b4" onclick = "clickNext(4)" value = "Avoid">Avoid</button> 
-                <button class = "selection" id = "b5" onclick = "clickNext(5)" value = "Approach">Approach</button> 
-                <button class = "selection" id = "b6" onclick = "clickNext(6)" value = "Avoid">Avoid</button> 
-                <button class = "selection" id = "b7" onclick = "clickNext(7)" value = "Approach">Approach</button> 
-                <button class = "selection" id = "b8" onclick = "clickNext(8)" value = "Avoid">Avoid</button> 
-                <button class = "selection" id = "b9" onclick = "clickNext(9)" value = "Approach">Approach</button> 
+                <button class = "selection" id = "b1" onclick = "clickNext(1)"></button>
+                <button class = "selection" id = "b2" onclick = "clickNext(2)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b3" onclick = "clickNext(3)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b4" onclick = "clickNext(4)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b5" onclick = "clickNext(5)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b6" onclick = "clickNext(6)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b7" onclick = "clickNext(7)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b8" onclick = "clickNext(8)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b9" onclick = "clickNext(9)" value = "Approach">Approach</button>
             </div>
-    
+
             <div class = "container">
-                <button class = "selection" id = "b10" onclick = "clickNext(10)" value = "Approach">Approach</button> 
-                <button class = "selection" id = "b11" onclick = "clickNext(11)" value = "Avoid">Avoid</button> 
-                <button class = "selection" id = "b12" onclick = "clickNext(12)" value = "Approach">Approach</button> 
-                <button class = "selection" id = "b13" onclick = "clickNext(13)" value = "Avoid">Avoid</button> 
-                <button class = "selection" id = "b14" onclick = "clickNext(14)" value = "Approach">Approach</button> 
-                <button class = "selection" id = "b15" onclick = "clickNext(15)" value = "Avoid">Avoid</button> 
-                <button class = "selection" id = "b16" onclick = "clickNext(16)" value = "Approach">Approach</button> 
-                <button class = "selection" id = "b17" onclick = "clickNext(17)" value = "Avoid">Avoid</button> 
-                <button class = "selection" id = "b18" onclick = "clickNext(17)" value = "Approach">Approach</button> 
+                <button class = "selection" id = "b10" onclick = "clickNext(10)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b11" onclick = "clickNext(11)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b12" onclick = "clickNext(12)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b13" onclick = "clickNext(13)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b14" onclick = "clickNext(14)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b15" onclick = "clickNext(15)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b16" onclick = "clickNext(16)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b17" onclick = "clickNext(17)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b18" onclick = "clickNext(17)" value = "Approach">Approach</button>
             </div>
-    
+
             <div class = "container">
-                <button class = "selection" id = "b19" onclick = "clickNext(19)" value = "Approach">Approach</button> 
-                <button class = "selection" id = "b20" onclick = "clickNext(20)" value = "Avoid">Avoid</button> 
-                <button class = "selection" id = "b21" onclick = "clickNext(21)" value = "Approach">Approach</button> 
-                <button class = "selection" id = "b22" onclick = "clickNext(22)" value = "Avoid">Avoid</button> 
-                <button class = "selection" id = "b23" onclick = "clickNext(23)" value = "Approach">Approach</button> 
-                <button class = "selection" id = "b24" onclick = "clickNext(24)" value = "Avoid">Avoid</button> 
-                <button class = "selection" id = "b25" onclick = "clickNext(25)" value = "Approach">Approach</button> 
-                <button class = "selection" id = "b26" onclick = "clickNext(26)" value = "Avoid">Avoid</button> 
-                <button class = "selection" id = "b27" onclick = "clickNext(27)" value = "Approach">Approach</button> 
+                <button class = "selection" id = "b19" onclick = "clickNext(19)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b20" onclick = "clickNext(20)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b21" onclick = "clickNext(21)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b22" onclick = "clickNext(22)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b23" onclick = "clickNext(23)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b24" onclick = "clickNext(24)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b25" onclick = "clickNext(25)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b26" onclick = "clickNext(26)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b27" onclick = "clickNext(27)" value = "Approach">Approach</button>
             </div>
         </div>
 
         <!--comment box-->
         <div id = "commentbox" style = "display: none">
             <textarea type = "text" id = "comment" placeholder = "explain your selection here..."></textarea>
-            <button class = "button" onclick = "clickSubmit()" id = "submitButton">Submit</button> 
+            <button class = "button" onclick = "clickSubmit()" id = "submitButton">Submit</button>
         </div>
         <div>
             <p id="comment-warning"></p>

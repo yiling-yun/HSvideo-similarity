@@ -9,7 +9,7 @@ class trialObject {
                 savingDir: "data/testing",
                 stimSource: "",
                 stimType: "",
-                trialInput: "", 
+                trialInput: "",
                 intertrialInterval: 500,
                 // updateFunc: false,
                 // trialFunc: false,
@@ -26,7 +26,7 @@ class trialObject {
     }
 
     init(){
-        // this.randomizedExptIDList = Object.keys(this.trialInput); // 
+        // this.randomizedExptIDList = Object.keys(this.trialInput); //
         this.randomizedExptIDList = this.trialInput;
         UPDATE_STIMULI();
         this.startTime = Date.now();
@@ -55,7 +55,7 @@ class trialObject {
         this.comment = comment;
         this.vidPlayCountsComment = JSON.stringify(this.vidPlayCountsComment);
         var dataList = list_from_attribute_names(this, this.titles);
-        // console.log(dataList);
+        console.log(dataList);
         this.allData += list_to_formatted_string(dataList, ";");
         // this.save();
     }
@@ -70,7 +70,7 @@ class trialObject {
             setTimeout(SHOW_VIDEOS, this.intertrialInterval);
         }
     }
-    
+
     save() {
         var postData = {
             'directory_path': this.savingDir,

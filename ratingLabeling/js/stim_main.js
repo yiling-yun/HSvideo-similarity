@@ -8,7 +8,7 @@
 
 // data saving
 const FORMAL = false;
-const EXPERIMENT_NAME = 'STIM';
+const EXPERIMENT_NAME = 'HSvideo';
 const SUBJ_NUM_SCRIPT = 'php/subjNum.php';
 const SAVING_SCRIPT = 'php/save.php';
 const VISIT_FILE = 'visit_' + EXPERIMENT_NAME + '.txt';
@@ -17,7 +17,7 @@ const TRIAL_FILE = "trial_" + EXPERIMENT_NAME + ".txt";
 const ATTRITION_FILE = 'attrition_' + EXPERIMENT_NAME + '.txt';
 const SUBJ_FILE = 'subj_' + EXPERIMENT_NAME + '.txt';
 const SAVING_DIR_HOME = '/var/www-data-experiments/cvlstudy_data/YY/'+EXPERIMENT_NAME+'/';
-const SAVING_DIR = FORMAL ? SAVING_DIR_HOME+'/formal' : SAVING_DIR_HOME+'/testing';
+const SAVING_DIR = FORMAL ? SAVING_DIR_HOME+'/formal_ratingLabeling' : SAVING_DIR_HOME+'/testing_ratingLabeling';
 const ID_GET_VARIABLE_NAME = 'id';
 const COMPLETION_URL = 'https://ucla.sona-systems.com/webstudy_credit.aspx?experiment_id=2320&credit_token=8610357a2fb040cb9a68edfb2162a54f&survey_code=';
 
@@ -32,12 +32,13 @@ const EXPT_N = 65;
 
 const INSTR_PRAC_LIST  = [ "5801_hug", "5994_push", "6005_throw"];
 const VID_LIST  = [
-    "1012_push", "1145_leave", '4397_hug', '4408_lead', 
-    '5787_accompany', '5809_pull', '5814_talk to', '5816_ignore', '5843_huddle with', 
-    '5849_approach', '5870_poke', '5875_escape', '5878_follow', '5902_hit', 
-    '5914_tickle', '5948_flirt with', '5986_fight', '5987_creep up on', '5991_examine', 
-    '6004_herd', '6005_throw', '6012_kiss', 
-    '6016_scratch', '6017_encircle', '6034_avoid', '6035_capture', '6079_bother'
+    "1012_push", "1145_leave", '4397_hug',
+    // '4408_lead',
+    // '5787_accompany', '5809_pull', '5814_talk to', '5816_ignore', '5843_huddle with',
+    // '5849_approach', '5870_poke', '5875_escape', '5878_follow', '5902_hit',
+    // '5914_tickle', '5948_flirt with', '5986_fight', '5987_creep up on', '5991_examine',
+    // '6004_herd', '6005_throw', '6012_kiss',
+    // '6016_scratch', '6017_encircle', '6034_avoid', '6035_capture', '6079_bother'
 ];
 const LABEL_LIST = [
     "Push", "Leave", "Hug", "Lead", "Kiss", "Accompany", "Pull", "Talk to", "Ignore",
@@ -224,15 +225,15 @@ instr_text[2] = "This experiment will take about 60 minutes to complete.<br /><b
 instr_text[3] = "For this study to work, the webpage will automatically switch to the fullscreen view on the next page. Please stay in the fullscreen mode until the study automatically switches out from it.";
 instr_text[4] = "Please also turn off any music you are playing. Music is known to affect my kind of studies and it will make your data unusable.";
 instr_text[5] = "In this experiment, we will show you some simple animations of two triangles interacting with each other, just like the one in the example below.";
-instr_text[6] = "You will complete two tasks in this experiment. And each task contains 27 trials. In both tasks, a video will show up first and you will click the video to play.";
-instr_text[7] = "In the first task, once you finish watching the video, you will be asked to rate on a scale of 1-5 whether the video is a social video.";
-instr_text[8] = "You will proceed to the second task once you finish the first task.";
-instr_text[9] = "In the second task, some labels will show up after you have played the video. Your job is to select the label that best describes the video.<br /><br />After clicking on the label, a comment box will show up, and you will describe the reason of your selection."; 
-instr_text[10] = "You may click on the video to rewatch the video as many time as you like.";
+instr_text[6] = "You will complete two tasks in this experiment. Each task contains 27 trials. In each trial, a video will show up, and you will click the video to play.";
+instr_text[7] = "In the first task, once you finish watching the video, you will be asked to rate on a scale of 1-5 to what extent the two triangles are socially interacting, like two people.";
+instr_text[8] = "Once you finish the first task, you will proceed to the second task .";
+instr_text[9] = "In the second task, some labels will show up after you watch the video. Your job is to select the label that best describes the interaction in the video.<br /><br />After clicking on the label, a comment box will show up, and you will describe the reason of your selection.";
+instr_text[10] = "You may click on the video to watch the video again as many times as you like.";
 instr_text[11] = "Let's try it once on the next page!";
 instr_text[12] = "";
 instr_text[13] = "I hope that was clear!<br /><br />By the way, you don't need to spend too much time thinking about what to choose. Just follow your intuition.";
-instr_text[14] = "One last thing: Please make sure you make you choose based on the content of the animations and not the length or duration of them."
+instr_text[14] = "One last thing: Please make sure you choose based on the content of the animations, not the length or duration of them."
 instr_text[15] = "The next page is a quick instruction quiz. (It's very simple!)";
 instr_text[16] = "";
 instr_text[17] = "Great! You can press SPACE to start. Please focus after you start. (Don't switch to other windows or tabs!)";
@@ -289,6 +290,7 @@ function SHOW_MAXIMIZE_WINDOW() {
 
 function SHOW_NO_MUSIC() {
     if (subj.num == 'pre-post') {
+        console.log("before obtain subjNum");
         subj.obtainSubjNum();
     }
     enter_fullscreen();
@@ -410,7 +412,7 @@ function end_task() {
     $('#questionsBox').show();
 }
 
-function UPDATE_STIMULI() { // array 
+function UPDATE_STIMULI() { // array
     test.startTime = Date.now();
     $("#progress").html( test.trialIndex + ' / ' + test.trialN + " completed");
     test.exptId = test.randomizedExptIDList[test.trialIndex]; // vid list index
@@ -481,7 +483,7 @@ function SUBMIT_COMMENT(comment) {
 }
 
 function RESET_TRIAL_INTERFACE() {
-    UPDATE_STIMULI(); 
+    UPDATE_STIMULI();
     test.startTime = Date.now();
 }
 
@@ -489,7 +491,6 @@ const TRIAL_TITLES = [
     "subjNum",
     "subjStartDate",
     "subjStartTime",
-    "exptVer",
     "trialIndex",
     "exptId",
 
@@ -544,7 +545,7 @@ function trial_done() {
     }
     if (practice) {
         if ($('input[name="rating"]:checked').length == 0) {
-            $('#required-warning').html('Please select a response before moving on.'); 
+            $('#required-warning').html('Please select a response before moving on.');
             return;
         }
         playTime = 0;
@@ -552,12 +553,12 @@ function trial_done() {
         $("#taskBox").hide();
         $('#instrBox').show();
         $("#prompt").html("  ");
-        $('#q1').trigger("reset"); 
+        $('#q1').trigger("reset");
         practice = false;
         instr.next();
-        BACK_TO_INSTRUCTIONS; 
+        BACK_TO_INSTRUCTIONS;
         return;
-    } 
+    }
     if ($('input[name="rating"]:checked').length > 0){
         if(document.getElementById('rating1').checked) {
             SUBMIT_RATING(1);
@@ -570,22 +571,22 @@ function trial_done() {
         } else {
             SUBMIT_RATING(5);
         }
-        $('#trial-container').hide(); 
-        $('#survey-box').hide(); 
+        $('#trial-container').hide();
+        $('#survey-box').hide();
         $('#vid-next-button').hide();
         $('#next-instr-box').show();
         // $('#video-instr').html('Please press play to watch the video.');
         $('#required-warning').html('');
-        $('#play-button').show(); 
+        $('#play-button').show();
         $('#replay-button').hide();
         // $('#submit-rating').hide();
-        $('#q1').trigger("reset");    //clear the forms when the trial is done 
+        $('#q1').trigger("reset");    //clear the forms when the trial is done
         $("#prompt").hide();
         playTime = 0;
         test.update();
     }
     else {
-        $('#required-warning').html('Please select a response before moving on.'); 
+        $('#required-warning').html('Please select a response before moving on.');
     }
 }
 
@@ -601,9 +602,10 @@ function clickNext(selection) {
 }
 
 function clickSubmit() {
-    if (test.trialIndex >= 26) {
+    if (test.trialIndex >= (test.trialN - 1)) {
         $('#commentbox').hide();
         $("#prompt").html("  ");
+        console.log('before test.save()');
         test.save();
         end_task();
         return;
@@ -611,7 +613,7 @@ function clickSubmit() {
 
     // if empty
     if (document.getElementById('comment').value == '') {
-        $('#comment-warning').html('Please write down the explantion for your selection.'); 
+        $('#comment-warning').html('Please write down the explanation for your selection.');
         return;
     }
 
@@ -634,7 +636,7 @@ function clickReplay() {
     else {
         return;
     }
-} 
+}
 
 var vid = document.getElementById("vid");
     vid.onended = function() {
@@ -642,13 +644,13 @@ var vid = document.getElementById("vid");
         if (playTime == 1) {
             if (practice) {
                 $("#prompt").show();
-                $("#prompt").html("Rate the social interation of this video (click video to replay)");
+                $("#prompt").html("Rate the video (click on the video to replay)");
                 $("#survey-box").show();
                 return;
             }
             if (trial1) {
                 $("#prompt").show();
-                $("#prompt").html("Rate the social interation of this video (click video to replay)");
+                $("#prompt").html("Rate the video (click on the video to replay)");
                 $("#survey-box").show();
                 return;
             }
