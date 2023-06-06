@@ -86,7 +86,7 @@ $(document).ready(function() {
     if (subj.phone) {
         halt_experiment('It seems that you are using a touchscreen device or a phone. Please use a laptop or desktop instead.<br /><br />If you believe you have received this message in error, please contact the experimenter at yiling.yun@g.ucla.edu<br /><br />Otherwise, please switch to a laptop or a desktop computer for this experiment.');
     } else if (subj.validID){
-        load_img(0, STIM_PATH + STIM_SOURCE, ALL_IMG_LIST);
+        load_img(0, STIM_PATH, ALL_IMG_LIST);
         instr = new instrObject(instr_options);
         instr.start();
     }
@@ -290,7 +290,6 @@ function SHOW_MAXIMIZE_WINDOW() {
 
 function SHOW_NO_MUSIC() {
     if (subj.num == 'pre-post') {
-        console.log("before obtain subjNum");
         subj.obtainSubjNum();
     }
     enter_fullscreen();
@@ -384,7 +383,7 @@ function SHOW_CONSENT() {
             show_trial();
         }
     });
-    buffer_video($('#bufferVid1')[0], test.stimSource + test.trialInput[test.trialIndex][0] + test.stimType); // load first trial's videos
+    buffer_video($('#bufferVid1')[0], test.stimSource + test.trialInput[test.trialIndex] + test.stimType); // load first trial's videos
 }
 
 var instr_options = {
@@ -607,7 +606,6 @@ function clickSubmit() {
         document.getElementById('comment').value = '';
         $('#commentbox').hide();
         $("#prompt").html("  ");
-        console.log('before test.save()');
         test.save();
         end_task();
         return;
