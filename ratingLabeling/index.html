@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en-us" translate="no">
+
+<head>
+    <meta charset="utf-8">
+    <title>UCLA Experiment</title>
+    <link rel = "icon" href="stim/ucla.png">
+    <link rel = 'stylesheet' href = 'css/stim_style.css' />
+    <link re l= 'stylesheet' href='https://fonts.googleapis.com/css2?family=Raleway&display=swap' />
+</head>
+
+<body>
+    <noscript>It seems that JavaScript is disabled in your browser. Please go to settings and enable JavaScript for this experiment.</noscript>
+
+    <!--======== INSTRUCTIONS ========-->
+    <div class = "pageBox fixedBox" id = "instrBox" style = "display: none">
+        <p id="instrText"></p>
+        <img id="instrImg" src="stim/blank.png" draggable="false" alt='Image Error: Please email yiling.yun@g.ucla.edu with the message "IMG-ERROR" to receive credit.'></img>
+        <video id="instrVid" preload="auto" muted loop>
+            <source src="stim/27movies/5801_hug.mp4" type="video/mp4" />
+            Video Error: Please contact yiling.yun@g.ucla.edu and include your sona ID and the code "VIDEO-ERROR" to receive your credit.
+        </video>
+
+        <button class = "button" id = "instrNextBut" onclick = "instr.next()">NEXT</button>
+
+        <!--======== INFORMED CONSENT FORM ========-->
+        <div class='pageBox' id='consentBox'>
+            <div class='consentInstr'>To conduct this experiment, we need to include this information sheet:</div>
+            <div class='formArea'>
+                <strong>CONSENT FORM</strong><br /><br />
+                You are invited to participate in a research study on human vision, conducted by Hongjing Lu, PhD, of the Dept. of Psychology at UCLA. You were selected as a possible participant in this study because you have normal or corrected vision and are 18 years of age or older.
+                <br /><br />
+                <strong>Purpose of Study</strong><br />
+                The purpose of the study is to understand human perception and cognition.
+                <br /><br />
+                <strong>Procedures Involved in Study</strong><br />
+                If you agree to participate, you may receive a demographic questionnaire to collect information of your age, gender, and language. You may be presented with video animations including multiple moving geometric shapes on a computer screen, and answer simple questions and/or perform simple tasks by interacting with a website via a keyboard or a computer mouse. Your responses will be recorded by the computer and will not be identified with you in any way. The session will take less than 60 minutes.
+                <br /><br />
+                <strong>Potential Risks and Discomforts</strong><br />
+                There is no known risk/discomfort in this study. If you experience any discomfort during the experiment, you can stop at any time and notify the experimenter.
+                <br /><br />
+                <strong>Potential Benefits to Subject</strong><br />
+                There are no direct benefits from participating in this study.
+                <br /><br />
+                <strong>Potential Benefits to Society</strong><br />
+                The findings of the study will help us understand how humans perceive and understand dynamics from visual inputs. By understanding the processes underlying human perception, we will be able to design better machine vision systems.
+                <br /><br />
+                <strong>Payment for Participation</strong><br />
+                You will receive 1 hour of credit for your psychology class if you signed up for the study through the UCLA Psychology Department Subject Pool; otherwise you will receive the payment in the rate of $10 per hour for your participation.
+                <br /><br />
+                <strong>Alternatives to Participation</strong><br />
+                An alternative to participating in this project and fulfilling Psychology 10 requirements is to participate in other research or to do an equivalent classroom project.
+                <br /><br />
+                <strong>Confidentiality</strong><br />
+                Your identity in this study will be treated as confidential. The results of the study, including laboratory or any other data, may be published for scientific purposes but will not include any identifiable references to you. Your data, including de-identified data, may be kept for use in future research.
+                <br /><br />
+                The researchers will do their best to make sure that your private information is kept confidential. Information about you will be handled as confidentially as possible, but participating in research may involve a loss of privacy and the potential for a breach in confidentiality. Study data will be physically and electronically secured.  As with any use of electronic means to store data, there is a risk of breach of data security.
+                <br /><br />
+                <strong>Participation and Withdraw</strong><br />
+                Your participation is VOLUNTARY. You may withdraw from the experiment at any time without suffering any negative consequences. You may refuse to answer any questions that you do not want to answer and still remain in the study.
+                <br /><br />
+                <strong>Identification of Investigators</strong><br />
+                If you have any questions, feel free to contact Dr. Hongjing Lu (hongjing@ucla.edu), at the Department of Psychology, UCLA, 405 Hilgard Ave., Los Angeles, CA 90095-1563.
+                <br /><br />
+                <strong>Rights of Research Subjects</strong><br />
+                You may withdraw your consent at any time and discontinue participation without penalty.  You are not waiving any legal claims, rights or remedies because of your participation in this research study.
+                <br /><br />
+                <strong>UCLA Office of the Human Research Protection Program (OHRPP)</strong><br />
+                If you have questions about your rights as a research subject, or you have concerns or suggestions and you want to talk to someone other than the researchers, you may contact the UCLA OHRPP by phone: (310) 206-2040; by email: participants@research.ucla.edu or by mail: Box 951406, Los Angeles, CA 90095-1406.
+                <br />
+            </div>
+        </div>
+    </div>
+
+    <!--======== INSTRUCTIONS QUIZ ========-->
+    <div class="pageBox" id="quizBox" style = "display: none">
+        <div class="bold">What is <strong>NOT</strong> your job in this experiment?</div>
+        <label><div class="option"><input class="radio" type="radio" name="quiz" value="forgot" /><p class='option-text'>Select this option if you do not remember the instructions.</p></div></label>
+        <label><div class="option"><input class="radio" type="radio" name="quiz" value="pleasant" /><p class="option-text">Rate each video on a scale of 1-5</p></div></label>
+        <label><div class="option"><input class="radio" type="radio" name="quiz" value="unpleasant" /><p class="option-text">Select one label that best describes each video</p></div></label>
+        <label><div class="option"><input class="radio" type="radio" name="quiz" value="complex" /><p class="option-text">Describe what you see in each video</p></div></label>
+        <label><div class="option"><input class="radio" type="radio" name="quiz" value="normal" /><p class="option-text">Click on the video to replay</p></div></label>
+        <label><div class="option"><input class="radio" type="radio" name="quiz" value="different" /><p class="option-text">Describe why you like the video</p></div></label>
+        <button class = "button" onclick='SUBMIT_INSTR_QUIZ()'>SUBMIT</button>
+        <p class="warning" id="quizWarning"></p>
+    </div>
+
+    <!--======== TASK ========-->
+    <div class="pageBox" id="taskBox" style = "display: none">
+        <p id="progress"></p>
+        <p id="prompt">Click on the video to play</p>
+        <!-- <video> -->
+        <div id="stimuliBox">
+            <!--video-->
+            <div class="optionBox" id="opt1">
+                <div>
+                    <video id = "vid" muted width = "300" onclick = "clickReplay()">
+                        <source type = "video/mp4">
+                    </video>
+                </div>
+            </div>
+            <div class='buffer' alt=''>
+                <video id="bufferVid1" preload="auto" muted>
+                    <source src="stim/27movies/1012_push.mp4" type="video/mp4" />
+                </video>
+            </div>
+        </div>
+
+        <div id="survey-box" style = "display:none">
+            <form id="q1">
+                <p> To what extent are the two triangles socially interacting?</p>
+                <input type="radio" class="survey" id="rating1" name="rating" value="1" required>
+                <label for="rating1" style="padding-right: 40px;">1 (not very social) </label>
+                <input type="radio" class="survey" id="rating2" name="rating" value="2" required>
+                <label for="rating2" style="padding-right: 40px;">2</label>
+                <input type="radio" class="survey" id="rating3" name="rating" value="3" required>
+                <label for="rating3" style="padding-right: 40px;">3</label>
+                <input type="radio" class="survey" id="rating4" name="rating" value="4" required>
+                <label for="rating4" style="padding-right: 40px;">4</label>
+                <input type="radio" class="survey" id="rating5" name="rating" value="5" required>
+                <label for="rating5">5 (completely social) </label> <br>
+
+                <button type="button" class="button" id="submit-rating"onclick="trial_done()"> Submit </button>
+                <p id="required-warning"></p>
+            </form>
+            <!-- <form id="q2">
+                <p>Please describe what happened in the video in your own words. </p>
+                <textarea class="survey" id="freeResponse" rows="10" cols="50" required></textarea> <br>
+
+                <button type="button" class="button" id="submit-desc" onclick="trial_done()"> Submit </button>
+            </form> -->
+        </div>
+
+        <!--selections-->
+        <div class = "selectionContainer" style = "display: none">
+            <div class = "container">
+                <button class = "selection" id = "b0" onclick = "clickNext(0)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b1" onclick = "clickNext(1)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b2" onclick = "clickNext(2)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b3" onclick = "clickNext(3)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b4" onclick = "clickNext(4)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b5" onclick = "clickNext(5)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b6" onclick = "clickNext(6)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b7" onclick = "clickNext(7)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b8" onclick = "clickNext(8)" value = "Avoid">Avoid</button>
+            </div>
+
+            <div class = "container">
+                <button class = "selection" id = "b9" onclick = "clickNext(9)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b10" onclick = "clickNext(10)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b11" onclick = "clickNext(11)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b12" onclick = "clickNext(12)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b13" onclick = "clickNext(13)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b14" onclick = "clickNext(14)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b15" onclick = "clickNext(15)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b16" onclick = "clickNext(16)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b17" onclick = "clickNext(17)" value = "Avoid">Avoid</button>
+            </div>
+
+            <div class = "container">
+                <button class = "selection" id = "b18" onclick = "clickNext(18)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b19" onclick = "clickNext(19)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b20" onclick = "clickNext(20)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b21" onclick = "clickNext(21)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b22" onclick = "clickNext(22)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b23" onclick = "clickNext(23)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b24" onclick = "clickNext(24)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b25" onclick = "clickNext(25)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b26" onclick = "clickNext(26)" value = "Avoid">Avoid</button>
+            </div>
+        </div>
+
+        <!--comment box-->
+        <div id = "commentbox" style = "display: none">
+            <textarea type = "text" id = "comment" placeholder = "explain your selection here..."></textarea>
+            <button class = "button" onclick = "clickSubmit()" id = "submitButton">Submit</button>
+        </div>
+        <div>
+            <p id="comment-warning"></p>
+        </div>
+    </div>
+
+    <!--======== DEBRIEFING QUESTIONS ========-->
+    <div class='pageBox' id='questionsBox'style = "display: none" >
+        <div class='question'>
+            You are almost done! Please answer these last few questions:
+        </div>
+        <div class='question'>
+            <p class='bold'>Did you complete this experiment seriously throughout (without responding randomly)?</p>
+            <p class='small-dim'>You will receive credit regardless of what your answer is here. Please be honest for science! Thanks!</p>
+            <label><div class='option'><input class='radio' type='radio' name='serious' value='0' /><p class='option-text'>No, I didn't.</p></div></label>
+            <label><div class='option'><input class='radio' type='radio' name='serious' value='1' /><p class='option-text'>Yes, I did.</p></div></label>
+            <p class='warning' id='serious-warning'>Please answer this question to complete the experiment. Thank you!</p>
+        </div>
+        <div class='question'>
+            <p class='bold'>Was the browser in the full-screen mode throughout the experiment?</p>
+            <p class='small-dim'>You will receive credit regardless of what your answer is here. Please be honest for science! Thanks!</p>
+            <label><div class='option'><input class='radio' type='radio' name='maximized' value='0' /><p class='option-text'>No, it wasn't.</p></div></label>
+            <label><div class='option'><input class='radio' type='radio' name='maximized' value='1' /><p class='option-text'>Yes, it was.</p></div></label>
+            <p class='warning' id='maximized-warning'>Please answer this question to complete the experiment. Thank you!</p>
+        </div>
+        <div class='question'>
+            <p class='bold'>Was any part of the procedure unclear? Did you have any problems completing any of the tasks?</p>
+            <p class='small-dim'>You will receive credit regardless of what your answer is here. Please be honest for science! Thanks!</p>
+            <textarea id='problems'></textarea>
+            <p class='warning' id='problems-warning'>Please answer this question to complete the experiment. Thank you!</p>
+        </div>
+        <div class='question'>
+            <p class='bold'>What is your gender?</p>
+            <label><div class='option'><input class='radio' type='radio' name='gender' value='F' /><p class='option-text'>Female</p></div></label>
+            <label><div class='option'><input class='radio' type='radio' name='gender' value='M' /><p class='option-text'>Male</p></div></label>
+            <label><div class='option'><input class='radio' type='radio' name='gender' value='O' /><p class='option-text'>Other</p></div></label>
+            <label><div class='option'><input class='radio' type='radio' name='gender' value='N' /><p class='option-text'>I would rather not say</p></div></label>
+            <p class='warning' id='gender-warning'>Please answer this question to complete the experiment. Thank you!</p>
+        </div>
+        <div class='question'>
+            <p class='bold'>What is your age?</p>
+            <input type='number' id='age' min='0' max='150'/>
+            <p class='warning' id='age-warning'>Please give a valid answer for this question. Thank you!</p>
+        </div>
+        <div class='question'>
+            <p class='bold'>Is there anything else you would like to share with us?</p>
+            <textarea id='comments'></textarea>
+            <p class='warning' id='comments-warning'>Please answer this question to complete the experiment. Thank you!</p>
+        </div>
+        <button class='button' onclick='submit_debriefing_questions()'>SUBMIT</button>
+    </div>
+
+    <!--======== DEBRIEFING ========-->
+    <div class='pageBox' id='debriefingBox' style = "display: none">
+        <p class='instructions'>Now there's one step left: Click END to get your credit! Thank you very much!<br /><br />
+        Interested in what we are testing? See below for more information.</p>
+        <button class='button' onclick='go_to_completion_page()'>END</button>
+        <div class='debriefing-area'>
+            <strong>Debriefing Sheet</strong><br />
+            We are studying if humans are able to see social interactions from the movements of simple shapes. If so, can people differentiate these interactions? The interactions can vary in multiple ways: the trajectories or the intention of each triangle, and the relations between the two triangles, etc.<br /><br />
+
+            If you have any questions, please feel free to contact the researcher Hongjing Lu at hongjing@g.ucla.edu.
+        </div>
+    </div>
+    </p>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.3/mobile-detect.min.js"></script>
+    <script src="js/stim_functions.js"></script>
+    <script src="js/stim_subj.js"></script>
+    <script src="js/stim_trial.js"></script>
+    <script src="js/stim_instr.js"></script>
+    <script src="js/stim_main.js"></script>
+
+</body>
+
+</html>
