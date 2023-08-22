@@ -33,12 +33,12 @@ const EXPT_N = 65;
 const INSTR_PRAC_LIST  = [ "5801_hug", "5994_push", "6005_throw"];
 const VID_LIST  = [
     "1012_push", "1145_leave", '4397_hug',
-    // '4408_lead',
-    // '5787_accompany', '5809_pull', '5814_talk to', '5816_ignore', '5843_huddle with',
-    // '5849_approach', '5870_poke', '5875_escape', '5878_follow', '5902_hit',
-    // '5914_tickle', '5948_flirt with', '5986_fight', '5987_creep up on', '5991_examine',
-    // '6004_herd', '6005_throw', '6012_kiss',
-    // '6016_scratch', '6017_encircle', '6034_avoid', '6035_capture', '6079_bother'
+    '4408_lead',
+    '5787_accompany', '5809_pull', '5814_talk to', '5816_ignore', '5843_huddle with',
+    '5849_approach', '5870_poke', '5875_escape', '5878_follow', '5902_hit',
+    '5914_tickle', '5948_flirt with', '5986_fight', '5987_creep up on', '5991_examine',
+    '6004_herd', '6005_throw', '6012_kiss',
+    '6016_scratch', '6017_encircle', '6034_avoid', '6035_capture', '6079_bother'
 ];
 const LABEL_LIST = [
     "Push", "Leave", "Hug", "Lead", "Kiss", "Accompany", "Pull", "Talk to", "Ignore",

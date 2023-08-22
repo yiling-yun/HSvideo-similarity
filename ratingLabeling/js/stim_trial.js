@@ -54,7 +54,6 @@ class trialObject {
         this.comment = comment;
         this.vidPlayCountsComment = JSON.stringify(this.vidPlayCountsComment);
         var dataList = list_from_attribute_names(this, this.titles);
-        console.log(dataList);
         this.allData += list_to_formatted_string(dataList, ";");
         // this.save();
     }
