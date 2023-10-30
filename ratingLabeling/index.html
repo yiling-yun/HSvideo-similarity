@@ -4,23 +4,25 @@
 <head>
     <meta charset="utf-8">
     <title>UCLA Experiment</title>
-    <link rel="icon" href="stim/ucla.png">
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Raleway&display=swap' />
+    <link rel = "icon" href="stim/ucla.png">
+    <link rel = 'stylesheet' href = 'css/stim_style.css' />
+    <link re l= 'stylesheet' href='https://fonts.googleapis.com/css2?family=Raleway&display=swap' />
 </head>
 
 <body>
     <noscript>It seems that JavaScript is disabled in your browser. Please go to settings and enable JavaScript for this experiment.</noscript>
 
     <!--======== INSTRUCTIONS ========-->
-    <div class="pageBox fixedBox" id="instrBox">
+    <div class = "pageBox fixedBox" id = "instrBox" style = "display: none">
         <p id="instrText"></p>
         <img id="instrImg" src="stim/blank.png" draggable="false" alt='Image Error: Please email yiling.yun@g.ucla.edu with the message "IMG-ERROR" to receive credit.'></img>
         <video id="instrVid" preload="auto" muted loop>
-            <source src="stim/27movies/1012_push.mp4" type="video/mp4" />
+            <source src="stim/27movies/5801_hug.mp4" type="video/mp4" />
             Video Error: Please contact yiling.yun@g.ucla.edu and include your sona ID and the code "VIDEO-ERROR" to receive your credit.
         </video>
-        <button class="instrBut" id="instrNextBut" onclick="instr.next()">NEXT</button>
+
+        <button class = "button" id = "instrNextBut" onclick = "instr.next()">NEXT</button>
+
         <!--======== INFORMED CONSENT FORM ========-->
         <div class='pageBox' id='consentBox'>
             <div class='consentInstr'>To conduct this experiment, we need to include this information sheet:</div>
@@ -71,61 +73,115 @@
     </div>
 
     <!--======== INSTRUCTIONS QUIZ ========-->
-    <div class="pageBox" id="quizBox">
-        <div class="bold">What is your job in this experiment?</div>
+    <div class="pageBox" id="quizBox" style = "display: none">
+        <div class="bold">What is <strong>NOT</strong> your job in this experiment?</div>
         <label><div class="option"><input class="radio" type="radio" name="quiz" value="forgot" /><p class='option-text'>Select this option if you do not remember the instructions.</p></div></label>
-        <label><div class="option"><input class="radio" type="radio" name="quiz" value="pleasant" /><p class="option-text">Choose the animation that is the most pleasant among the three</p></div></label>
-        <label><div class="option"><input class="radio" type="radio" name="quiz" value="unpleasant" /><p class="option-text">Choose the animation that is the most unpleasant among the three</p></div></label>
-        <label><div class="option"><input class="radio" type="radio" name="quiz" value="complex" /><p class="option-text">Choose the animation that is the most complex among the three</p></div></label>
-        <label><div class="option"><input class="radio" type="radio" name="quiz" value="normal" /><p class="option-text">Choose the animation that is the most normal among the three</p></div></label>
-        <label><div class="option"><input class="radio" type="radio" name="quiz" value="different" /><p class="option-text">Choose the animation that is the most different among the three</p></div></label>
-        <button onclick='SUBMIT_INSTR_QUIZ()'>SUBMIT</button>
+        <label><div class="option"><input class="radio" type="radio" name="quiz" value="pleasant" /><p class="option-text">Rate each video on a scale of 1-5</p></div></label>
+        <label><div class="option"><input class="radio" type="radio" name="quiz" value="unpleasant" /><p class="option-text">Select one label that best describes each video</p></div></label>
+        <label><div class="option"><input class="radio" type="radio" name="quiz" value="complex" /><p class="option-text">Describe what you see in each video</p></div></label>
+        <label><div class="option"><input class="radio" type="radio" name="quiz" value="normal" /><p class="option-text">Click on the video to replay</p></div></label>
+        <label><div class="option"><input class="radio" type="radio" name="quiz" value="different" /><p class="option-text">Describe why you like the video</p></div></label>
+        <button class = "button" onclick='SUBMIT_INSTR_QUIZ()'>SUBMIT</button>
         <p class="warning" id="quizWarning"></p>
     </div>
 
     <!--======== TASK ========-->
-    <div class="pageBox" id="taskBox">
+    <div class="pageBox" id="taskBox" style = "display: none">
         <p id="progress"></p>
-        <p id="prompt">Which one looks the most different?</p>
+        <p id="prompt">Click on the video to play</p>
         <!-- <video> -->
-            <div id="stimuliBox">
-                <div class="optionBox" id="opt1">
-                    <video class="vid" id="vid1" preload="auto" muted>
-                        <source src="stim/27movies_rev/1012_push.mp4" type="video/mp4" />
-                        Video Error: Please contact yiling.yun@g.ucla.edu and include your sona ID and the code "VIDEO-ERROR" to receive your credit.
-                    </video>
-                    <button class="responseBut" id="leftRespBut">^</button>
-                </div>
-                <div class="optionBox" id="opt2">
-                    <video class="vid" id="vid2" preload="auto" muted>
-                        <source src="stim/27movies_rev/1012_push.mp4" type="video/mp4" />
-                        Video Error: Please contact yiling.yun@g.ucla.edu and include your sona ID and the code "VIDEO-ERROR" to receive your credit.
-                    </video>
-                    <button class="responseBut" id="middleRespBut">^</button>
-                </div>
-                <div class="optionBox" id="opt3">
-                    <video class="vid" id="vid3" preload="auto" muted>
-                        <source src="stim/27movies_rev/1012_push.mp4" type="video/mp4" />
-                        Video Error: Please contact yiling.yun@g.ucla.edu and include your sona ID and the code "VIDEO-ERROR" to receive your credit.
-                    </video>
-                    <button class="responseBut" id="rightRespBut">^</button>
-                </div>
-                <div class='buffer' alt=''>
-                    <video id="bufferVid1" preload="auto" muted>
-                        <source src="stim/27movies_rev/1012_push.mp4" type="video/mp4" />
-                    </video>
-                    <video id="bufferVid2" preload="auto" muted>
-                        <source src="stim/27movies_rev/1012_push.mp4" type="video/mp4" />
-                    </video>
-                    <video id="bufferVid3" preload="auto" muted>
-                        <source src="stim/27movies_rev/1012_push.mp4" type="video/mp4" />
+        <div id="stimuliBox">
+            <!--video-->
+            <div class="optionBox" id="opt1">
+                <div>
+                    <video id = "vid" muted width = "300" onclick = "clickReplay()">
+                        <source type = "video/mp4">
                     </video>
                 </div>
             </div>
-        <!-- </video> -->
+            <div class='buffer' alt=''>
+                <video id="bufferVid1" preload="auto" muted>
+                    <source src="stim/27movies/1012_push.mp4" type="video/mp4" />
+                </video>
+            </div>
+        </div>
+
+        <div id="survey-box" style = "display:none">
+            <form id="q1">
+                <p> To what extent are the two triangles socially interacting?</p>
+                <input type="radio" class="survey" id="rating1" name="rating" value="1" required>
+                <label for="rating1" style="padding-right: 40px;">1 (not very social) </label>
+                <input type="radio" class="survey" id="rating2" name="rating" value="2" required>
+                <label for="rating2" style="padding-right: 40px;">2</label>
+                <input type="radio" class="survey" id="rating3" name="rating" value="3" required>
+                <label for="rating3" style="padding-right: 40px;">3</label>
+                <input type="radio" class="survey" id="rating4" name="rating" value="4" required>
+                <label for="rating4" style="padding-right: 40px;">4</label>
+                <input type="radio" class="survey" id="rating5" name="rating" value="5" required>
+                <label for="rating5">5 (completely social) </label> <br>
+
+                <button type="button" class="button" id="submit-rating"onclick="trial_done()"> Submit </button>
+                <p id="required-warning"></p>
+            </form>
+            <!-- <form id="q2">
+                <p>Please describe what happened in the video in your own words. </p>
+                <textarea class="survey" id="freeResponse" rows="10" cols="50" required></textarea> <br>
+
+                <button type="button" class="button" id="submit-desc" onclick="trial_done()"> Submit </button>
+            </form> -->
+        </div>
+
+        <!--selections-->
+        <div class = "selectionContainer" style = "display: none">
+            <div class = "container">
+                <button class = "selection" id = "b0" onclick = "clickNext(0)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b1" onclick = "clickNext(1)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b2" onclick = "clickNext(2)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b3" onclick = "clickNext(3)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b4" onclick = "clickNext(4)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b5" onclick = "clickNext(5)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b6" onclick = "clickNext(6)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b7" onclick = "clickNext(7)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b8" onclick = "clickNext(8)" value = "Avoid">Avoid</button>
+            </div>
+
+            <div class = "container">
+                <button class = "selection" id = "b9" onclick = "clickNext(9)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b10" onclick = "clickNext(10)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b11" onclick = "clickNext(11)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b12" onclick = "clickNext(12)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b13" onclick = "clickNext(13)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b14" onclick = "clickNext(14)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b15" onclick = "clickNext(15)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b16" onclick = "clickNext(16)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b17" onclick = "clickNext(17)" value = "Avoid">Avoid</button>
+            </div>
+
+            <div class = "container">
+                <button class = "selection" id = "b18" onclick = "clickNext(18)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b19" onclick = "clickNext(19)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b20" onclick = "clickNext(20)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b21" onclick = "clickNext(21)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b22" onclick = "clickNext(22)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b23" onclick = "clickNext(23)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b24" onclick = "clickNext(24)" value = "Avoid">Avoid</button>
+                <button class = "selection" id = "b25" onclick = "clickNext(25)" value = "Approach">Approach</button>
+                <button class = "selection" id = "b26" onclick = "clickNext(26)" value = "Avoid">Avoid</button>
+            </div>
+        </div>
+
+        <!--comment box-->
+        <div id = "commentbox" style = "display: none">
+            <textarea type = "text" id = "comment" placeholder = "explain your selection here..."></textarea>
+            <button class = "button" onclick = "clickSubmit()" id = "submitButton">Submit</button>
+        </div>
+        <div>
+            <p id="comment-warning"></p>
+        </div>
     </div>
+
     <!--======== DEBRIEFING QUESTIONS ========-->
-    <div class='pageBox' id='questionsBox'>
+    <div class='pageBox' id='questionsBox'style = "display: none" >
         <div class='question'>
             You are almost done! Please answer these last few questions:
         </div>
@@ -169,14 +225,15 @@
         </div>
         <button class='button' onclick='submit_debriefing_questions()'>SUBMIT</button>
     </div>
+
     <!--======== DEBRIEFING ========-->
-    <div class='pageBox' id='debriefingBox'>
+    <div class='pageBox' id='debriefingBox' style = "display: none">
         <p class='instructions'>Now there's one step left: Click END to get your credit! Thank you very much!<br /><br />
         Interested in what we are testing? See below for more information.</p>
         <button class='button' onclick='go_to_completion_page()'>END</button>
         <div class='debriefing-area'>
             <strong>Debriefing Sheet</strong><br />
-            We are studying how humans perceive social interactions from the movements of simple shapes. We are testing it using a similarity judgment task. Two videos can be similar in multiple ways: the speed of the movements, the trajectory, the intention of each triangle, the relations between the two triangles, etc.<br /><br />
+            We are studying if humans are able to see social interactions from the movements of simple shapes. If so, can people differentiate these interactions? The interactions can vary in multiple ways: the trajectories or the intention of each triangle, and the relations between the two triangles, etc.<br /><br />
 
             If you have any questions, please feel free to contact the researcher Hongjing Lu at hongjing@g.ucla.edu.
         </div>
@@ -184,11 +241,12 @@
     </p>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.4.3/mobile-detect.min.js"></script>
-    <script src="js/func.js"></script>
-    <script src="js/subj.js"></script>
-    <script src="js/trial.js"></script>
-    <script src="js/instr.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/stim_functions.js"></script>
+    <script src="js/stim_subj.js"></script>
+    <script src="js/stim_trial.js"></script>
+    <script src="js/stim_instr.js"></script>
+    <script src="js/stim_main.js"></script>
+
 </body>
 
 </html>

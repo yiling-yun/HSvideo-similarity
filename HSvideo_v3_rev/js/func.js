@@ -109,6 +109,26 @@ function shuffle_array(input_array) {
 //  #       #     # #   # #    #    #       #   # #    #
 //  #     # #     # #    ##    #    #       #    ##    #
 //   #####  ####### #     #    #    ####### #     #    #
+<<<<<<<< HEAD:HSvideo_v3_rev/js/func.js
+========
+function import_json(num){
+    let exptVer = num % EXPT_N;
+
+    if (exptVer == 0)
+        exptVer = EXPT_N;
+
+    // let exptVer = exptVerToManuallyAssign[num - 1 - subjNumBefore]; //xxx: to manually assign exptVer
+    fetch("./input/expt" + String(exptVer) + ".json")
+        .then(response => {
+            return response.json();
+            })
+            .then(data => {
+                test.trialInput = data;
+                test.trialN = Object.keys(test.trialInput).length;
+            });
+}
+
+>>>>>>>> bed9165304b91385c894861e4d51e4e17ee4d7c4:HSvideo_v4_shortv1/js/func.js
 
 function list_from_attribute_names(obj, string_list) {
     let list = []
