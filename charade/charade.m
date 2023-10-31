@@ -1,6 +1,6 @@
 % ZZ
 % Charade 
-PsychDebugWindowConfiguration;
+% PsychDebugWindowConfiguration;
 rng shuffle;
 
 %% SCREEN SETUP
@@ -107,10 +107,11 @@ y2   = [(y2Coord - (sqrt(3) / 4) * sideL)', (y2Coord + (sqrt(3) / 4) * sideL)', 
 
 %% DOT
 % Screen('DrawDots', w, dotPosition, dotSize, dotColor, [], 2);
-dotFrame = 6;
+dotFrame = 10;
 dotStartFrame = int32(rand() * numRadians - dotFrame); % random dot start frame 0 to (total frames - presentation frame)
 dotT = int32(rand() * 1);            % random triangle 0 or 1
-dotC = [50, 50, 50]; % color
+dotC = [0.6, 0.6, 0.6];
+% dotC = [50, 50, 50]; % color
 dotS = 3;            % size
 dotStartTime = 0;
 dotEndTime = 0;
@@ -146,10 +147,10 @@ end
 
 %% EXPERIMENT
 for i = 1:(numel(x1Coord)-1)
-    Screen('FillRect', w, [255 255 255], canvasR);
+    Screen('FillRect', w, 1, canvasR);
 
-    Screen('FillPoly', w, [0.45, 0.45, 0.45], ([tx1(i,:); ty1(i,:)])');
-    Screen('FillPoly', w, [0.45, 0.45, 0.45], ([tx2(i,:); ty2(i,:)])');
+    Screen('FillPoly', w, 0.5, ([tx1(i,:); ty1(i,:)])');
+    Screen('FillPoly', w, 0.5, ([tx2(i,:); ty2(i,:)])');
 
     % Present dot on triangle
     if (i >= dotStartFrame && i < (dotStartFrame + dotFrame))
