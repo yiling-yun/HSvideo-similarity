@@ -6,21 +6,18 @@ rng shuffle;
 %% SCREEN SETUP
 PsychDefaultSetup(2);
 screenNumber     = max(Screen('Screens'));
+screenColor      = [0 0 0];
+textColor   
 [w, windowRect]  = PsychImaging('OpenWindow', screenNumber, [0 0 0], [],[],[],[],5);
 [wWidth,wHeight] = Screen('WindowSize', w);    
 xmid             = round(wWidth  / 2);         
 ymid             = round(wHeight / 2); 
-Screen('TextSize', w, round(wHeight / 30));
-screenColor      = [0 0 0];
-textColor        = [1 1 1];
 
 Screen('BlendFunction', w, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA'); % anti-aliasing
 
 KbName('UnifyKeyNames');                       
 keyNumSpace = min(KbName('space'));
-keyCode = zeros(1,256);     
-
-reactionT = [];
+keyCode = zeros(1,256);               
 
 
 %% CANVAS SCALING
@@ -187,19 +184,15 @@ for i = 1:(numel(x1Coord)-1)
     end 
 end
 
-% check if key press before dot appearance
 if (t <= 0) 
-    Screen('FillRect', w, screenColor);
-    DrawFormattedText(w, 'You pressed space bar before the dot appeared',...
-        'center', ymid, textColor);    % display instruction on screen
+    Screen('FillRect', w, screenColor, canvasR);
+
     Screen('Flip', w);
 else 
-    Screen('FillRect', w, screenColor);
+    Screen('FillRect', w, screenColor, canvasR);
     Screen('Flip', w);
 end
 WaitSecs(1);
-
-reactionT = [reactionT, t];
 end
 
 %% END
