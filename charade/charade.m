@@ -1,5 +1,9 @@
 % ZZ
 % Charade 
+clc;
+close all;
+clear all;
+
 PsychDebugWindowConfiguration;
 rng shuffle;
 
@@ -13,6 +17,7 @@ ymid             = round(wHeight / 2);
 Screen('TextSize', w, round(wHeight / 30));
 screenColor      = [0 0 0];
 textColor        = [1 1 1];
+textWarningColor = [1 0 0];
 
 Screen('BlendFunction', w, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA'); % anti-aliasing
 
@@ -49,7 +54,6 @@ y2Coord = 450;
 numRadians = 327;
 numZeros   = 310;
 side       = 80;
-
 
 randomRadians1  = [rand(1, numRadians-numZeros) * 2 * pi, zeros(1, numZeros)];
 randomRadians2  = [rand(1, numRadians-numZeros) * 2 * pi, zeros(1, numZeros)];
@@ -180,6 +184,9 @@ for i = 1:(numel(x1Coord)-1)
 
     Screen('Flip', w);
 
+    % skip current trial if pressed before dot
+    % restrict key for kbcheck 
+    % another variable - whether key is pressed
     [keyIsDown, secs, keyCode] = KbCheck;
     if keyCode(keyNumSpace)
         t = secs - dotStartTime;
@@ -190,8 +197,8 @@ end
 % check if key press before dot appearance
 if (t <= 0) 
     Screen('FillRect', w, screenColor);
-    DrawFormattedText(w, 'You pressed space bar before the dot appeared',...
-        'center', ymid, textColor);    % display instruction on screen
+    DrawFormattedText(w, 'Wrong',...
+        'center', ymid, textWarningColor);    % display instruction on screen
     Screen('Flip', w);
 else 
     Screen('FillRect', w, screenColor);
