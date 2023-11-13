@@ -5,10 +5,13 @@ close all;
 clear all;
 
 PsychDebugWindowConfiguration;
+HideCursor;  % hide mouse cursor
 rng shuffle;
 
 %% SCREEN SETUP
 PsychDefaultSetup(2);
+Screen('Preference', 'VisualDebugLevel', 1);  % suppress Psychtoolbox welcome screen
+Screen('Preference', 'SkipSyncTests', 1);     % skip sync testing that causes errors
 screenNumber     = max(Screen('Screens'));
 [w, windowRect]  = PsychImaging('OpenWindow', screenNumber, [0 0 0], [],[],[],[],5);
 [wWidth,wHeight] = Screen('WindowSize', w);    
@@ -185,28 +188,26 @@ for i = 1:(numel(x1Coord)-1)
     Screen('Flip', w);
 
     % skip current trial if pressed before dot
-    % restrict key for kbcheck 
-    % another variable - whether key is pressed
+    RestrictKeysForKbCheck([keyNumSpace]);
     [keyIsDown, secs, keyCode] = KbCheck;
     if keyCode(keyNumSpace)
+        if (dotStartTime == 0) 
+            Screen('FillRect', w, screenColor);
+            DrawFormattedText(w, 'Wrong', 'center', ymid, textWarningColor);    % display instruction on screen
+            Screen('Flip', w);
+            WaitSecs(1); 
+            break;
+        end
         t = secs - dotStartTime;
         keyCode = zeros(1,256);
     end 
 end
 
-% check if key press before dot appearance
-if (t <= 0) 
-    Screen('FillRect', w, screenColor);
-    DrawFormattedText(w, 'Wrong',...
-        'center', ymid, textWarningColor);    % display instruction on screen
-    Screen('Flip', w);
-else 
-    Screen('FillRect', w, screenColor);
-    Screen('Flip', w);
-end
+Screen('FillRect', w, screenColor);
+Screen('Flip', w);
 WaitSecs(1);
 
-reactionT = [reactionT, t];
+reactionT = [reactionT, t];  
 end
 
 %% END
