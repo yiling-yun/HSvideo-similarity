@@ -181,9 +181,11 @@ for i = 1:(numel(x1Coord)-1)
         dotStartTime = GetSecs;
     end
 
-    % if (i == dotStartFrame + dotFrame) 
-        % dotEndTime = GetSecs;
-    % end
+    if (i == dotStartFrame + dotFrame) 
+        dotEndTime = GetSecs;
+    end
+
+    frameDuration = (dotEndTime - dotStartTime)/10;
 
     Screen('Flip', w);
 
