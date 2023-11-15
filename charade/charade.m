@@ -4,7 +4,7 @@ clc;
 close all;
 clear all;
 
-PsychDebugWindowConfiguration;
+% PsychDebugWindowConfiguration;
 HideCursor;  % hide mouse cursor
 rng shuffle;
 
