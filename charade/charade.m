@@ -5,7 +5,7 @@ close all;
 clear all;
 
 PsychDebugWindowConfiguration;
-HideCursor;  % hide mouse cursor
+% HideCursor;  % hide mouse cursor
 rng shuffle;
 
 %% SCREEN SETUP
@@ -42,8 +42,27 @@ canvasR = [xmid-canvasW, ymid-canvasH, xmid+canvasW, ymid+canvasH];
 
 sideL = 80;        % Length of each side
 
+dotColor = [1, 1, 1;
+    0.9, 0.9, 0.9;
+    0.8, 0.8, 0.8;
+    0.7, 0.7, 0.7;
+    0.6, 0.6, 0.6];
+
+%% INTRODUCTION
+DrawFormattedText(w, ['Welcome to the experiment!' ...
+    '\n\nIn the experiment, you will see animations of two triangles.' ...
+    '\nYour task is to detect whether a grey dot appeared on either triangle during each trial.' ...
+    '\nPress space bar as soon as you see the grey dot.' ...
+    '\n\nYou will complete 5 practice trials before proceeding to the actual experiment.' ...
+    '\n\nPress space bar to continue.'], 'center', 'center', textColor);           
+Screen('Flip', w) ;                            % put warning on screen
+RestrictKeysForKbCheck(keyNumSpace); % diregard all keys except space
+[~, keyCode]  = KbWait(-1)          ;          % wait for key-press
+isSubjIDValid = keyCode(keyNumSpace);          % subject number valid
+
+
 %% TRIAL ITERATION
-iter = 3;
+iter = 5;
 for i = 1:iter
 
 %% RANDOM COORD GENERATION
@@ -126,13 +145,16 @@ y2   = [(y2Coord - (sqrt(3) / 4) * sideL)', (y2Coord + (sqrt(3) / 4) * sideL)', 
 dotFrame = 10;
 dotStartFrame = int32(rand() * numRadians - dotFrame); % random dot start frame 0 to (total frames - presentation frame)
 dotT = int32(rand() * 1);            % random triangle 0 or 1
-dotC = [0.6, 0.6, 0.6];
-% dotC = [50, 50, 50]; % color
+% dotC = [0.6, 0.6, 0.6];
+dotC = dotColor(iter,:); % color
 dotS = 3;            % size
 dotStartTime = 0;
 dotEndTime = 0;
-t = 0;
+t = -1;
 keyIsDown = 0;
+
+keyPressed = false;
+hitTime = 1.5; % secs after probe onset (data analysis)
 
 
 %% TRIANGLE COORDINATE CALCULATION
@@ -157,7 +179,6 @@ for i = 1:(numel(x1Coord))
     ty2 = [ty2; (x2(i,1) - x2Coord(i)) * sin(t2Orientation(i)) + (y2(i,1) - y2Coord(i)) * cos(t2Orientation(i)) + y2Coord(i), ...
        (x2(i,2) - x2Coord(i)) * sin(t2Orientation(i)) + (y2(i,2) - y2Coord(i)) * cos(t2Orientation(i)) + y2Coord(i), ...
        (x2(i,3) - x2Coord(i)) * sin(t2Orientation(i)) + (y2(i,3) - y2Coord(i)) * cos(t2Orientation(i)) + y2Coord(i)];
-
 end
 
 
@@ -187,20 +208,30 @@ for i = 1:(numel(x1Coord)-1)
 
     Screen('Flip', w);
 
-    % skip current trial if pressed before dot
+    % holding for too long (rt <= 1.5, warning)
+    % press twice (rt first time <= 1.5, warning)
+    % press once within time frame (rt <= 1.5)
+    % press after hit time (rt = -1, warning)
+    % press before dot (rt = -1, warning)
+
     RestrictKeysForKbCheck([keyNumSpace]);
     [keyIsDown, secs, keyCode] = KbCheck;
     if keyCode(keyNumSpace)
-        if (dotStartTime == 0) 
+        if (secs-dotStartTime>hitTime || dotStartTime == 0) % rt longer than hit time or before dot
             Screen('FillRect', w, screenColor);
-            DrawFormattedText(w, 'Wrong', 'center', ymid, textWarningColor);    % display instruction on screen
+            DrawFormattedText(w, 'You made a false alarm', 'center', ymid, textWarningColor);    % display instruction on screen
             Screen('Flip', w);
-            WaitSecs(1); 
+            WaitSecs(2); 
             break;
         end
-        t = secs - dotStartTime;
+      
+        if (keyPressed == false)
+            t = secs - dotStartTime; % reaction time 
+        end
+        
         keyCode = zeros(1,256);
-    end 
+        keyPressed = true;
+    end      
 end
 
 Screen('FillRect', w, screenColor);
