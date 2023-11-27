@@ -1,34 +1,30 @@
 % ZZ
-% Charade
-clc;
-close all;
-clear all;
-
-PsychDebugWindowConfiguration;
-% HideCursor;  % hide mouse cursor
+% Charade 
+% PsychDebugWindowConfiguration;
 rng shuffle;
 
+clear all       % clear previously-defined variables from workspace
+close all       % close any open figure windows
+sca             % close any open Psychtoolbox windows
+rng shuffle     % seed random number generator using current clock time
+HideCursor      % hide mouse-cursor
+ListenChar(2) ; % suppress keyboard output to Matlab window
+
 %% SCREEN SETUP
+Screen('Preference', 'VisualDebugLevel', 1) ; % suppress Psychtoolbox welcome screen
+Screen('Preference', 'SkipSyncTests'   , 2) ; % skip sync testing that causes errors, suppress warning symbol
 PsychDefaultSetup(2);
-Screen('Preference', 'VisualDebugLevel', 1);  % suppress Psychtoolbox welcome screen
-Screen('Preference', 'SkipSyncTests', 1);     % skip sync testing that causes errors
 screenNumber     = max(Screen('Screens'));
 [w, windowRect]  = PsychImaging('OpenWindow', screenNumber, [0 0 0], [],[],[],[],5);
-[wWidth,wHeight] = Screen('WindowSize', w);
-xmid             = round(wWidth  / 2);
-ymid             = round(wHeight / 2);
-Screen('TextSize', w, round(wHeight / 30));
-screenColor      = [0 0 0];
-textColor        = [1 1 1];
-textWarningColor = [1 0 0];
+[wWidth,wHeight] = Screen('WindowSize', w);    
+xmid             = round(wWidth  / 2);         
+ymid             = round(wHeight / 2); 
 
 Screen('BlendFunction', w, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA'); % anti-aliasing
 
-KbName('UnifyKeyNames');
+KbName('UnifyKeyNames');                       
 keyNumSpace = min(KbName('space'));
-keyCode = zeros(1,256);
-
-reactionT = [];
+keyCode = zeros(1,256);               
 
 
 %% CANVAS SCALING
@@ -42,28 +38,6 @@ canvasR = [xmid-canvasW, ymid-canvasH, xmid+canvasW, ymid+canvasH];
 
 sideL = 80;        % Length of each side
 
-dotColor = [1, 1, 1;
-    0.9, 0.9, 0.9;
-    0.8, 0.8, 0.8;
-    0.7, 0.7, 0.7;
-    0.6, 0.6, 0.6];
-
-%% INTRODUCTION
-DrawFormattedText(w, ['Welcome to the experiment!' ...
-    '\n\nIn the experiment, you will see animations of two triangles.' ...
-    '\nYour task is to detect whether a grey dot appeared on either triangle during each trial.' ...
-    '\nPress space bar as soon as you see the grey dot.' ...
-    '\n\nYou will complete 5 practice trials before proceeding to the actual experiment.' ...
-    '\n\nPress space bar to continue.'], 'center', 'center', textColor);
-Screen('Flip', w) ;                            % put warning on screen
-RestrictKeysForKbCheck(keyNumSpace); % diregard all keys except space
-[~, keyCode]  = KbWait(-1)          ;          % wait for key-press
-isSubjIDValid = keyCode(keyNumSpace);          % subject number valid
-
-
-%% TRIAL ITERATION
-iter = 5;
-for i = 1:iter
 
 %% RANDOM COORD GENERATION
 % frame coordinates
@@ -73,7 +47,7 @@ x2Coord = 650;
 y2Coord = 450;
 
 % radians
-numRadians = 327;
+numRadians = 326;
 numZeros   = 310;
 side       = 80;
 
@@ -89,17 +63,17 @@ randomDistance2 = rand(1, numRadians) * 8;
 
 % new coordinates
 radians = 0;
-for i = 1:numRadians-1
+for i = 1:numRadians
     if (randomRadians1(i) == 0)
         randomRadians1(i) = radians;
-    else
+    else 
         radians = randomRadians1(i);
     end
 
     xNew = x1Coord(i) + randomDistance1(i)*(cos(radians));
     yNew = y1Coord(i) + randomDistance1(i)*(sin(radians));
 
-    if (xNew < canvasR(3) - 50 && xNew > canvasR(1) + 50 && yNew > canvasR(2) +50 && yNew < canvasR(4) - 50)
+    if (xNew < canvasR(3) - 50 && xNew > canvasR(1) + 50 && yNew > canvasR(2) +50 && yNew < canvasR(4) - 50) 
         x1Coord = [x1Coord, xNew];
         y1Coord = [y1Coord, yNew];
     else
@@ -112,14 +86,14 @@ radians = 0;
 for j = 1:numRadians
     if (randomRadians2(j) == 0)
         randomRadians2(j) = radians;
-    else
+    else 
         radians = randomRadians2(j);
     end
 
     xNew = x2Coord(j) + randomDistance2(j)*(cos(radians));
     yNew = y2Coord(j) + randomDistance2(j)*(sin(radians));
 
-    if (xNew < canvasR(3) - 50 && xNew > canvasR(1) + 50 && yNew > canvasR(2) +50 && yNew < canvasR(4) - 50)
+    if (xNew < canvasR(3) - 50 && xNew > canvasR(1) + 50 && yNew > canvasR(2) +50 && yNew < canvasR(4) - 50) 
         x2Coord = [x2Coord, xNew];
         y2Coord = [y2Coord, yNew];
     else
@@ -145,16 +119,13 @@ y2   = [(y2Coord - (sqrt(3) / 4) * sideL)', (y2Coord + (sqrt(3) / 4) * sideL)', 
 dotFrame = 10;
 dotStartFrame = int32(rand() * numRadians - dotFrame); % random dot start frame 0 to (total frames - presentation frame)
 dotT = int32(rand() * 1);            % random triangle 0 or 1
-% dotC = [0.6, 0.6, 0.6];
-dotC = dotColor(iter,:); % color
+dotC = 0.7; % was 0.6
+% dotC = [50, 50, 50]; % color
 dotS = 3;            % size
 dotStartTime = 0;
 dotEndTime = 0;
-t = -1;
+t = 0;
 keyIsDown = 0;
-
-keyPressed = false;
-hitTime = 1.5; % secs after probe onset (data analysis)
 
 
 %% TRIANGLE COORDINATE CALCULATION
@@ -163,7 +134,7 @@ ty1 = [];
 tx2 = [];
 ty2 = [];
 
-for i = 1:(numel(x1Coord))
+for i = 1:(numel(x1Coord)-1)
     tx1 = [tx1 ; (x(i,1) - x1Coord(i)) * cos(t1Orientation(i)) - (y(i,1) - y1Coord(i)) * sin(t1Orientation(i)) + x1Coord(i), ...
        (x(i,2) - x1Coord(i)) * cos(t1Orientation(i)) - (y(i,2) - y1Coord(i)) * sin(t1Orientation(i)) + x1Coord(i), ...
        (x(i,3) - x1Coord(i)) * cos(t1Orientation(i)) - (y(i,3) - y1Coord(i)) * sin(t1Orientation(i)) + x1Coord(i)];
@@ -175,10 +146,11 @@ for i = 1:(numel(x1Coord))
     tx2 = [tx2; (x2(i,1) - x2Coord(i)) * cos(t2Orientation(i)) - (y2(i,1) - y2Coord(i)) * sin(t2Orientation(i)) + x2Coord(i), ...
        (x2(i,2) - x2Coord(i)) * cos(t2Orientation(i)) - (y2(i,2) - y2Coord(i)) * sin(t2Orientation(i)) + x2Coord(i), ...
        (x2(i,3) - x2Coord(i)) * cos(t2Orientation(i)) - (y2(i,3) - y2Coord(i)) * sin(t2Orientation(i)) + x2Coord(i)];
-
+    
     ty2 = [ty2; (x2(i,1) - x2Coord(i)) * sin(t2Orientation(i)) + (y2(i,1) - y2Coord(i)) * cos(t2Orientation(i)) + y2Coord(i), ...
        (x2(i,2) - x2Coord(i)) * sin(t2Orientation(i)) + (y2(i,2) - y2Coord(i)) * cos(t2Orientation(i)) + y2Coord(i), ...
        (x2(i,3) - x2Coord(i)) * sin(t2Orientation(i)) + (y2(i,3) - y2Coord(i)) * cos(t2Orientation(i)) + y2Coord(i)];
+
 end
 
 
@@ -202,46 +174,21 @@ for i = 1:(numel(x1Coord)-1)
         dotStartTime = GetSecs;
     end
 
-    if (i == dotStartFrame + dotFrame)
+    if (i == dotStartFrame + dotFrame) 
         dotEndTime = GetSecs;
     end
 
-    frameDuration = (dotEndTime - dotStartTime)/10;
-
     Screen('Flip', w);
 
-    % holding for too long (rt <= 1.5, warning)
-    % press twice (rt first time <= 1.5, warning)
-    % press once within time frame (rt <= 1.5)
-    % press after hit time (rt = -1, warning)
-    % press before dot (rt = -1, warning)
-
-    RestrictKeysForKbCheck([keyNumSpace]);
     [keyIsDown, secs, keyCode] = KbCheck;
     if keyCode(keyNumSpace)
-        if (secs-dotStartTime>hitTime || dotStartTime == 0) % rt longer than hit time or before dot
-            Screen('FillRect', w, screenColor);
-            DrawFormattedText(w, 'You made a false alarm', 'center', ymid, textWarningColor);    % display instruction on screen
-            Screen('Flip', w);
-            WaitSecs(2);
-            break;
-        end
-
-        if (keyPressed == false)
-            t = secs - dotStartTime; % reaction time
-        end
-
+        t = secs - dotStartTime;
         keyCode = zeros(1,256);
-        keyPressed = true;
-    end
+    end 
+
 end
 
-Screen('FillRect', w, screenColor);
-Screen('Flip', w);
-WaitSecs(1);
-
-reactionT = [reactionT, t];
-end
-
+dotPresentationTime = dotEndTime - dotStartTime;
 %% END
 sca;
+ListenChar(1) ; % restore keyboard output to Matlab window
