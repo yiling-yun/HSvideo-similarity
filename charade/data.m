@@ -126,6 +126,11 @@ dotEndTime = 0;
 t = 0;
 keyIsDown = 0;
 
+keyPressed = false;
+hitTime = 1.5; % secs after probe onset (data analysis)
+
+
+
 %% EXPERIMENT
 for i = 1:(numel(x1Coord)-1)
     Screen('FillRect', w, 1, canvasR);

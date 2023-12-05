@@ -54,8 +54,9 @@ ori2 = ori2Data(1); ori2 = ori2{1};
 ori2 = strrep(ori2, '[', ''); ori2 = strrep(ori2, ']', ''); ori2 = strrep(ori2, '''', '');
 ori2 = str2double(strsplit(ori2, ','));
 
-for i = numel(ori1)
-    ori(i) = 
+for i = 1:numel(ori1)-1
+    t1Orientation(i) = ori1(i+1)-ori1(i);
+    t2Orientation(i) = ori2(i+1)-ori2(i);
 end
 
 % v = {x1}
@@ -73,16 +74,12 @@ x1Coord = x1;
 y1Coord = y1;
 x2Coord = x2;
 y2Coord = y2;
-t1Orientation = ori1;
-t2Orientation = ori2;
 
 x1Coord = (x1Coord./scale).*2.+canvasR(1);
 y1Coord = ((y1Coord./scale).*2.-canvasR(4)).*(-1);
-% t1Orientation = t1Orientation./57;
 
 x2Coord = (x2Coord/scale)*2+canvasR(1);
 y2Coord = ((y2Coord/scale)*2-canvasR(4))*(-1);
-% t2Orientation = t2Orientation./57;
 
 sideL = 80;        % Length of each side
 
@@ -98,7 +95,7 @@ ty1 = [];
 tx2 = [];
 ty2 = [];
 
-for i = 1:(numel(x1Coord))
+for i = 1:(numel(x1Coord))-1
     tx1 = [tx1 ; (x(i,1) - x1Coord(i)) * cos(t1Orientation(i)) - (y(i,1) - y1Coord(i)) * sin(t1Orientation(i)) + x1Coord(i), ...
        (x(i,2) - x1Coord(i)) * cos(t1Orientation(i)) - (y(i,2) - y1Coord(i)) * sin(t1Orientation(i)) + x1Coord(i), ...
        (x(i,3) - x1Coord(i)) * cos(t1Orientation(i)) - (y(i,3) - y1Coord(i)) * sin(t1Orientation(i)) + x1Coord(i)];
@@ -128,6 +125,17 @@ dotStartTime = 0;
 dotEndTime = 0;
 t = 0;
 keyIsDown = 0;
+
+dotS = 30;            % size 
+dotStartTime = 0;
+dotEndTime = 0;
+t = -1;
+keyIsDown = 0;
+
+keyPressed = false;
+hitTime = 1.5; % secs after probe onset (data analysis)
+
+
 
 %% EXPERIMENT
 for i = 1:(numel(x1Coord)-1)
