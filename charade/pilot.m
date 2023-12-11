@@ -1,5 +1,5 @@
 % ZZ
-% Charade
+% Charade: pilot study example code
 clc;
 close all;
 clear all;
@@ -49,17 +49,6 @@ dotColor = [1, 1, 1;
     0.6, 0.6, 0.6];
 
 %% INTRODUCTION
-DrawFormattedText(w, ['Welcome to the experiment!' ...
-    '\n\nIn the experiment, you will see animations of two triangles.' ...
-    '\nYour task is to detect whether a grey dot appeared on either triangle during each trial.' ...
-    '\nPress space bar as soon as you see the grey dot.' ...
-    '\n\nYou will complete 5 practice trials before proceeding to the actual experiment.' ...
-    '\n\nPress space bar to continue.'], 'center', 'center', textColor);
-Screen('Flip', w) ;                            % put warning on screen
-RestrictKeysForKbCheck(keyNumSpace); % diregard all keys except space
-[~, keyCode]  = KbWait(-1)          ;          % wait for key-press
-isSubjIDValid = keyCode(keyNumSpace);          % subject number valid
-
 
 %% TRIAL ITERATION
 iter = 5;
@@ -146,8 +135,9 @@ dotFrame = 10;
 dotStartFrame = int32(rand() * numRadians - dotFrame); % random dot start frame 0 to (total frames - presentation frame)
 dotT = int32(rand() * 1);            % random triangle 0 or 1
 % dotC = [0.6, 0.6, 0.6];
-dotC = dotColor(iter,:); % color
-dotS = 3;            % size 
+% dotC = dotColor(iter,:); % color
+dotC = 0.6;
+dotS = 15;            % size 
 dotStartTime = 0;
 dotEndTime = 0;
 t = -1;
@@ -216,31 +206,12 @@ for i = 1:(numel(x1Coord)-1)
     % press after hit time (rt = -1, warning)
     % press before dot (rt = -1, warning)
 
-    RestrictKeysForKbCheck([keyNumSpace]);
-    [keyIsDown, secs, keyCode] = KbCheck;
-    if keyCode(keyNumSpace)
-        if (secs-dotStartTime>hitTime || dotStartTime == 0) % rt longer than hit time or before dot
-            Screen('FillRect', w, screenColor);
-            DrawFormattedText(w, 'You made a false alarm', 'center', ymid, textWarningColor);    % display instruction on screen
-            Screen('Flip', w);
-            WaitSecs(2);
-            break;
-        end
-
-        if (keyPressed == false)
-            t = secs - dotStartTime; % reaction time
-        end
-
-        keyCode = zeros(1,256);
-        keyPressed = true;
-    end
+    
 end
 
-Screen('FillRect', w, screenColor);
 Screen('Flip', w);
-WaitSecs(1);
+WaitSecs(2);
 
-reactionT = [reactionT, t];
 end
 
 %% END
