@@ -16,6 +16,15 @@ ymid             = round(wHeight / 2);
 
 Screen('BlendFunction', w, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA'); %YY
 
+textColor        = [1 1 1];
+textWarningColor = [1 0 0];
+practiceDotC     = [1, 1, 1;
+    0.9, 0.9, 0.9;
+    0.8, 0.8, 0.8;
+    0.7, 0.7, 0.7;
+    0.6, 0.6, 0.6];
+
+
 %% LOAD DATA FILE
 charadeData = readtable("charades_summary_.xlsx"); 
 
@@ -37,16 +46,12 @@ DrawFormattedText(w, ['Welcome to the experiment!' ...
     '\n\nYou will complete 5 practice trials before proceeding to the actual experiment.' ...
     '\n\nPress space bar to continue.'], 'center', 'center', textColor);
 Screen('Flip', w) ;                           
-WaitSecs(2);
+WaitSecs(5);
+Screen('Flip', w) ;     
 
 %% PRACTICE TRIAL
 trialNum = 10;
 practiceTrialNum = 5;
-practiceDotC = [1, 1, 1;
-    0.9, 0.9, 0.9;
-    0.8, 0.8, 0.8;
-    0.7, 0.7, 0.7;
-    0.6, 0.6, 0.6];
 
 for p = 1: practiceTrialNum
     x1 = x1Data(p+trialNum); x1 = x1{1};
@@ -131,7 +136,7 @@ end
 
 dotFrame = 10;
 dotStartFrame = int32(rand() * numel(x1Coord) - dotFrame);
-dotT = 1; % triangle 1
+dotT = int32(rand() * 1); ; % triangle 1
 dotC = practiceDotC(p,:); % color
 dotS = 3; % size
 dotStartTime = 0;
@@ -179,15 +184,10 @@ end
 
 %% PROCEED TO EXPERIMENT
 DrawFormattedText(w, ['Now you have completed the practice trials,' ...
-    '\nPress space bar to proceed to the actual experiment.' ...
-    '\nYour task is to detect whether a grey dot appeared on either triangle during each trial.' ...
-    '\nPress space bar as soon as you see the grey dot.' ...
-    '\n\nYou will complete 5 practice trials before proceeding to the actual experiment.' ...
-    '\n\nPress space bar to continue.'], 'center', 'center', textColor);
+    '\n\nPress space bar to proceed to the actual experiment.'], 'center', 'center', textColor);
 Screen('Flip', w) ;                           
-WaitSecs(2);
-
-
+WaitSecs(3);
+Screen('Flip', w) ;     
 
 %% CONVERTING NUMERIC VALUE
 for i = 1:trialNum
@@ -279,7 +279,7 @@ end
 % Screen('DrawDots', w, dotPosition, dotSize, dotColor, [], 2);
 dotFrame = 10;
 dotStartFrame = int32(rand() * numel(x1Coord) - dotFrame);
-dotT = 1; % triangle 1
+dotT = int32(rand() * 1); ; % triangle 1
 dotC = 0.6;%[50, 50, 50]; % color
 dotS = 3; % size
 dotStartTime = 0;
@@ -324,5 +324,10 @@ end
 Screen('Flip', w);
 WaitSecs(2);
 
+
 end
+
+% survey questions: purpose of study; strategies used; gender; age
+% data: reaction time; subject number; trial number; probe location; probe
+% time; accuracy
 

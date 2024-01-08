@@ -175,25 +175,6 @@ for i = 1:(numel(x1Coord)-1)
     frameDuration = (dotEndTime - dotStartTime)/10;
 
     Screen('Flip', w);
-
-    RestrictKeysForKbCheck([keyNumSpace]);
-    [keyIsDown, secs, keyCode] = KbCheck;
-    if keyCode(keyNumSpace)
-        if (secs-dotStartTime>hitTime || dotStartTime == 0) % rt longer than hit time or before dot
-            Screen('FillRect', w, screenColor);
-            DrawFormattedText(w, 'You made a false alarm', 'center', ymid, textWarningColor);    % display instruction on screen
-            Screen('Flip', w);
-            WaitSecs(2);
-            break;
-        end
-
-        if (keyPressed == false)
-            t = secs - dotStartTime; % reaction time
-        end
-
-        keyCode = zeros(1,256);
-        keyPressed = true;
-    end
 end
 
 Screen('Flip', w);
@@ -338,31 +319,15 @@ for i = 1:(numel(x1Coord)-1)
     frameDuration = (dotEndTime - dotStartTime)/10;
 
     Screen('Flip', w);
-
-    RestrictKeysForKbCheck([keyNumSpace]);
-    [keyIsDown, secs, keyCode] = KbCheck;
-    if keyCode(keyNumSpace)
-        if (secs-dotStartTime>hitTime || dotStartTime == 0) % rt longer than hit time or before dot
-            Screen('FillRect', w, screenColor);
-            DrawFormattedText(w, 'You made a false alarm', 'center', ymid, textWarningColor);    % display instruction on screen
-            Screen('Flip', w);
-            WaitSecs(2);
-            break;
-        end
-
-        if (keyPressed == false)
-            t = secs - dotStartTime; % reaction time
-        end
-
-        keyCode = zeros(1,256);
-        keyPressed = true;
-    end
 end
 
 Screen('Flip', w);
 WaitSecs(2);
 
-reactionT = [reactionT, t];
 
 end
+
+% survey questions: purpose of study; strategies used; gender; age
+% data: reaction time; subject number; trial number; probe location; probe
+% time; accuracy
 
