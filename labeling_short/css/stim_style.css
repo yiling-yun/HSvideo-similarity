@@ -153,7 +153,7 @@ button:active {
 .warning {
     display: none;
     padding: 30px 0;
-    color: #380000;
+    color: red;
 }
 .small-dim {
     color: #222222;
