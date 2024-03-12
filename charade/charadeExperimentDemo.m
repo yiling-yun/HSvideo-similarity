@@ -39,9 +39,11 @@ practiceDotC     = [1, 1, 1;
 
 
 %% LOAD DATA FILE
+charadeLabel = readtable("charades_label.xlsx"); 
 charadeData = readtable("charades_summary_.xlsx"); 
 
-videoID  = charadeData.id;
+videoID  = charadeLabel.id;
+probeID  = charadeLabel.probeId;
 
 x1Data   = charadeData.x1;
 y1Data   = charadeData.y1;
@@ -113,28 +115,30 @@ for i = 1:(practiceTrialNum + trialNum)
         [~, keyCode]  = KbWait(-1)          ;          % wait for key-press
         WaitSecs(0.5);
     end
+
+    r = find(charadeData.id == videoID(i)); % role index of the item
     
-    x1 = x1Data(i); x1 = x1{1};
+    x1 = x1Data(r); x1 = x1{1};
     x1 = strrep(x1, '[', ''); x1 = strrep(x1, ']', ''); x1 = strrep(x1, '''', ''); 
     x1 = str2double(strsplit(x1, ','));
 
-    y1 = y1Data(i); y1 = y1{1};
+    y1 = y1Data(r); y1 = y1{1};
     y1 = strrep(y1, '[', ''); y1 = strrep(y1, ']', ''); y1 = strrep(y1, '''', '');
     y1 = str2double(strsplit(y1, ','));
 
-    ori1 = ori1Data(i); ori1 = ori1{1};
+    ori1 = ori1Data(r); ori1 = ori1{1};
     ori1 = strrep(ori1, '[', ''); ori1 = strrep(ori1, ']', ''); ori1 = strrep(ori1, '''', '');
     ori1 = str2double(strsplit(ori1, ','));
 
-    x2 = x2Data(i); x2 = x2{1};
+    x2 = x2Data(r); x2 = x2{1};
     x2 = strrep(x2, '[', ''); x2 = strrep(x2, ']', ''); x2 = strrep(x2, '''', '');
     x2 = str2double(strsplit(x2, ','));
 
-    y2 = y2Data(i); y2 = y2{1};
+    y2 = y2Data(r); y2 = y2{1};
     y2 = strrep(y2, '[', ''); y2 = strrep(y2, ']', ''); y2 = strrep(y2, '''', '');
     y2 = str2double(strsplit(y2, ','));
 
-    ori2 = ori2Data(i); ori2 = ori2{1};
+    ori2 = ori2Data(r); ori2 = ori2{1};
     ori2 = strrep(ori2, '[', ''); ori2 = strrep(ori2, ']', ''); ori2 = strrep(ori2, '''', '');
     ori2 = str2double(strsplit(ori2, ','));
 
@@ -201,7 +205,7 @@ end
 % Screen('DrawDots', w, dotPosition, dotSize, dotColor, [], 2);
 dotFrame = 10;  % 300 ms
 dotStartFrame = int32(rand() * numel(x1Coord) - dotFrame - 30) + 30;
-dotT = int32(rand() * 1); ;    % triangle 1
+dotT = probeID(i); ;    % triangle 1
 dotC = 0.6;     %[50, 50, 50]; 
 dotS = 20;      % size
 dotStartTime = 0;
@@ -280,7 +284,7 @@ DrawFormattedText(w, ['Thank you for your participation!' ...
 Screen('Flip', w) ; 
 
 RestrictKeysForKbCheck(keyNumSpace);           % diregard all keys except space
-[~, keyCode]  = KbWait(-1)        ;          % wait for key-press
+[~, keyCode]  = KbWait(-1)         ;           % wait for key-press
 
 
 %% END & DATA SAVING
