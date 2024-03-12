@@ -64,7 +64,7 @@ practiceTrialNum = 5; % height(charadeData);
 % data to be saved
 reactionT = {};
 probeStart  = {};
-accurateHit = zeros(1, trialNum);
+accurateHit = ones(1, practiceTrialNum+trialNum);
 probePosition = {};
 
 
@@ -107,7 +107,7 @@ WaitSecs(0.5);
  
 
 %% CONVERTING NUMERIC VALUE
-for i = 1:(trialNum)
+for i = 1:(practiceTrialNum + trialNum)
 
     if i == (practiceTrialNum + 1)
         DrawFormattedText(w, ['Now you have completed the practice trial.' ...
@@ -210,7 +210,7 @@ end
 % Screen('DrawDots', w, dotPosition, dotSize, dotColor, [], 2);
 dotFrame = 10;  % 300 ms
 dotStartFrame = int32(rand() * numel(x1Coord) - dotFrame - 30) + 30;
-dotT = probeID(i);   % triangle 1
+dotT = probeID(i); ;    % triangle 1
 dotC = 0.6;     %[50, 50, 50]; 
 dotS = 20;      % size
 dotStartTime = 0;
@@ -257,13 +257,13 @@ for k = 1:(numel(x1Coord)-1)
             Screen('FillRect', w, screenColor);
             DrawFormattedText(w, 'You made a false alarm', 'center', ymid, textWarningColor);    % display instruction on screen
             Screen('Flip', w);
+            accurateHit(i) = 0;
             WaitSecs(2);
             break;
         end
 
         if (keyPressed == false)
             t = secs - dotStartTime; % reaction time
-            accurateHit(i) = 1;
         end
 
         keyCode = zeros(1,256);
