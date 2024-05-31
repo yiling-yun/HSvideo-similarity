@@ -27,7 +27,7 @@ const STIM_PATH = 'stim/';
 const ALL_IMG_LIST = ['blank.png','maximize_window.png','no_music.png','ucla.png'];
 const STIM_TYPE = '.mp4';
 const INTERTRIAL_INTERVAL = 500; //ms
-const STIM_SOURCE = '27movies/';
+const STIM_SOURCE = 'greyed/';
 const EXPT_N = 65;
 
 const INSTR_PRAC_LIST  = [ "5801_hug", "5994_push", "6005_throw"];
@@ -76,9 +76,9 @@ const INSTR_READING_TIME_MIN = 0.3;
 
 
 $(document).ready(function() {
-    for (let i = 0; i < 27; i++) {
-        $(BUTTON_LIST[i]).text(SHUFFLED_LABEL[i]);
-    }
+    // for (let i = 0; i < 27; i++) {
+    //     $(BUTTON_LIST[i]).text(SHUFFLED_LABEL[i]);
+    // }
 
     subj = new Subject(subj_options);
     subj.id = subj.getID(ID_GET_VARIABLE_NAME);

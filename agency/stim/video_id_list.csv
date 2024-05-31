@@ -1,0 +1,249 @@
+﻿label,id,agent
+accompany,6300,light
+accompany,5787,light
+accompany,5114,light
+accompany,5372,light
+approach,5849,light
+approach,5096,light
+approach,5000,light
+approach,5786,light
+argue with,856,light
+argue with,5431,light
+argue with,5588,light
+argue with,4910,light
+avoid,4793,light
+avoid,6034,light
+avoid,5581,light
+avoid,4722,light
+block,1180,light
+block,913,light
+block,4811,light
+block,1131,light
+bother,4803,light
+bother,4789,light
+bother,5781,light
+bother,5898,light
+chase,5924,light
+chase,6046,light
+chase,2364,light
+chase,6304,light
+creep up on,5988,light
+creep up on,5314,light
+creep up on,4939,light
+creep up on,5908,light
+encircle,5905,light
+encircle,6017,light
+encircle,6043,light
+encircle,4877,light
+escape,5875,light
+escape,5790,light
+escape,4925,light
+escape,6015,light
+examine,5788,light
+examine,5991,light
+examine,6232,light
+examine,4757,light
+fight,5006,light
+fight,6026,light
+fight,5931,light
+fight,5934,light
+flirt with,4806,light
+flirt with,5249,light
+flirt with,1432,light
+flirt with,5877,light
+follow,5878,light
+follow,5866,light
+follow,1426,light
+follow,5371,light
+herd,1051,light
+herd,4807,light
+herd,5279,light
+herd,1025,light
+hit,851,light
+hit,6172,light
+hit,4633,light
+hit,1064,light
+huddle with,5843,light
+huddle with,5901,light
+huddle with,5996,light
+huddle with,4858,light
+hug,5528,light
+hug,4397,light
+hug,5383,light
+hug,5525,light
+ignore,4584,light
+ignore,5471,light
+ignore,5112,light
+ignore,4626,light
+kiss,1167,light
+kiss,905,light
+kiss,4995,light
+kiss,4787,light
+lead,4926,light
+lead,4408,light
+lead,1421,light
+lead,4951,light
+leave,1145,light
+leave,6058,light
+leave,5929,light
+leave,1188,light
+mimic,5990,light
+mimic,5999,light
+mimic,5432,light
+mimic,5808,light
+play with,5879,light
+play with,5107,light
+play with,5004,light
+play with,4868,light
+poke,1076,light
+poke,5570,light
+poke,846,light
+poke,4985,light
+pull,5401,light
+pull,6239,light
+pull,5871,light
+pull,4909,light
+push,5568,light
+push,5501,light
+push,1161,light
+push,5994,light
+scratch,1121,light
+scratch,6016,light
+scratch,5184,light
+scratch,6235,light
+talk to,6013,light
+talk to,5810,light
+talk to,4952,light
+talk to,5662,light
+throw,4861,light
+throw,4992,light
+throw,4942,light
+throw,6005,light
+tickle,1104,light
+tickle,1068,light
+tickle,6815,light
+tickle,5317,light
+accompany,6300,dark
+accompany,5787,dark
+accompany,5114,dark
+accompany,5372,dark
+approach,5849,dark
+approach,5096,dark
+approach,5000,dark
+approach,5786,dark
+argue with,856,dark
+argue with,5431,dark
+argue with,5588,dark
+argue with,4910,dark
+avoid,4793,dark
+avoid,6034,dark
+avoid,5581,dark
+avoid,4722,dark
+block,1180,dark
+block,913,dark
+block,4811,dark
+block,1131,dark
+bother,4803,dark
+bother,4789,dark
+bother,5781,dark
+bother,5898,dark
+chase,5924,dark
+chase,6046,dark
+chase,2364,dark
+chase,6304,dark
+creep up on,5988,dark
+creep up on,5314,dark
+creep up on,4939,dark
+creep up on,5908,dark
+encircle,5905,dark
+encircle,6017,dark
+encircle,6043,dark
+encircle,4877,dark
+escape,5875,dark
+escape,5790,dark
+escape,4925,dark
+escape,6015,dark
+examine,5788,dark
+examine,5991,dark
+examine,6232,dark
+examine,4757,dark
+fight,5006,dark
+fight,6026,dark
+fight,5931,dark
+fight,5934,dark
+flirt with,4806,dark
+flirt with,5249,dark
+flirt with,1432,dark
+flirt with,5877,dark
+follow,5878,dark
+follow,5866,dark
+follow,1426,dark
+follow,5371,dark
+herd,1051,dark
+herd,4807,dark
+herd,5279,dark
+herd,1025,dark
+hit,851,dark
+hit,6172,dark
+hit,4633,dark
+hit,1064,dark
+huddle with,5843,dark
+huddle with,5901,dark
+huddle with,5996,dark
+huddle with,4858,dark
+hug,5528,dark
+hug,4397,dark
+hug,5383,dark
+hug,5525,dark
+ignore,4584,dark
+ignore,5471,dark
+ignore,5112,dark
+ignore,4626,dark
+kiss,1167,dark
+kiss,905,dark
+kiss,4995,dark
+kiss,4787,dark
+lead,4926,dark
+lead,4408,dark
+lead,1421,dark
+lead,4951,dark
+leave,1145,dark
+leave,6058,dark
+leave,5929,dark
+leave,1188,dark
+mimic,5990,dark
+mimic,5999,dark
+mimic,5432,dark
+mimic,5808,dark
+play with,5879,dark
+play with,5107,dark
+play with,5004,dark
+play with,4868,dark
+poke,1076,dark
+poke,5570,dark
+poke,846,dark
+poke,4985,dark
+pull,5401,dark
+pull,6239,dark
+pull,5871,dark
+pull,4909,dark
+push,5568,dark
+push,5501,dark
+push,1161,dark
+push,5994,dark
+scratch,1121,dark
+scratch,6016,dark
+scratch,5184,dark
+scratch,6235,dark
+talk to,6013,dark
+talk to,5810,dark
+talk to,4952,dark
+talk to,5662,dark
+throw,4861,dark
+throw,4992,dark
+throw,4942,dark
+throw,6005,dark
+tickle,1104,dark
+tickle,1068,dark
+tickle,6815,dark
+tickle,5317,dark
