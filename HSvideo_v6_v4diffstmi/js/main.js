@@ -7,7 +7,7 @@
 // ######## ##     ## ##           ##
 
 // data saving
-const FORMAL = true;
+const FORMAL = false;
 const EXPERIMENT_NAME = 'HSvideo';
 const SUBJ_NUM_SCRIPT = 'php/subjNum.php';
 const SAVING_SCRIPT = 'php/save.php';
@@ -17,9 +17,9 @@ const TRIAL_FILE = "trial_" + EXPERIMENT_NAME + ".txt";
 const ATTRITION_FILE = 'attrition_' + EXPERIMENT_NAME + '.txt';
 const SUBJ_FILE = 'subj_' + EXPERIMENT_NAME + '.txt';
 const SAVING_DIR_HOME = '/var/www-data-experiments/cvlstudy_data/YY/'+EXPERIMENT_NAME+'/';
-const SAVING_DIR = FORMAL ? SAVING_DIR_HOME+'/formal_v4_shortv1' : SAVING_DIR_HOME+'/testing_v4_shortv1';
+const SAVING_DIR = FORMAL ? SAVING_DIR_HOME+'/formal_v6_v4diffstim' : SAVING_DIR_HOME+'/testing_v6_v4diffstim';
 const ID_GET_VARIABLE_NAME = 'id';
-const COMPLETION_URL = 'https://ucla.sona-systems.com/webstudy_credit.aspx?experiment_id=2233&credit_token=31c13a54f32446b590985785ad094b60&survey_code=';
+const COMPLETION_URL = 'https://ucla.sona-systems.com/webstudy_credit.aspx?experiment_id=2709&credit_token=e813293b0eac4383ad87aff7cf733fe5&survey_code=';
 
 
 // stimuli
